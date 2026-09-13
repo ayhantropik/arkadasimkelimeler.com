@@ -1748,3 +1748,18 @@ h1,h2,h3,h4,
 @media (max-width: 768px) {
     .flow-block { padding: 1.5rem 1rem; }
 }
+
+/* The CTA mascot sits bottom-right over a wide section. On phones the
+   section is narrow enough that it landed on top of the store buttons,
+   so there it moves below them and the section makes room. */
+@media (max-width: 768px) {
+    #indir { padding-bottom: 13.5rem; }
+    .cta-bear {
+        width: 150px;
+        /* centred with a margin, not a transform: the float animation
+           drives transform and would overwrite it */
+        right: 50%;
+        margin-right: -75px;
+        opacity: 1;
+    }
+}
