@@ -2109,3 +2109,15 @@ section > .container,
 #sunum .kahraman-sag    { width: 112px; }   /* badger, a tall standing figure */
 #sunum .kahraman-sol    { width: 132px; }
 #akademik .kahraman-sol { width: 122px; }   /* stork at her stall */
+
+/* The credit now opens the page under the hero, on its own slim band.
+   Cream keeps it distinct from the hero's tint above and the white
+   features band below. */
+.isbirligi-band {
+    background: #fff7e4;
+    padding: 2.25rem 2rem;
+}
+.isbirligi-band .isbirligi { margin: 0 auto; }
+@media (max-width: 700px) {
+    .isbirligi-band { padding: 1.75rem 1rem; }
+}
