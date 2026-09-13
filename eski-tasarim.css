@@ -2105,7 +2105,9 @@ section > .container,
 /* sizes re-pointed after the shuffle */
 #hero .kahraman         { width: 168px; }
 #oyunlar .kahraman-sol  { width: 168px; }
-#yorumlar .kahraman-sag { width: 168px; }
+/* the reading owl chick moved here from the FAQ */
+#yorumlar .kahraman-sag { width: 130px; }
+#nasil-oynanir .kahraman-sag { width: 180px; }   /* stork and bear, a wide scene */
 #sunum .kahraman-sag    { width: 112px; }   /* badger, a tall standing figure */
 #sunum .kahraman-sol    { width: 132px; }
 #akademik .kahraman-sol { width: 122px; }   /* stork at her stall */
