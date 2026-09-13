@@ -2028,19 +2028,25 @@ section > .container,
 .kahraman {
     position: absolute;
     bottom: 24px;
-    width: 168px;
+    /* fit the free margin beside the 1200px content column, so a character
+       is never sliced by the screen edge nor buried under a card */
+    width: clamp(96px, calc((100vw - 1180px) / 2), 170px);
     height: auto;
+    /* the standing figures are far taller than the crouching ones; cap the
+       height and let the art sit against its edge */
+    max-height: 230px;
+    object-fit: contain;
     z-index: 0;
     opacity: .92;
     pointer-events: none;
     filter: drop-shadow(0 10px 16px rgba(32,22,12,.16));
 }
-.kahraman-sol  { left: -26px; }
-.kahraman-sag  { right: -26px; }
+/* flush with the edge, not past it: the section clips its overflow, so a
+   negative offset was slicing 14-23% off every character */
+.kahraman-sol  { left: 8px;  object-position: left bottom; }
+.kahraman-sag  { right: 8px; object-position: right bottom; }
 
 /* the tall ones would tower over their band */
-#sunum .kahraman { width: 132px; }
-#sss .kahraman   { width: 150px; }
 
 /* below this the content reaches the edges and would collide */
 @media (max-width: 1180px) {
@@ -2050,10 +2056,6 @@ section > .container,
 /* Four more of the cast. The standing figures are much taller than the
    crouching ones, so they are sized down to keep every corner about the
    same visual weight. */
-#hero .kahraman             { width: 132px; }
-#oyunlar .kahraman-sol      { width: 112px; }
-#yorumlar .kahraman-sag     { width: 122px; }
-#indir .kahraman-sol        { width: 156px; }
 
 /* =========================================================
    Collaboration credit for the library, placed where the
@@ -2103,14 +2105,7 @@ section > .container,
 .kahraman-orta { top: 46%; bottom: auto; }
 
 /* sizes re-pointed after the shuffle */
-#hero .kahraman         { width: 168px; }
-#oyunlar .kahraman-sol  { width: 168px; }
 /* the reading owl chick moved here from the FAQ */
-#yorumlar .kahraman-sag { width: 130px; }
-#nasil-oynanir .kahraman-sag { width: 180px; }   /* stork and bear, a wide scene */
-#sunum .kahraman-sag    { width: 112px; }   /* badger, a tall standing figure */
-#sunum .kahraman-sol    { width: 132px; }
-#akademik .kahraman-sol { width: 122px; }   /* stork at her stall */
 
 /* The credit now opens the page under the hero, on its own slim band.
    Cream keeps it distinct from the hero's tint above and the white
@@ -2127,7 +2122,3 @@ section > .container,
 /* the three newcomers, sized for their slots */
 /* swapped: the owl on the branch takes the top-right, the crane the
    bottom-left, so the widths follow them */
-#ozellikler .kahraman-sag { width: 168px; }   /* owl on its branch, a wide figure */
-#ozellikler .kahraman-sol { width: 120px; }   /* crane, a tall standing figure */
-#oyunlar .kahraman-sol    { width: 150px; }
-#akademik .kahraman-orta  { width: 168px; }
