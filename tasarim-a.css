@@ -1162,3 +1162,93 @@ footer h4 {
     .flow-travel:nth-child(3) { left: 62%; }
     .flow-travel:nth-child(4) { left: 87%; }
 }
+
+/* =========================================================
+   FLOW DIAGRAM — the learning-outcome journey
+   (exported from Mermaid, restyled into the brand palette)
+   ========================================================= */
+.flow-block {
+    margin-top: var(--spacing-64);
+    border: 2px solid var(--color-keyline);
+    border-radius: var(--radius);
+    padding: var(--spacing-40) var(--spacing-32);
+}
+.flow-title {
+    font-family: var(--font-feather);
+    font-weight: 800;
+    font-size: clamp(24px, 3.4vw, 36px);
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    text-align: center;
+    color: var(--color-orange-heading);
+}
+.flow-lede {
+    max-width: 640px;
+    margin: var(--spacing-12) auto var(--spacing-32);
+    text-align: center;
+    font-size: var(--text-body);
+    line-height: 1.5;
+    color: var(--color-pencil-gray);
+}
+.flow-scroll {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    border: 2px solid var(--color-keyline);
+    border-radius: var(--radius);
+    padding: var(--spacing-24);
+}
+.flow-scroll:focus-visible { outline: 3px solid var(--color-cyan-deep); outline-offset: 3px; }
+.flow-diagram { display: block; width: 100%; min-width: 900px; height: auto; }
+.flow-hint {
+    margin-top: var(--spacing-16);
+    text-align: center;
+    font-size: var(--text-caption);
+    font-weight: 700;
+    letter-spacing: var(--tracking-nav);
+    text-transform: uppercase;
+    color: var(--color-pencil-gray);
+}
+@media (min-width: 1000px) { .flow-hint { display: none; } }
+
+/* Mermaid sized every label box for 16px Trebuchet at 24px line boxes and
+   offset each one to that block's top-left. Keeping the 24px line box makes
+   the swapped-in face land dead centre in its node, whatever the line count. */
+.flow-diagram .label,
+.flow-diagram .nodeLabel,
+.flow-diagram .edgeLabel span {
+    font-family: var(--font-sans);
+    color: var(--color-charcoal);
+    fill: var(--color-charcoal);
+}
+.flow-diagram .nodeLabel { font-size: 14px; line-height: 24px; font-weight: 500; }
+.flow-diagram foreignObject { overflow: visible; }
+.flow-diagram foreignObject > div { display: block !important; text-align: center; width: 100%; }
+.flow-diagram .node rect.label-container {
+    fill: var(--color-paper-white);
+    stroke: var(--color-keyline);
+    stroke-width: 2px;
+}
+.flow-diagram .node[data-id="A"] rect.label-container { fill: #fff6ea; stroke: var(--color-brand-orange); }
+.flow-diagram .node[data-id="B"] rect.label-container { fill: var(--color-cyan-soft); stroke: var(--color-brand-cyan); }
+.flow-diagram .node[data-id="D"] rect.label-container { fill: var(--color-green-soft); stroke: var(--color-brand-green); }
+.flow-diagram .node[data-id="E"] rect.label-container { fill: var(--color-purple-soft); stroke: var(--color-brand-purple); }
+.flow-diagram .node[data-id="H"] rect.label-container { fill: var(--color-cyan-soft); stroke: var(--color-cyan-deep); }
+.flow-diagram .node[data-id="J"] rect.label-container { fill: var(--color-brand-orange); stroke: var(--color-ink); }
+.flow-diagram .node[data-id="J"] .nodeLabel { color: var(--color-ink); fill: var(--color-ink); }
+.flow-diagram .flowchart-link { stroke: var(--color-faded-gray); stroke-width: 2px; fill: none; }
+.flow-diagram .marker,
+.flow-diagram .arrowMarkerPath { fill: var(--color-faded-gray); stroke: var(--color-faded-gray); }
+.flow-diagram .edgeLabel span {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--color-orange-deep);
+    background: var(--color-orange-soft);
+    padding: 3px 9px;
+    border-radius: var(--radius);
+    white-space: nowrap;
+}
+
+@media (max-width: 900px) {
+    .flow-block { padding: var(--spacing-24) var(--spacing-16); }
+    .flow-scroll { padding: var(--spacing-16); }
+}

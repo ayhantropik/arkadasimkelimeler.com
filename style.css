@@ -1200,3 +1200,108 @@ footer h4 {
 .section-title,
 #indir h2 { line-height: 1.12; }
 .ecosystem-title { line-height: 1.12; }
+
+/* =========================================================
+   FLOW DIAGRAM — the learning-outcome journey
+   (exported from Mermaid, restyled into the sticker language)
+   ========================================================= */
+.flow-block {
+    margin-top: var(--spacing-80);
+    border: var(--hairline);
+    border-radius: var(--radius-card-lg);
+    background: var(--color-paper-white);
+    padding: var(--spacing-48) var(--spacing-40);
+}
+.flow-title {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: clamp(28px, 4vw, 52px);
+    line-height: 1.08;
+    text-transform: uppercase;
+    text-align: center;
+    padding-bottom: 0.18em;
+}
+.flow-lede {
+    max-width: 720px;
+    margin: 0 auto var(--spacing-40);
+    text-align: center;
+    font-size: var(--text-body-lg);
+    line-height: 1.5;
+}
+.flow-scroll {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    border: var(--hairline);
+    border-radius: var(--radius-card);
+    background: var(--color-sky-wash);
+    padding: var(--spacing-24);
+}
+.flow-scroll:focus-visible { outline: 3px solid var(--color-voltage-violet); outline-offset: 3px; }
+.flow-diagram {
+    display: block;
+    width: 100%;
+    min-width: 900px;
+    height: auto;
+}
+.flow-hint {
+    margin-top: var(--spacing-16);
+    text-align: center;
+    font-size: var(--text-caption);
+    font-weight: 700;
+    letter-spacing: var(--tracking-label);
+    text-transform: uppercase;
+}
+@media (min-width: 1000px) { .flow-hint { display: none; } }
+
+/* diagram internals */
+.flow-diagram .label,
+.flow-diagram .nodeLabel,
+.flow-diagram .edgeLabel span {
+    font-family: var(--font-ui);
+    color: var(--color-carbon);
+    fill: var(--color-carbon);
+}
+/* Mermaid sized every label box for 16px Trebuchet at 24px line boxes and
+   offset each one to that block's top-left. Keeping the 24px line box makes
+   the swapped-in face land dead centre in its node, whatever the line count. */
+.flow-diagram .nodeLabel { font-size: 14px; line-height: 24px; font-weight: 500; }
+.flow-diagram foreignObject { overflow: visible; }
+.flow-diagram foreignObject > div {
+    display: block !important;
+    text-align: center;
+    width: 100%;
+}
+.flow-diagram .node rect.label-container {
+    fill: var(--color-paper-white);
+    stroke: var(--color-carbon);
+    stroke-width: 1.5px;
+}
+/* colour the nodes as stickers, left to right through the flow */
+.flow-diagram .node[data-id="A"] rect.label-container { fill: var(--color-sunburst); }
+.flow-diagram .node[data-id="B"] rect.label-container { fill: var(--color-sky-wash); }
+.flow-diagram .node[data-id="D"] rect.label-container { fill: var(--color-mint-pop); }
+.flow-diagram .node[data-id="E"] rect.label-container { fill: var(--color-lavender); }
+.flow-diagram .node[data-id="H"] rect.label-container { fill: var(--color-electric-blue); }
+.flow-diagram .node[data-id="J"] rect.label-container { fill: var(--color-ember); }
+.flow-diagram .node[data-id="J"] .nodeLabel { color: var(--color-paper-white); fill: var(--color-paper-white); }
+.flow-diagram .flowchart-link {
+    stroke: var(--color-carbon);
+    stroke-width: 2px;
+    fill: none;
+}
+.flow-diagram .marker,
+.flow-diagram .arrowMarkerPath { fill: var(--color-carbon); stroke: var(--color-carbon); }
+.flow-diagram .edgeLabel span {
+    font-size: 12px;
+    font-weight: 700;
+    background: var(--color-paper-white);
+    padding: 2px 7px;
+    border: 1px solid var(--color-carbon);
+    border-radius: var(--radius-pill);
+    white-space: nowrap;
+}
+
+@media (max-width: 900px) {
+    .flow-block { padding: var(--spacing-32) var(--spacing-20); }
+    .flow-scroll { padding: var(--spacing-16); }
+}

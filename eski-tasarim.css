@@ -1677,3 +1677,77 @@ h1,h2,h3,h4,
 .trio-cycle .trio-left .trio-desc, .trio-cycle .trio-right .trio-desc {
     height: 2.7em; overflow: visible;
 }
+
+/* ---- Flow diagram: the learning-outcome journey ---- */
+.flow-block {
+    margin-top: 4rem;
+    background: #fff;
+    border-radius: 24px;
+    padding: 2.5rem 2rem;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+}
+.flow-title {
+    text-align: center;
+    font-size: 1.9rem;
+    font-weight: 900;
+    font-family: 'Baloo 2','Nunito',sans-serif;
+    background: linear-gradient(135deg, #7c3aed, #f97316);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+.flow-lede {
+    max-width: 640px;
+    margin: 0.6rem auto 2rem;
+    text-align: center;
+    color: #777;
+    font-size: 1.05rem;
+    line-height: 1.6;
+}
+.flow-scroll {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    background: #faf9ff;
+    border-radius: 18px;
+    padding: 1.5rem;
+}
+.flow-scroll:focus-visible { outline: 3px solid #7c3aed; outline-offset: 3px; }
+.flow-diagram { display: block; width: 100%; min-width: 900px; height: auto; }
+.flow-hint {
+    margin-top: 1rem;
+    text-align: center;
+    color: #999;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+}
+@media (min-width: 1000px) { .flow-hint { display: none; } }
+
+/* Mermaid sized every label box for 16px Trebuchet at 24px line boxes and
+   offset each one to that block's top-left; keeping the 24px line box makes
+   the swapped-in face land centred in its node whatever the line count. */
+.flow-diagram .label,
+.flow-diagram .nodeLabel,
+.flow-diagram .edgeLabel span { font-family: 'Nunito', sans-serif; color: #333; fill: #333; }
+.flow-diagram .nodeLabel { font-size: 14px; line-height: 24px; font-weight: 600; }
+.flow-diagram foreignObject { overflow: visible; }
+.flow-diagram foreignObject > div { display: block !important; text-align: center; width: 100%; }
+.flow-diagram .node rect.label-container { fill: #fff; stroke: #e5e0f5; stroke-width: 2px; }
+.flow-diagram .node[data-id="A"] rect.label-container { fill: #fff3e6; stroke: #f97316; }
+.flow-diagram .node[data-id="B"] rect.label-container { fill: #f3ecff; stroke: #7c3aed; }
+.flow-diagram .node[data-id="D"] rect.label-container { fill: #e8f8ee; stroke: #22c55e; }
+.flow-diagram .node[data-id="E"] rect.label-container { fill: #eaf2ff; stroke: #3b82f6; }
+.flow-diagram .node[data-id="H"] rect.label-container { fill: #f3ecff; stroke: #a855f7; }
+.flow-diagram .node[data-id="J"] rect.label-container { fill: #f97316; stroke: #d97706; }
+.flow-diagram .node[data-id="J"] .nodeLabel { color: #fff; fill: #fff; }
+.flow-diagram .flowchart-link { stroke: #c9c2e0; stroke-width: 2.5px; fill: none; }
+.flow-diagram .marker,
+.flow-diagram .arrowMarkerPath { fill: #c9c2e0; stroke: #c9c2e0; }
+.flow-diagram .edgeLabel span {
+    font-size: 12px; font-weight: 700; color: #7c3aed;
+    background: #f3ecff; padding: 3px 10px; border-radius: 999px; white-space: nowrap;
+}
+
+@media (max-width: 768px) {
+    .flow-block { padding: 1.5rem 1rem; }
+    .flow-scroll { padding: 1rem; }
+}
