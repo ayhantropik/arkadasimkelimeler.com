@@ -149,7 +149,10 @@ nav {
 }
 .nav-bear {
     height: 46px; width: 46px;
-    object-fit: cover;
+    /* contain, not cover: the rabbit's ears are its silhouette and a
+       square crop lopped them off */
+    object-fit: contain;
+    padding: 3px;
     border: var(--hairline);
     border-radius: var(--radius-pill);
     background: var(--color-sky-wash);
