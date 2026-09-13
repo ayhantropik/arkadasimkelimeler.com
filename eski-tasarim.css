@@ -2046,3 +2046,11 @@ section > .container,
 @media (max-width: 1180px) {
     .kahraman { display: none; }
 }
+
+/* Four more of the cast. The standing figures are much taller than the
+   crouching ones, so they are sized down to keep every corner about the
+   same visual weight. */
+#hero .kahraman             { width: 132px; }
+#oyunlar .kahraman-sol      { width: 112px; }
+#yorumlar .kahraman-sag     { width: 122px; }
+#indir .kahraman-sol        { width: 156px; }
