@@ -2031,11 +2031,15 @@ section > .container,
     /* fit the free margin beside the 1200px content column, so a character
        is never sliced by the screen edge nor buried under a card */
     --k: 1;
-    width: calc(var(--k) * clamp(96px, calc((100vw - 1180px) / 2), 170px));
+    /* sized so the widest character reaches at most ~26px into the 1200px
+       content column — that lands on a card's padding, never on its text */
+    width: calc(var(--k) * clamp(60px, calc((100vw - 1244px) / 2), 132px));
     height: auto;
     max-height: 270px;
     object-fit: contain;
-    z-index: 0;
+    /* above the cards rather than buried under them: they may lap onto a
+       card's edge, so they have to be the ones on top */
+    z-index: 2;
     opacity: .92;
     pointer-events: none;
     filter: drop-shadow(0 10px 16px rgba(32,22,12,.16));
@@ -2047,8 +2051,8 @@ section > .container,
 
 /* the tall ones would tower over their band */
 
-/* below this the content reaches the edges and would collide */
-@media (max-width: 1180px) {
+/* below this there is no margin left beside the content column */
+@media (max-width: 1320px) {
     .kahraman { display: none; }
 }
 
