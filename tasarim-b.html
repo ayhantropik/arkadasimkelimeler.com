@@ -4,33 +4,42 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Arkadaşım Kelimeler — akıllı tahta programı, Kazanım Tabanlı Çalışma Kütüphanesi ve mobil oyun uygulamasıyla ilk okuma yazmayı eğlenceli hale getiren tek ekosistem.">
-    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-    <meta http-equiv="Pragma" content="no-cache">
-    <meta http-equiv="Expires" content="0">
+    <meta name="theme-color" content="#dceeff">
     <title>Arkadaşım Kelimeler - Kelimelerin Eğlenceli Dünyası!</title>
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Baloo+2:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link href="https://fonts.cdnfonts.com/css/scrambled-tofu" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Antonio:wght@600;700&family=Inter:wght@500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <link rel="stylesheet" href="style.css?v=30">
+    <link rel="stylesheet" href="tasarim-b.css?v=21">
 </head>
 <body>
 
+<div class="nav-backdrop" aria-hidden="true"></div>
+
+<!-- MARQUEE -->
+<div class="marquee" aria-hidden="true">
+    <div class="marquee-track">
+        <span>40.000 interaktif ekran</span><span>&#9679;</span><span>5800+ PDF sayfası</span><span>&#9679;</span><span>30 formatta 8000+ oyun</span><span>&#9679;</span><span>Sınıfta, evde, kitapta &mdash; tek ekosistem</span><span>&#9679;</span>
+        <span>40.000 interaktif ekran</span><span>&#9679;</span><span>5800+ PDF sayfası</span><span>&#9679;</span><span>30 formatta 8000+ oyun</span><span>&#9679;</span><span>Sınıfta, evde, kitapta &mdash; tek ekosistem</span><span>&#9679;</span>
+    </div>
+</div>
+
 <!-- NAV -->
 <nav>
-    <a href="#" class="nav-logo">
-        <img src="bear-mascot.png?v=3" alt="" class="nav-bear" aria-hidden="true" width="55" height="48" style="height:48px;width:auto;">
+    <a href="#hero" class="nav-logo">
+        <img src="bear-mascot.png?v=3" alt="" class="nav-bear" aria-hidden="true" width="46" height="46">
         <span>Arkadaşım Kelimeler</span>
     </a>
     <ul class="nav-links">
         <li><a href="#ozellikler">Özellikler</a></li>
         <li><a href="#oyunlar">Oyunlar</a></li>
-        <li><a href="#nasil-oynanir">Sistem Nasıl Çalışır?</a></li>
+        <li><a href="#nasil-oynanir">Nasıl Çalışır</a></li>
         <li><a href="#yorumlar">Yorumlar</a></li>
         <li><a href="#sunum">Sunum</a></li>
-        <li><a href="#akademik">Bilimsel Sunum</a></li>
-        <li><a href="#indir">İndir</a></li>
+        <li><a href="#akademik">Bilimsel</a></li>
     </ul>
-    <button class="hamburger" id="hamburger" aria-label="Menü">
+    <a href="#indir" class="btn btn-primary btn-sm nav-cta">İndir</a>
+    <button class="hamburger" id="hamburger" aria-label="Menü" aria-expanded="false" aria-controls="mobileMenu">
         <span></span><span></span><span></span>
     </button>
 </nav>
@@ -39,6 +48,7 @@
     <a href="#oyunlar">Oyunlar</a>
     <a href="#nasil-oynanir">Sistem Nasıl Çalışır?</a>
     <a href="#yorumlar">Yorumlar</a>
+    <a href="#sss">SSS</a>
     <a href="#sunum">Sunum</a>
     <a href="#akademik">Bilimsel Sunum</a>
     <a href="#indir">İndir</a>
@@ -46,16 +56,33 @@
 
 <!-- HERO -->
 <section class="hero" id="hero">
-    <div class="bubble" style="width:80px;height:80px;left:10%;bottom:-80px;animation-duration:12s;animation-delay:0s;"></div>
-    <div class="bubble" style="width:40px;height:40px;left:30%;bottom:-40px;animation-duration:9s;animation-delay:2s;"></div>
-    <div class="bubble" style="width:60px;height:60px;left:55%;bottom:-60px;animation-duration:14s;animation-delay:1s;"></div>
-    <div class="bubble" style="width:90px;height:90px;left:75%;bottom:-90px;animation-duration:11s;animation-delay:3s;"></div>
-    <div class="bubble" style="width:50px;height:50px;left:90%;bottom:-50px;animation-duration:10s;animation-delay:0.5s;"></div>
+    <svg class="hero-ribbon" viewBox="-200 0 1900 620" fill="none" aria-hidden="true">
+        <defs>
+            <filter id="grain" x="-10%" y="-10%" width="120%" height="120%">
+                <feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="3" result="n"/>
+                <feColorMatrix in="n" type="saturate" values="0" result="d"/>
+                <feComponentTransfer in="d" result="d2"><feFuncA type="linear" slope="0.34"/></feComponentTransfer>
+                <feComposite in="d2" in2="SourceAlpha" operator="in" result="grainMasked"/>
+                <feBlend in="SourceGraphic" in2="grainMasked" mode="multiply"/>
+            </filter>
+        </defs>
+        <g filter="url(#grain)">
+            <path d="M-60 452 C 210 452, 250 150, 470 150 S 720 452, 940 452 S 1230 140, 1420 190 C 1560 220, 1620 300, 1660 300"
+                  stroke="#000" stroke-width="120" fill="none" stroke-linecap="round"/>
+            <path d="M-60 452 C 210 452, 250 150, 470 150 S 720 452, 940 452 S 1230 140, 1420 190 C 1560 220, 1620 300, 1660 300"
+                  stroke="#4da2ff" stroke-width="118" fill="none" stroke-linecap="round"/>
+        </g>
+    </svg>
+    <span class="sticker sticker-rocket" aria-hidden="true">🚀</span>
+    <span class="sticker sticker-coin" aria-hidden="true">🪙</span>
+    <span class="sticker sticker-check" aria-hidden="true">✅</span>
+    <span class="sticker sticker-wallet" aria-hidden="true">🎒</span>
     <div class="hero-content">
         <div class="hero-text fade-in">
-            <img src="logo.png?v=11" alt="Arkadaşım Kelimeler" class="hero-logo" style="height:240px;width:auto;max-width:100%;margin-bottom:0.5rem;display:block;">
-            <div class="slogan">✨ Eğitim ve Eğlence Aynı Yerde!</div>
-            <p>İlkokula en iyi başlangıç için fiziksel materyal ve teknolojiyi birleştirdik. Sınıfta dersi MEB'in İlk Okuma Yazma kitapları ve akıllı tahta programımızdan takip et, ders kitaplarına destek olan Kazanım Tabanlı Çalışma Kütüphanesi ile çalış ve mobil uygulamadaki binlerce oyunla potansiyelini geliştir. Eğlenceli öğrenme dünyasına hoş geldin.</p>
+            <img src="logo.png?v=11" alt="Arkadaşım Kelimeler" class="hero-logo">
+            <div class="slogan">Eğitim ve eğlence aynı yerde</div>
+            <h1>İlkokula<br>en iyi başlangıç</h1>
+            <p>Fiziksel materyal ve teknolojiyi birleştirdik. Sınıfta dersi MEB'in İlk Okuma Yazma kitapları ve akıllı tahta programımızdan takip et, ders kitaplarına destek olan Kazanım Tabanlı Çalışma Kütüphanesi ile çalış ve mobil uygulamadaki binlerce oyunla potansiyelini geliştir.</p>
             <div class="store-buttons">
                 <a href="#" class="store-btn">
                     <i class="fab fa-apple"></i>
@@ -267,7 +294,7 @@
 </section>
 
 <!-- FEATURES -->
-<section id="ozellikler">
+<section id="ozellikler" class="band-white">
     <div class="container">
         <h2 class="section-title fade-in">Özellikler</h2>
         <p class="section-subtitle fade-in">Türkiye'nin ilk ve tek tam yapılandırılmış İlk Okuma-Yazma Öğretimine hoş geldin! Kelime oyunlarını seviyorsan, öğrenirken gelişmek ve ömür boyu kullanacağın bilişsel yetenekler kazanmak istiyorsan doğru yerdesin! İşte seni bekleyen harika özellikler.</p>
@@ -322,7 +349,7 @@
 </section>
 
 <!-- GAMES -->
-<section id="oyunlar">
+<section id="oyunlar" class="band-sky">
     <div class="container">
         <h2 class="section-title fade-in">Oyunlarımız</h2>
         <p class="section-subtitle fade-in">Platformumuzda seni bekleyen birbirinden eğlenceli kelime oyunlarını keşfet!</p>
@@ -452,10 +479,10 @@
 </section>
 
 <!-- HOW TO PLAY -->
-<section id="nasil-oynanir">
+<section id="nasil-oynanir" class="band-gray">
     <div class="container">
         <h2 class="section-title fade-in">Sistem Nasıl Çalışır?</h2>
-        <p class="section-subtitle fade-in">Üç kolay adımda eğlenceye katıl!</p>
+        <p class="section-subtitle fade-in">Dört kolay adımda eğlenceye katıl!</p>
         <div class="steps">
             <div class="step fade-in">
                 <div class="step-number">1</div>
@@ -559,16 +586,15 @@
             <h3 class="flow-title">Bir Öğrenme Çıktısının Yolculuğu</h3>
             <p class="flow-lede">Kitaptaki sayfadan akıllı tahtaya, oradan mobildeki pekiştirmeye; ara yoklamanın açığa çıkardığı eksikten o öğrenciye özel çalışmaya kadar tek bir akış.</p>
             <div class="flow-scroll" tabindex="0" role="group" aria-label="Öğrenme akışı şeması, yatay kaydırılabilir">
-                <svg class="flow-diagram" viewBox="-8 -8 1424.34765625 699" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Kitaptan akıllı tahtaya, mobil pekiştirmeye, ara yoklamaya ve bireysel desteğe uzanan öğrenme akışı şeması"><g><marker orient="auto" markerHeight="12" markerWidth="12" markerUnits="userSpaceOnUse" refY="5" refX="6" viewBox="0 0 10 10" class="marker flowchart" id="akis_flowchart-pointEnd"><path style="stroke-width: 1; stroke-dasharray: 1, 0;" class="arrowMarkerPath" d="M 0 0 L 10 5 L 0 10 z"></path></marker><marker orient="auto" markerHeight="12" markerWidth="12" markerUnits="userSpaceOnUse" refY="5" refX="4.5" viewBox="0 0 10 10" class="marker flowchart" id="akis_flowchart-pointStart"><path style="stroke-width: 1; stroke-dasharray: 1, 0;" class="arrowMarkerPath" d="M 0 5 L 10 10 L 10 0 z"></path></marker><marker orient="auto" markerHeight="11" markerWidth="11" markerUnits="userSpaceOnUse" refY="5" refX="11" viewBox="0 0 10 10" class="marker flowchart" id="akis_flowchart-circleEnd"><circle style="stroke-width: 1; stroke-dasharray: 1, 0;" class="arrowMarkerPath" r="5" cy="5" cx="5"></circle></marker><marker orient="auto" markerHeight="11" markerWidth="11" markerUnits="userSpaceOnUse" refY="5" refX="-1" viewBox="0 0 10 10" class="marker flowchart" id="akis_flowchart-circleStart"><circle style="stroke-width: 1; stroke-dasharray: 1, 0;" class="arrowMarkerPath" r="5" cy="5" cx="5"></circle></marker><marker orient="auto" markerHeight="11" markerWidth="11" markerUnits="userSpaceOnUse" refY="5.2" refX="12" viewBox="0 0 11 11" class="marker cross flowchart" id="akis_flowchart-crossEnd"><path style="stroke-width: 2; stroke-dasharray: 1, 0;" class="arrowMarkerPath" d="M 1,1 l 9,9 M 10,1 l -9,9"></path></marker><marker orient="auto" markerHeight="11" markerWidth="11" markerUnits="userSpaceOnUse" refY="5.2" refX="-1" viewBox="0 0 11 11" class="marker cross flowchart" id="akis_flowchart-crossStart"><path style="stroke-width: 2; stroke-dasharray: 1, 0;" class="arrowMarkerPath" d="M 1,1 l 9,9 M 10,1 l -9,9"></path></marker><g class="root"><g class="clusters"></g><g class="edgePaths"><path style="fill:none;" class="edge-thickness-normal edge-pattern-solid flowchart-link LS-A LE-B" id="L-A-B-0" d="M216.25,87L216.25,93.167C216.25,99.333,216.25,111.667,216.25,124C216.25,136.333,216.25,148.667,216.25,154.833L216.25,161"></path><path marker-end="url(#akis_flowchart-pointEnd)" style="fill:none;" class="edge-thickness-normal edge-pattern-solid flowchart-link LS-B LE-C" id="L-B-C-0" d="M184.298,248L179.769,254.167C175.239,260.333,166.18,272.667,161.651,286.117C157.121,299.567,157.121,314.133,157.121,321.417L157.121,328.7"></path><path marker-end="url(#akis_flowchart-pointEnd)" style="fill:none;" class="edge-thickness-normal edge-pattern-solid flowchart-link LS-C LE-D" id="L-C-D-0" d="M157.121,397L157.121,405.167C157.121,413.333,157.121,429.667,174.638,443.719C192.154,457.771,227.187,469.541,244.704,475.427L262.22,481.312"></path><path style="fill:none;" class="edge-thickness-normal edge-pattern-solid flowchart-link LS-B LE-E" id="L-B-E-0" d="M348.176,233.947L386.297,242.455C424.419,250.964,500.661,267.982,538.783,284.658C576.904,301.333,576.904,317.667,576.904,325.833L576.904,334"></path><path marker-end="url(#akis_flowchart-pointEnd)" style="fill:none;" class="edge-thickness-normal edge-pattern-solid flowchart-link LS-E LE-D" id="L-E-D-0" d="M512.526,397L495.835,405.167C479.144,413.333,445.762,429.667,428.04,443.133C410.318,456.599,408.255,467.198,407.223,472.498L406.192,477.798"></path><path marker-end="url(#akis_flowchart-pointEnd)" style="fill:none;" class="edge-thickness-normal edge-pattern-solid flowchart-link LS-E LE-F" id="L-E-F-0" d="M762.045,392.048L824.753,401.04C887.461,410.032,1012.877,428.016,1075.585,444.291C1138.293,460.567,1138.293,475.133,1138.293,482.417L1138.293,489.7"></path><path style="fill:none;" class="edge-thickness-normal edge-pattern-solid flowchart-link LS-D LE-G" id="L-D-G-0" d="M396.713,570L396.713,576.167C396.713,582.333,396.713,594.667,396.713,607C396.713,619.333,396.713,631.667,396.713,637.833L396.713,644"></path><path marker-end="url(#akis_flowchart-pointEnd)" style="fill:none;" class="edge-thickness-normal edge-pattern-solid flowchart-link LS-H LE-I" id="L-H-I-0" d="M969.983,75L969.252,83.167C968.522,91.333,967.062,107.667,966.332,123.117C965.602,138.567,965.602,153.133,965.602,160.417L965.602,167.7"></path><path marker-end="url(#akis_flowchart-pointEnd)" style="fill:none;" class="edge-thickness-normal edge-pattern-solid flowchart-link LS-I LE-J" id="L-I-J-0" d="M965.602,236L965.602,244.167C965.602,252.333,965.602,268.667,966.074,282.12C966.547,295.574,967.492,306.147,967.965,311.434L968.438,316.721"></path><path marker-end="url(#akis_flowchart-pointEnd)" style="fill:none;" class="edge-thickness-normal edge-pattern-solid flowchart-link LS-J LE-D" id="L-J-D-0" d="M968.91,409L968.358,415.167C967.807,421.333,966.704,433.667,893.981,450.046C821.258,466.425,676.914,486.85,604.742,497.063L532.57,507.276"></path><path marker-end="url(#akis_flowchart-pointEnd)" style="fill:none;stroke-width:2px;stroke-dasharray:3;" class="edge-thickness-normal edge-pattern-dotted flowchart-link LS-J LE-H" id="L-J-H-0" d="M1123.99,329.303L1154.832,321.919C1185.674,314.536,1247.359,299.768,1278.201,278.967C1309.043,258.167,1309.043,231.333,1309.043,204.5C1309.043,177.667,1309.043,150.833,1275.79,129.456C1242.538,108.078,1176.032,92.156,1142.78,84.195L1109.527,76.234"></path></g><g class="edgeLabels"><g transform="translate(216.25, 124)" class="edgeLabel"><g transform="translate(-111.7578125, -12)" class="label"><foreignObject height="24" width="223.515625"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="edgeLabel">Karşılık gelen içerik ve sayfalar</span></div></foreignObject></g></g><g class="edgeLabel"><g transform="translate(0, 0)" class="label"><foreignObject height="0" width="0"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="edgeLabel"></span></div></foreignObject></g></g><g class="edgeLabel"><g transform="translate(0, 0)" class="label"><foreignObject height="0" width="0"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="edgeLabel"></span></div></foreignObject></g></g><g transform="translate(576.904296875, 285)" class="edgeLabel"><g transform="translate(-110.1875, -12)" class="label"><foreignObject height="24" width="220.375"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="edgeLabel">Öğretim basamaklarıyla eşleşir</span></div></foreignObject></g></g><g transform="translate(412.380859375, 446)" class="edgeLabel"><g transform="translate(-66.921875, -12)" class="label"><foreignObject height="24" width="133.84375"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="edgeLabel">İnteraktif kullanım</span></div></foreignObject></g></g><g transform="translate(1138.29296875, 446)" class="edgeLabel"><g transform="translate(-51.921875, -12)" class="label"><foreignObject height="24" width="103.84375"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="edgeLabel">Basılı kullanım</span></div></foreignObject></g></g><g transform="translate(396.712890625, 607)" class="edgeLabel"><g transform="translate(-98.46484375, -12)" class="label"><foreignObject height="24" width="196.9296875"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="edgeLabel">Öğrenmeyi ayrıca destekler</span></div></foreignObject></g></g><g class="edgeLabel"><g transform="translate(0, 0)" class="label"><foreignObject height="0" width="0"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="edgeLabel"></span></div></foreignObject></g></g><g transform="translate(965.6015625, 285)" class="edgeLabel"><g transform="translate(-96.05078125, -12)" class="label"><foreignObject height="24" width="192.1015625"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="edgeLabel">Destek ihtiyacı belirlenirse</span></div></foreignObject></g></g><g transform="translate(965.6015625, 446)" class="edgeLabel"><g transform="translate(-100.76953125, -12)" class="label"><foreignObject height="24" width="201.5390625"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="edgeLabel">Öğrenciye özel çalışma akışı</span></div></foreignObject></g></g><g transform="translate(1309.04296875, 204.5)" class="edgeLabel"><g transform="translate(-99.3046875, -12)" class="label"><foreignObject height="24" width="198.609375"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="edgeLabel">Yeni ara yoklamayla kontrol</span></div></foreignObject></g></g></g><g class="nodes"><g transform="translate(216.25, 43.5)" data-id="A" data-node="true" id="flowchart-A-174" class="node default default flowchart-label"><rect height="87" width="341.5625" y="-43.5" x="-170.78125" ry="16" rx="16" style="" class="basic label-container"></rect><g transform="translate(-163.28125, -36)" style="" class="label"><rect></rect><foreignObject height="72" width="326.5625"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="nodeLabel">TÜRKİYE YÜZYILI MAARİF MODELİ<br/>İLK OKUMA-YAZMA KİTAP SETLERİ<br/>Öğrencilerin ilgili kitap sayfalarında çalışması</span></div></foreignObject></g></g><g transform="translate(216.25, 204.5)" data-id="B" data-node="true" id="flowchart-B-175" class="node default default flowchart-label"><rect height="87" width="263.8515625" y="-43.5" x="-131.92578125" ry="16" rx="16" style="" class="basic label-container"></rect><g transform="translate(-124.42578125, -36)" style="" class="label"><rect></rect><foreignObject height="72" width="248.8515625"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="nodeLabel">SINIFTA WEB PROGRAMI<br/>Akıllı tahtada sahne sahne öğretim<br/>ve dokunmatik etkinlikler</span></div></foreignObject></g></g><g transform="translate(157.12109375, 365.5)" data-id="C" data-node="true" id="flowchart-C-176" class="node default default flowchart-label"><rect height="63" width="314.2421875" y="-31.5" x="-157.12109375" ry="16" rx="16" style="" class="basic label-container"></rect><g transform="translate(-149.62109375, -24)" style="" class="label"><rect></rect><foreignObject height="48" width="299.2421875"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="nodeLabel">Ders sonunda ilgili öğrenme çıktılarına ait<br/>içerikler mobile otomatik gönderilir</span></div></foreignObject></g></g><g transform="translate(396.712890625, 526.5)" data-id="D" data-node="true" id="flowchart-D-177" class="node default default flowchart-label"><rect height="87" width="261.21875" y="-43.5" x="-130.609375" ry="16" rx="16" style="" class="basic label-container"></rect><g transform="translate(-123.109375, -36)" style="" class="label"><rect></rect><foreignObject height="72" width="246.21875"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="nodeLabel">MOBİLDE PEKİŞTİRME<br/>ÖĞRENME ÇIKTISI BAZLI OYUNLAR<br/>VE İNTERAKTİF ÇALIŞMA SAYFALARI</span></div></foreignObject></g></g><g transform="translate(576.904296875, 365.5)" data-id="E" data-node="true" id="flowchart-E-178" class="node default default flowchart-label"><rect height="63" width="370.28125" y="-31.5" x="-185.140625" ry="16" rx="16" style="" class="basic label-container"></rect><g transform="translate(-177.640625, -24)" style="" class="label"><rect></rect><foreignObject height="48" width="355.28125"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="nodeLabel">Kazanım Tabanlı Çalışma Kütüphanesi<br/>Öğretim basamaklarına uygun 5800 sayfalık içerik</span></div></foreignObject></g></g><g transform="translate(1138.29296875, 526.5)" data-id="F" data-node="true" id="flowchart-F-179" class="node default default flowchart-label"><rect height="63" width="296.875" y="-31.5" x="-148.4375" ry="16" rx="16" style="" class="basic label-container"></rect><g transform="translate(-140.9375, -24)" style="" class="label"><rect></rect><foreignObject height="48" width="281.875"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="nodeLabel">PDF çıktısı<br/>Sınıfta veya evde kalem-kâğıt çalışması</span></div></foreignObject></g></g><g transform="translate(396.712890625, 663.5)" data-id="G" data-node="true" id="flowchart-G-180" class="node default default flowchart-label"><rect height="39" width="257.484375" y="-19.5" x="-128.7421875" ry="16" rx="16" style="" class="basic label-container"></rect><g transform="translate(-121.2421875, -12)" style="" class="label"><rect></rect><foreignObject height="24" width="242.484375"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="nodeLabel">Mobilde bilişsel beceri etkinlikleri</span></div></foreignObject></g></g><g transform="translate(972.798828125, 43.5)" data-id="H" data-node="true" id="flowchart-H-181" class="node default default flowchart-label"><rect height="63" width="274.3359375" y="-31.5" x="-137.16796875" ry="16" rx="16" style="" class="basic label-container"></rect><g transform="translate(-129.66796875, -24)" style="" class="label"><rect></rect><foreignObject height="48" width="259.3359375"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="nodeLabel">ÖĞRETMEN ARA YOKLAMA GÖNDERİR<br/>Toplu veya öğrenciye özel</span></div></foreignObject></g></g><g transform="translate(965.6015625, 204.5)" data-id="I" data-node="true" id="flowchart-I-182" class="node default default flowchart-label"><rect height="63" width="418.2734375" y="-31.5" x="-209.13671875" ry="16" rx="16" style="" class="basic label-container"></rect><g transform="translate(-201.63671875, -24)" style="" class="label"><rect></rect><foreignObject height="48" width="403.2734375"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="nodeLabel">Öğrenci mobilde yanıtlar<br/>Öğretmen öğrenme çıktıları bazında düzeyi kontrol eder</span></div></foreignObject></g></g><g transform="translate(972.798828125, 365.5)" data-id="J" data-node="true" id="flowchart-J-183" class="node default default flowchart-label"><rect height="87" width="302.3828125" y="-43.5" x="-151.19140625" ry="16" rx="16" style="" class="basic label-container"></rect><g transform="translate(-143.69140625, -36)" style="" class="label"><rect></rect><foreignObject height="72" width="287.3828125"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="nodeLabel">İHTİYACA YÖNELİK DESTEK<br/>Eksik öğrenme çıktılarına ait çalışmalar<br/>ilgili öğrenciye ağırlıklı olarak gönderilir</span></div></foreignObject></g></g></g></g></g></svg>
+                <svg class="flow-diagram" viewBox="-8 -8 1424.34765625 699" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Kitaptan akıllı tahtaya, mobil pekiştirmeye, ara yoklamaya ve bireysel desteğe uzanan öğrenme akışı şeması"><g><marker orient="auto" markerHeight="12" markerWidth="12" markerUnits="userSpaceOnUse" refY="5" refX="6" viewBox="0 0 10 10" class="marker flowchart" id="akis_flowchart-pointEnd"><path style="stroke-width: 1; stroke-dasharray: 1, 0;" class="arrowMarkerPath" d="M 0 0 L 10 5 L 0 10 z"></path></marker><marker orient="auto" markerHeight="12" markerWidth="12" markerUnits="userSpaceOnUse" refY="5" refX="4.5" viewBox="0 0 10 10" class="marker flowchart" id="akis_flowchart-pointStart"><path style="stroke-width: 1; stroke-dasharray: 1, 0;" class="arrowMarkerPath" d="M 0 5 L 10 10 L 10 0 z"></path></marker><marker orient="auto" markerHeight="11" markerWidth="11" markerUnits="userSpaceOnUse" refY="5" refX="11" viewBox="0 0 10 10" class="marker flowchart" id="akis_flowchart-circleEnd"><circle style="stroke-width: 1; stroke-dasharray: 1, 0;" class="arrowMarkerPath" r="5" cy="5" cx="5"></circle></marker><marker orient="auto" markerHeight="11" markerWidth="11" markerUnits="userSpaceOnUse" refY="5" refX="-1" viewBox="0 0 10 10" class="marker flowchart" id="akis_flowchart-circleStart"><circle style="stroke-width: 1; stroke-dasharray: 1, 0;" class="arrowMarkerPath" r="5" cy="5" cx="5"></circle></marker><marker orient="auto" markerHeight="11" markerWidth="11" markerUnits="userSpaceOnUse" refY="5.2" refX="12" viewBox="0 0 11 11" class="marker cross flowchart" id="akis_flowchart-crossEnd"><path style="stroke-width: 2; stroke-dasharray: 1, 0;" class="arrowMarkerPath" d="M 1,1 l 9,9 M 10,1 l -9,9"></path></marker><marker orient="auto" markerHeight="11" markerWidth="11" markerUnits="userSpaceOnUse" refY="5.2" refX="-1" viewBox="0 0 11 11" class="marker cross flowchart" id="akis_flowchart-crossStart"><path style="stroke-width: 2; stroke-dasharray: 1, 0;" class="arrowMarkerPath" d="M 1,1 l 9,9 M 10,1 l -9,9"></path></marker><g class="root"><g class="clusters"></g><g class="edgePaths"><path style="fill:none;" class="edge-thickness-normal edge-pattern-solid flowchart-link LS-A LE-B" id="L-A-B-0" d="M216.25,87L216.25,93.167C216.25,99.333,216.25,111.667,216.25,124C216.25,136.333,216.25,148.667,216.25,154.833L216.25,161"></path><path marker-end="url(#akis_flowchart-pointEnd)" style="fill:none;" class="edge-thickness-normal edge-pattern-solid flowchart-link LS-B LE-C" id="L-B-C-0" d="M184.298,248L179.769,254.167C175.239,260.333,166.18,272.667,161.651,286.117C157.121,299.567,157.121,314.133,157.121,321.417L157.121,328.7"></path><path marker-end="url(#akis_flowchart-pointEnd)" style="fill:none;" class="edge-thickness-normal edge-pattern-solid flowchart-link LS-C LE-D" id="L-C-D-0" d="M157.121,397L157.121,405.167C157.121,413.333,157.121,429.667,174.638,443.719C192.154,457.771,227.187,469.541,244.704,475.427L262.22,481.312"></path><path style="fill:none;" class="edge-thickness-normal edge-pattern-solid flowchart-link LS-B LE-E" id="L-B-E-0" d="M348.176,233.947L386.297,242.455C424.419,250.964,500.661,267.982,538.783,284.658C576.904,301.333,576.904,317.667,576.904,325.833L576.904,334"></path><path marker-end="url(#akis_flowchart-pointEnd)" style="fill:none;" class="edge-thickness-normal edge-pattern-solid flowchart-link LS-E LE-D" id="L-E-D-0" d="M512.526,397L495.835,405.167C479.144,413.333,445.762,429.667,428.04,443.133C410.318,456.599,408.255,467.198,407.223,472.498L406.192,477.798"></path><path marker-end="url(#akis_flowchart-pointEnd)" style="fill:none;" class="edge-thickness-normal edge-pattern-solid flowchart-link LS-E LE-F" id="L-E-F-0" d="M762.045,392.048L824.753,401.04C887.461,410.032,1012.877,428.016,1075.585,444.291C1138.293,460.567,1138.293,475.133,1138.293,482.417L1138.293,489.7"></path><path style="fill:none;" class="edge-thickness-normal edge-pattern-solid flowchart-link LS-D LE-G" id="L-D-G-0" d="M396.713,570L396.713,576.167C396.713,582.333,396.713,594.667,396.713,607C396.713,619.333,396.713,631.667,396.713,637.833L396.713,644"></path><path marker-end="url(#akis_flowchart-pointEnd)" style="fill:none;" class="edge-thickness-normal edge-pattern-solid flowchart-link LS-H LE-I" id="L-H-I-0" d="M969.983,75L969.252,83.167C968.522,91.333,967.062,107.667,966.332,123.117C965.602,138.567,965.602,153.133,965.602,160.417L965.602,167.7"></path><path marker-end="url(#akis_flowchart-pointEnd)" style="fill:none;" class="edge-thickness-normal edge-pattern-solid flowchart-link LS-I LE-J" id="L-I-J-0" d="M965.602,236L965.602,244.167C965.602,252.333,965.602,268.667,966.074,282.12C966.547,295.574,967.492,306.147,967.965,311.434L968.438,316.721"></path><path marker-end="url(#akis_flowchart-pointEnd)" style="fill:none;" class="edge-thickness-normal edge-pattern-solid flowchart-link LS-J LE-D" id="L-J-D-0" d="M968.91,409L968.358,415.167C967.807,421.333,966.704,433.667,893.981,450.046C821.258,466.425,676.914,486.85,604.742,497.063L532.57,507.276"></path><path marker-end="url(#akis_flowchart-pointEnd)" style="fill:none;stroke-width:2px;stroke-dasharray:3;" class="edge-thickness-normal edge-pattern-dotted flowchart-link LS-J LE-H" id="L-J-H-0" d="M1123.99,329.303L1154.832,321.919C1185.674,314.536,1247.359,299.768,1278.201,278.967C1309.043,258.167,1309.043,231.333,1309.043,204.5C1309.043,177.667,1309.043,150.833,1275.79,129.456C1242.538,108.078,1176.032,92.156,1142.78,84.195L1109.527,76.234"></path></g><g class="edgeLabels"><g transform="translate(216.25, 124)" class="edgeLabel"><g transform="translate(-111.7578125, -12)" class="label"><foreignObject height="24" width="223.515625"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="edgeLabel">Karşılık gelen içerik ve sayfalar</span></div></foreignObject></g></g><g class="edgeLabel"><g transform="translate(0, 0)" class="label"><foreignObject height="0" width="0"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="edgeLabel"></span></div></foreignObject></g></g><g class="edgeLabel"><g transform="translate(0, 0)" class="label"><foreignObject height="0" width="0"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="edgeLabel"></span></div></foreignObject></g></g><g transform="translate(576.904296875, 285)" class="edgeLabel"><g transform="translate(-110.1875, -12)" class="label"><foreignObject height="24" width="220.375"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="edgeLabel">Öğretim basamaklarıyla eşleşir</span></div></foreignObject></g></g><g transform="translate(412.380859375, 446)" class="edgeLabel"><g transform="translate(-66.921875, -12)" class="label"><foreignObject height="24" width="133.84375"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="edgeLabel">İnteraktif kullanım</span></div></foreignObject></g></g><g transform="translate(1138.29296875, 446)" class="edgeLabel"><g transform="translate(-51.921875, -12)" class="label"><foreignObject height="24" width="103.84375"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="edgeLabel">Basılı kullanım</span></div></foreignObject></g></g><g transform="translate(396.712890625, 607)" class="edgeLabel"><g transform="translate(-98.46484375, -12)" class="label"><foreignObject height="24" width="196.9296875"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="edgeLabel">Öğrenmeyi ayrıca destekler</span></div></foreignObject></g></g><g class="edgeLabel"><g transform="translate(0, 0)" class="label"><foreignObject height="0" width="0"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="edgeLabel"></span></div></foreignObject></g></g><g transform="translate(965.6015625, 285)" class="edgeLabel"><g transform="translate(-96.05078125, -12)" class="label"><foreignObject height="24" width="192.1015625"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="edgeLabel">Destek ihtiyacı belirlenirse</span></div></foreignObject></g></g><g transform="translate(965.6015625, 446)" class="edgeLabel"><g transform="translate(-100.76953125, -12)" class="label"><foreignObject height="24" width="201.5390625"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="edgeLabel">Öğrenciye özel çalışma akışı</span></div></foreignObject></g></g><g transform="translate(1309.04296875, 204.5)" class="edgeLabel"><g transform="translate(-99.3046875, -12)" class="label"><foreignObject height="24" width="198.609375"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="edgeLabel">Yeni ara yoklamayla kontrol</span></div></foreignObject></g></g></g><g class="nodes"><g transform="translate(216.25, 43.5)" data-id="A" data-node="true" id="flowchart-A-174" class="node default default flowchart-label"><rect height="87" width="341.5625" y="-43.5" x="-170.78125" ry="14" rx="14" style="" class="basic label-container"></rect><g transform="translate(-163.28125, -36)" style="" class="label"><rect></rect><foreignObject height="72" width="326.5625"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="nodeLabel">TÜRKİYE YÜZYILI MAARİF MODELİ<br/>İLK OKUMA-YAZMA KİTAP SETLERİ<br/>Öğrencilerin ilgili kitap sayfalarında çalışması</span></div></foreignObject></g></g><g transform="translate(216.25, 204.5)" data-id="B" data-node="true" id="flowchart-B-175" class="node default default flowchart-label"><rect height="87" width="263.8515625" y="-43.5" x="-131.92578125" ry="14" rx="14" style="" class="basic label-container"></rect><g transform="translate(-124.42578125, -36)" style="" class="label"><rect></rect><foreignObject height="72" width="248.8515625"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="nodeLabel">SINIFTA WEB PROGRAMI<br/>Akıllı tahtada sahne sahne öğretim<br/>ve dokunmatik etkinlikler</span></div></foreignObject></g></g><g transform="translate(157.12109375, 365.5)" data-id="C" data-node="true" id="flowchart-C-176" class="node default default flowchart-label"><rect height="63" width="314.2421875" y="-31.5" x="-157.12109375" ry="14" rx="14" style="" class="basic label-container"></rect><g transform="translate(-149.62109375, -24)" style="" class="label"><rect></rect><foreignObject height="48" width="299.2421875"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="nodeLabel">Ders sonunda ilgili öğrenme çıktılarına ait<br/>içerikler mobile otomatik gönderilir</span></div></foreignObject></g></g><g transform="translate(396.712890625, 526.5)" data-id="D" data-node="true" id="flowchart-D-177" class="node default default flowchart-label"><rect height="87" width="261.21875" y="-43.5" x="-130.609375" ry="14" rx="14" style="" class="basic label-container"></rect><g transform="translate(-123.109375, -36)" style="" class="label"><rect></rect><foreignObject height="72" width="246.21875"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="nodeLabel">MOBİLDE PEKİŞTİRME<br/>ÖĞRENME ÇIKTISI BAZLI OYUNLAR<br/>VE İNTERAKTİF ÇALIŞMA SAYFALARI</span></div></foreignObject></g></g><g transform="translate(576.904296875, 365.5)" data-id="E" data-node="true" id="flowchart-E-178" class="node default default flowchart-label"><rect height="63" width="370.28125" y="-31.5" x="-185.140625" ry="14" rx="14" style="" class="basic label-container"></rect><g transform="translate(-177.640625, -24)" style="" class="label"><rect></rect><foreignObject height="48" width="355.28125"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="nodeLabel">Kazanım Tabanlı Çalışma Kütüphanesi<br/>Öğretim basamaklarına uygun 5800 sayfalık içerik</span></div></foreignObject></g></g><g transform="translate(1138.29296875, 526.5)" data-id="F" data-node="true" id="flowchart-F-179" class="node default default flowchart-label"><rect height="63" width="296.875" y="-31.5" x="-148.4375" ry="14" rx="14" style="" class="basic label-container"></rect><g transform="translate(-140.9375, -24)" style="" class="label"><rect></rect><foreignObject height="48" width="281.875"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="nodeLabel">PDF çıktısı<br/>Sınıfta veya evde kalem-kâğıt çalışması</span></div></foreignObject></g></g><g transform="translate(396.712890625, 663.5)" data-id="G" data-node="true" id="flowchart-G-180" class="node default default flowchart-label"><rect height="39" width="257.484375" y="-19.5" x="-128.7421875" ry="14" rx="14" style="" class="basic label-container"></rect><g transform="translate(-121.2421875, -12)" style="" class="label"><rect></rect><foreignObject height="24" width="242.484375"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="nodeLabel">Mobilde bilişsel beceri etkinlikleri</span></div></foreignObject></g></g><g transform="translate(972.798828125, 43.5)" data-id="H" data-node="true" id="flowchart-H-181" class="node default default flowchart-label"><rect height="63" width="274.3359375" y="-31.5" x="-137.16796875" ry="14" rx="14" style="" class="basic label-container"></rect><g transform="translate(-129.66796875, -24)" style="" class="label"><rect></rect><foreignObject height="48" width="259.3359375"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="nodeLabel">ÖĞRETMEN ARA YOKLAMA GÖNDERİR<br/>Toplu veya öğrenciye özel</span></div></foreignObject></g></g><g transform="translate(965.6015625, 204.5)" data-id="I" data-node="true" id="flowchart-I-182" class="node default default flowchart-label"><rect height="63" width="418.2734375" y="-31.5" x="-209.13671875" ry="14" rx="14" style="" class="basic label-container"></rect><g transform="translate(-201.63671875, -24)" style="" class="label"><rect></rect><foreignObject height="48" width="403.2734375"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="nodeLabel">Öğrenci mobilde yanıtlar<br/>Öğretmen öğrenme çıktıları bazında düzeyi kontrol eder</span></div></foreignObject></g></g><g transform="translate(972.798828125, 365.5)" data-id="J" data-node="true" id="flowchart-J-183" class="node default default flowchart-label"><rect height="87" width="302.3828125" y="-43.5" x="-151.19140625" ry="14" rx="14" style="" class="basic label-container"></rect><g transform="translate(-143.69140625, -36)" style="" class="label"><rect></rect><foreignObject height="72" width="287.3828125"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="nodeLabel">İHTİYACA YÖNELİK DESTEK<br/>Eksik öğrenme çıktılarına ait çalışmalar<br/>ilgili öğrenciye ağırlıklı olarak gönderilir</span></div></foreignObject></g></g></g></g></g></svg>
             </div>
             <p class="flow-hint">Şemayı yanlara kaydırarak tamamını görebilirsin.</p>
         </div>
     </div>
-    <img src="bear-mascot.png?v=3" alt="" aria-hidden="true" class="section-bear peek-left">
 </section>
 
 <!-- STATS -->
-<section id="istatistikler">
+<section id="istatistikler" class="band-white">
     <div class="container">
         <h2 class="section-title fade-in">Rakamlarla Biz</h2>
         <p class="section-subtitle fade-in">Milyonlarca oyuncunun tercihi olmaktan gurur duyuyoruz.</p>
@@ -598,7 +624,7 @@
 </section>
 
 <!-- TESTIMONIALS -->
-<section id="yorumlar">
+<section id="yorumlar" class="band-lavender">
     <div class="container">
         <h2 class="section-title fade-in">Kullanıcılarımız Ne Diyor?</h2>
         <p class="section-subtitle fade-in">Milyonlarca mutlu kullanıcıdan bazıları...</p>
@@ -632,7 +658,7 @@
 </section>
 
 <!-- FAQ -->
-<section id="sss">
+<section id="sss" class="band-white">
     <div class="container">
         <h2 class="section-title fade-in">Sıkça Sorulan Sorular</h2>
         <p class="section-subtitle fade-in">Merak ettiklerin burada!</p>
@@ -678,7 +704,7 @@
 </section>
 
 <!-- SUNUM / PRESENTATION -->
-<section id="sunum">
+<section id="sunum" class="band-sky">
     <div class="container">
         <h2 class="section-title fade-in">Arkadaşım Kelimeler</h2>
         <p class="section-subtitle fade-in">Yapay Zeka ve Nörobilim ile İlk Okuma Yazmayı Yeniden Tanımlıyoruz</p>
@@ -688,22 +714,22 @@
             <h3>"İlk okuma yazma, bir çocuğun eğitim hayatındaki en kritik eşiktir."</h3>
             <p>Bu kritik eşik yanlış geçilirse bireydeki öğrenme alışkanlıkları hatalı bir yöne evrilir.</p>
             <div class="sunum-problems">
-                <div class="sunum-problem"><i class="fas fa-times" style="font-size:1.4em;"></i> Öğrenme zorlaşır</div>
-                <div class="sunum-problem"><i class="fas fa-times" style="font-size:1.4em;"></i> Okuma yavaşlar</div>
-                <div class="sunum-problem"><i class="fas fa-times" style="font-size:1.4em;"></i> Özgüven düşer</div>
+                <div class="sunum-problem"><i class="fas fa-times"></i> Öğrenme zorlaşır</div>
+                <div class="sunum-problem"><i class="fas fa-times"></i> Okuma yavaşlar</div>
+                <div class="sunum-problem"><i class="fas fa-times"></i> Özgüven düşer</div>
             </div>
         </div>
 
         <!-- Çözüm Yaklaşımı -->
-        <div class="sunum-hero-card fade-in" style="background: linear-gradient(135deg, rgba(34,197,94,0.2), rgba(59,130,246,0.2));">
-            <h3 style="color:#4ade80;">Her Çocuk Farklı Öğrenir</h3>
+        <div class="sunum-hero-card accent fade-in">
+            <h3>Her Çocuk Farklı Öğrenir</h3>
             <p>Arkadaşım Kelimeler eğitimi bireyin öğrenme biçimine göre yapılandırır. Öğretmen artık <em>"Derste ne işlendi?"</em> diye düşünmez, <strong>"Kim, nerede takıldı?"</strong> sorusunu cevaplar. Bireysel hız ilkesi..</p>
         </div>
 
         <!-- Yapay Zeka Getirdikleri -->
-        <div class="sunum-feature-block fade-in" style="margin-bottom:2rem; border-left: none; text-align:center;">
-            <h4 style="justify-content:center;"><span class="sf-icon" style="background:linear-gradient(135deg,#7c3aed,#a855f7);color:#fff;"><i class="fas fa-robot"></i></span> Yapay Zekanın Getirdikleri</h4>
-            <ul style="display:inline-block; text-align:left;">
+        <div class="sunum-feature-block center fade-in">
+            <h4><span class="sf-icon"><i class="fas fa-robot"></i></span> Yapay Zekanın Getirdikleri</h4>
+            <ul>
                 <li><span class="sf-check"><i class="fas fa-check"></i></span> Oyunla öğrenme</li>
                 <li><span class="sf-check"><i class="fas fa-check"></i></span> Bireysel hızda ilerleme</li>
                 <li><span class="sf-check"><i class="fas fa-check"></i></span> Öğretmen için ölçülebilir veri</li>
@@ -713,7 +739,7 @@
 
         <!-- 3 İkonlu Ekosistem -->
         <div id="ekosistem" class="ecosystem-highlight fade-in">
-            <div class="ecosystem-badge">⭐⭐ TEMEL YAKLAŞIM ⭐⭐</div>
+            <div class="ecosystem-badge">Temel Yaklaşım</div>
             <h3 class="ecosystem-title">Senkron Çalışan Tek Ekosistem</h3>
             <p class="ecosystem-subtitle">Sınıf, ev ve kitap bir arada — öğrenme hiç durmaz!</p>
             <div class="sunum-ecosystem">
@@ -741,7 +767,7 @@
             </div>
             <div class="ecosystem-connector">
                 <span class="connector-line"></span>
-                <span class="connector-text">🔄 Hepsi senkron çalışır</span>
+                <span class="connector-text">Hepsi senkron çalışır</span>
                 <span class="connector-line"></span>
             </div>
         </div>
@@ -749,7 +775,7 @@
         <!-- Özellik Blokları -->
         <div class="sunum-features-grid">
             <div class="sunum-feature-block fade-in">
-                <h4><span class="sf-icon" style="background:linear-gradient(135deg,#3b82f6,#60a5fa);color:#fff;"><i class="fas fa-chalkboard-teacher"></i></span> Öğretmen Kontrolü</h4>
+                <h4><span class="sf-icon"><i class="fas fa-chalkboard-teacher"></i></span> Öğretmen Kontrolü</h4>
                 <ul>
                     <li><span class="sf-check"><i class="fas fa-check"></i></span> Ders akışına tam uyumlu 40.000 interaktif ekran</li>
                     <li><span class="sf-check"><i class="fas fa-check"></i></span> Öğrenci performans raporları</li>
@@ -758,7 +784,7 @@
                 </ul>
             </div>
             <div class="sunum-feature-block fade-in">
-                <h4><span class="sf-icon" style="background:linear-gradient(135deg,#f97316,#fbbf24);color:#fff;"><i class="fas fa-gamepad"></i></span> Oyun Sistemi</h4>
+                <h4><span class="sf-icon"><i class="fas fa-gamepad"></i></span> Oyun Sistemi</h4>
                 <ul>
                     <li><span class="sf-check"><i class="fas fa-check"></i></span> 30 farklı formatta 8000+ oyun</li>
                     <li><span class="sf-check"><i class="fas fa-check"></i></span> Yapay zeka ile otomatik zorluk ayarı</li>
@@ -767,7 +793,7 @@
                 </ul>
             </div>
             <div class="sunum-feature-block fade-in">
-                <h4><span class="sf-icon" style="background:linear-gradient(135deg,#22c55e,#4ade80);color:#fff;"><i class="fas fa-fingerprint"></i></span> Benzersiz Özellikler</h4>
+                <h4><span class="sf-icon"><i class="fas fa-fingerprint"></i></span> Benzersiz Özellikler</h4>
                 <ul>
                     <li><span class="sf-check"><i class="fas fa-check"></i></span> Bireysel hız ile ilerleme</li>
                     <li><span class="sf-check"><i class="fas fa-check"></i></span> Otomatik analiz ve dikkat ölçümü</li>
@@ -776,7 +802,7 @@
                 </ul>
             </div>
             <div class="sunum-feature-block fade-in">
-                <h4><span class="sf-icon" style="background:linear-gradient(135deg,#ec4899,#f472b6);color:#fff;"><i class="fas fa-sync-alt"></i></span> Ekran + Kitap Dengesi</h4>
+                <h4><span class="sf-icon"><i class="fas fa-sync-alt"></i></span> Ekran + Kitap Dengesi</h4>
                 <ul>
                     <li><span class="sf-check"><i class="fas fa-check"></i></span> Dijital + basılı içerik birlikte</li>
                     <li><span class="sf-check"><i class="fas fa-check"></i></span> Birbiriyle haberleşen uygulamalar</li>
@@ -789,33 +815,33 @@
         <!-- Karşılaştırma Tablosu -->
         <div class="sunum-compare fade-in">
             <h4>Neden Arkadaşım Kelimeler?</h4>
-            <table class="sunum-compare-table">
+            <div class="table-scroll"><table class="sunum-compare-table">
                 <tr>
                     <th>Klasik Yöntem</th>
                     <th>Tekil Uygulamalar</th>
                     <th>Arkadaşım Kelimeler</th>
                 </tr>
                 <tr>
-                    <td><span style="color:#ef4444;">&#10006;</span> Bireysel takip yok</td>
-                    <td><span style="color:#ef4444;">&#10006;</span> Ekosistem bütünlüğü yok</td>
-                    <td><span style="color:#4ade80;">&#10004;</span> Bütünlük + Yapay Zeka</td>
+                    <td><span class="mark-no">&#10006;</span> Bireysel takip yok</td>
+                    <td><span class="mark-no">&#10006;</span> Ekosistem bütünlüğü yok</td>
+                    <td><span class="mark-yes">&#10004;</span> Bütünlük + Yapay Zeka</td>
                 </tr>
                 <tr>
-                    <td><span style="color:#ef4444;">&#10006;</span> Ölçülebilir veri yok</td>
-                    <td><span style="color:#ef4444;">&#10006;</span> Öğretmen entegrasyonu yok</td>
-                    <td><span style="color:#4ade80;">&#10004;</span> Ölçüm + Raporlama</td>
+                    <td><span class="mark-no">&#10006;</span> Ölçülebilir veri yok</td>
+                    <td><span class="mark-no">&#10006;</span> Öğretmen entegrasyonu yok</td>
+                    <td><span class="mark-yes">&#10004;</span> Ölçüm + Raporlama</td>
                 </tr>
                 <tr>
-                    <td><span style="color:#ef4444;">&#10006;</span> Tek tip öğretim</td>
-                    <td><span style="color:#ef4444;">&#10006;</span> Müfredat uyumsuzluğu</td>
-                    <td><span style="color:#4ade80;">&#10004;</span> Bireyselleştirilmiş öğrenme</td>
+                    <td><span class="mark-no">&#10006;</span> Tek tip öğretim</td>
+                    <td><span class="mark-no">&#10006;</span> Müfredat uyumsuzluğu</td>
+                    <td><span class="mark-yes">&#10004;</span> Bireyselleştirilmiş öğrenme</td>
                 </tr>
                 <tr>
-                    <td><span style="color:#ef4444;">&#10006;</span> Veli desteği sınırlı</td>
-                    <td><span style="color:#ef4444;">&#10006;</span> Veli görünürlüğü yok</td>
-                    <td><span style="color:#4ade80;">&#10004;</span> Yapılandırılmış ödev ortamı</td>
+                    <td><span class="mark-no">&#10006;</span> Veli desteği sınırlı</td>
+                    <td><span class="mark-no">&#10006;</span> Veli görünürlüğü yok</td>
+                    <td><span class="mark-yes">&#10004;</span> Yapılandırılmış ödev ortamı</td>
                 </tr>
-            </table>
+            </table></div>
         </div>
 
         <!-- Sonuç -->
@@ -823,19 +849,19 @@
             <h3>Arkadaşım Kelimeler, çocuğun öğrenmeye bakışını değiştirir.</h3>
             <div class="sunum-result-items">
                 <div class="sunum-result-item">
-                    <div class="sri-icon" style="background:rgba(124,58,237,0.2); color:#a855f7;"><i class="fas fa-child"></i></div>
+                    <div class="sri-icon"><i class="fas fa-child"></i></div>
                     Öğrenci kazanır
                 </div>
                 <div class="sunum-result-item">
-                    <div class="sri-icon" style="background:rgba(249,115,22,0.2); color:#f97316;"><i class="fas fa-chalkboard-teacher"></i></div>
+                    <div class="sri-icon"><i class="fas fa-chalkboard-teacher"></i></div>
                     Öğretmen güçlenir
                 </div>
                 <div class="sunum-result-item">
-                    <div class="sri-icon" style="background:rgba(34,197,94,0.2); color:#22c55e;"><i class="fas fa-chart-line"></i></div>
+                    <div class="sri-icon"><i class="fas fa-chart-line"></i></div>
                     Sistem ölçülebilir olur
                 </div>
                 <div class="sunum-result-item">
-                    <div class="sri-icon" style="background:rgba(236,72,153,0.2); color:#ec4899;"><i class="fas fa-heart"></i></div>
+                    <div class="sri-icon"><i class="fas fa-heart"></i></div>
                     Velilerin yükü azalır
                 </div>
             </div>
@@ -844,7 +870,7 @@
 </section>
 
 <!-- ACADEMIC -->
-<section id="akademik">
+<section id="akademik" class="band-white">
     <div class="container">
         <h2 class="section-title fade-in">Bilimsel Temel</h2>
         <p class="section-subtitle fade-in">İlk Okuma Yazma: Bir Çocuğun Eğitim Hayatındaki En Kritik Eşik</p>
@@ -862,8 +888,8 @@
             <div class="academic-card fade-in">
                 <h3>1.1. Kritik Dönem ve Nöroplastisite</h3>
                 <p>İlk okuma yazma öğrenimi, genellikle 5-7 yaş aralığında başlar. Bu dönem, nörobilimde <strong>"kritik dönem"</strong> (critical period) olarak adlandırılan beynin belirli becerileri öğrenmeye en açık olduğu zaman dilimidir.</p>
-                <p style="margin-top:0.8rem">Bu dönemde beyin saniyede yaklaşık <strong>700-1000 yeni sinaptik bağlantı</strong> kurar. Görsel korteks (harf tanıma), temporal lob (ses işleme), frontal lob (anlam kurma), angular girus (ses-harf eşleştirme) arasında yoğun bir nöral ağ inşası gerçekleşir.</p>
-                <p style="margin-top:0.8rem">Fransız nörobilimci <strong>Stanislas Dehaene</strong>'in ortaya koyduğu <strong>"Nöronal Geri Dönüşüm Hipotezi"</strong>ne göre, beyin esasen okuma için değil, yüz tanıma ve nesne tanıma için tasarlanmıştır. Beyinde yüz ve nesne tanıma için ayrılmış bölgeler (özellikle sol fusiform girus — "Visual Word Form Area") okuma işlevi için yeniden yapılandırılır.</p>
+                <p>Bu dönemde beyin saniyede yaklaşık <strong>700-1000 yeni sinaptik bağlantı</strong> kurar. Görsel korteks (harf tanıma), temporal lob (ses işleme), frontal lob (anlam kurma), angular girus (ses-harf eşleştirme) arasında yoğun bir nöral ağ inşası gerçekleşir.</p>
+                <p>Fransız nörobilimci <strong>Stanislas Dehaene</strong>'in ortaya koyduğu <strong>"Nöronal Geri Dönüşüm Hipotezi"</strong>ne göre, beyin esasen okuma için değil, yüz tanıma ve nesne tanıma için tasarlanmıştır. Beyinde yüz ve nesne tanıma için ayrılmış bölgeler (özellikle sol fusiform girus — "Visual Word Form Area") okuma işlevi için yeniden yapılandırılır.</p>
             </div>
 
             <div class="academic-highlight fade-in">
@@ -874,7 +900,7 @@
                 <h3>A-K Projesinde 4 Bilişsel Alanı Destekleyen Oyunlar</h3>
                 <p>Bu kritik dönemde optimal koşulları desteklemek için yapılandırılmış <strong>30 formatta 8.000'in üzerinde oyun</strong> bulunmaktadır.</p>
 
-                <h3 style="margin-top:1.5rem; color:#7c3aed;">Görsel Korteks (Harf Tanıma)</h3>
+                <h3 class="sub">Görsel Korteks (Harf Tanıma)</h3>
                 <div class="academic-game-list">
                     <div class="academic-game-item">
                         <h4>Çiftini Bul</h4>
@@ -906,7 +932,7 @@
                     </div>
                 </div>
 
-                <h3 style="margin-top:1.5rem; color:#f97316;">Temporal Lob (Ses İşleme)</h3>
+                <h3 class="sub">Temporal Lob (Ses İşleme)</h3>
                 <div class="academic-game-list">
                     <div class="academic-game-item">
                         <h4>Tonlama Oyunu</h4>
@@ -926,7 +952,7 @@
                     </div>
                 </div>
 
-                <h3 style="margin-top:1.5rem; color:#22c55e;">Frontal Lob (Anlam Kurma)</h3>
+                <h3 class="sub">Frontal Lob (Anlam Kurma)</h3>
                 <div class="academic-game-list">
                     <div class="academic-game-item">
                         <h4>Gökkuşağı Sayılar</h4>
@@ -946,7 +972,7 @@
                     </div>
                 </div>
 
-                <h3 style="margin-top:1.5rem; color:#3b82f6;">Angular Girus (Ses-Harf Eşleştirme)</h3>
+                <h3 class="sub">Angular Girus (Ses-Harf Eşleştirme)</h3>
                 <div class="academic-game-list">
                     <div class="academic-game-item">
                         <h4>Karmakarışık Oyunu</h4>
@@ -975,14 +1001,14 @@
                     <li><strong>Sol inferior frontal girus (Broca alanı):</strong> Seslerin üretilmesi</li>
                     <li><strong>Arkuat fasikülüs:</strong> Bu iki bölge arasındaki iletişim</li>
                 </ul>
-                <p style="margin-top:0.8rem">Ses-harf ilişkisi doğru kurulmazsa, bu üç bölge arasındaki bağlantı zayıf kalır. fMRI çalışmaları, okuma güçlüğü yaşayan çocukların bu devrelerde belirgin aktivasyon eksikliği gösterdiğini ortaya koymuştur <em>(Shaywitz et al., 2002, Yale Üniversitesi)</em>.</p>
+                <p>Ses-harf ilişkisi doğru kurulmazsa, bu üç bölge arasındaki bağlantı zayıf kalır. fMRI çalışmaları, okuma güçlüğü yaşayan çocukların bu devrelerde belirgin aktivasyon eksikliği gösterdiğini ortaya koymuştur <em>(Shaywitz et al., 2002, Yale Üniversitesi)</em>.</p>
             </div>
 
             <div class="academic-card fade-in">
                 <h3>1.3. Miyelinizasyon ve Zamanlama</h3>
                 <p>Sinir liflerini saran miyelin kılıf, bilgi iletim hızını belirler. 5-7 yaş aralığında <strong>Corpus callosum</strong> (iki beyin yarıküresi arasındaki köprü) hızla miyelinize olur. Bu, görsel bilgiyi (harfin şekli) işitsel bilgiyle (harfin sesi) eşleştirmeyi mümkün kılar.</p>
-                <p style="margin-top:0.8rem"><strong>Beynin iki yarım küresini aynı anda çalıştırarak miyelinleşmeyi artıran oyunlar:</strong> Gökkuşağı Sayılar, Rengârenk, Keskin Nişancı.</p>
-                <p style="margin-top:0.8rem"><strong>Görsel bilgiyi işitsel bilgi ile eşleştirme becerisini geliştiren oyunlar:</strong> Rengârenk, Başta-Ortada-Sonda, Saklı Gerçek, Hecelerden Kelime Türetme, Karmakarışık, Şifre.</p>
+                <p><strong>Beynin iki yarım küresini aynı anda çalıştırarak miyelinleşmeyi artıran oyunlar:</strong> Gökkuşağı Sayılar, Rengârenk, Keskin Nişancı.</p>
+                <p><strong>Görsel bilgiyi işitsel bilgi ile eşleştirme becerisini geliştiren oyunlar:</strong> Rengârenk, Başta-Ortada-Sonda, Saklı Gerçek, Hecelerden Kelime Türetme, Karmakarışık, Şifre.</p>
             </div>
 
             <div class="academic-highlight fade-in">
@@ -995,7 +1021,7 @@
             <div class="academic-card fade-in">
                 <h3>2.1. Keith Stanovich</h3>
                 <p>Eğitim bilimci <strong>Keith Stanovich (1986)</strong> tarafından ortaya konan bu kavram şunu ifade eder: <em>"Zengine daha çok verilecek, fakirden elindeki de alınacaktır."</em></p>
-                <table class="compare-table" style="margin-top:1.2rem">
+                <div class="table-scroll"><table class="compare-table">
                     <tr>
                         <th>Erken Dönemde İyi Okuyan</th>
                         <th>Erken Dönemde Zayıf Okuyan</th>
@@ -1005,7 +1031,7 @@
                     <tr><td>Anlama becerisi artar</td><td>Anlama güçlüğü derinleşir</td></tr>
                     <tr><td>Diğer derslerde başarılı olur</td><td>Tüm derslerde zorlanır</td></tr>
                     <tr><td>Akademik özgüven yükselir</td><td>Akademik kimlik zedelenir</td></tr>
-                </table>
+                </table></div>
             </div>
 
             <div class="academic-highlight fade-in">
@@ -1020,7 +1046,7 @@
                     <li><strong>2. sınıf sonu:</strong> ~80-100 kelime/dakika</li>
                     <li><strong>3. sınıf sonu:</strong> ~100-120 kelime/dakika</li>
                 </ul>
-                <p style="margin-top:0.8rem">Bu eşiğin altında kalan çocuk, bilişsel enerjisinin büyük bölümünü harfleri çözmeye harcar; anlam kurmaya kaynak kalmaz. Bu durum, <strong>"Bilişsel Yük Kuramı"</strong> (Cognitive Load Theory — Sweller, 1988) ile açıklanır.</p>
+                <p>Bu eşiğin altında kalan çocuk, bilişsel enerjisinin büyük bölümünü harfleri çözmeye harcar; anlam kurmaya kaynak kalmaz. Bu durum, <strong>"Bilişsel Yük Kuramı"</strong> (Cognitive Load Theory — Sweller, 1988) ile açıklanır.</p>
             </div>
 
             <div class="academic-highlight fade-in">
@@ -1033,12 +1059,12 @@
             <div class="academic-card fade-in">
                 <h3>3.1. Akademik Benlik Kavramı</h3>
                 <p>Gelişim psikoloğu <strong>Erik Erikson</strong>'un psikososyal gelişim kuramına göre, 6-12 yaş arası <strong>"Başarıya Karşı Aşağılık Duygusu"</strong> evresine denk gelir. Bu evrede çocuk şu temel soruyu sorar: <em>"Ben yapabiliyor muyum?"</em></p>
-                <p style="margin-top:0.8rem">İlk okuma yazma, çocuğun bu soruya verdiği ilk büyük cevaptır:</p>
+                <p>İlk okuma yazma, çocuğun bu soruya verdiği ilk büyük cevaptır:</p>
                 <ul>
                     <li><strong>"Evet, yapabiliyorum"</strong> → Yetkinlik duygusu, girişimcilik, merak</li>
                     <li><strong>"Hayır, yapamıyorum"</strong> → Aşağılık duygusu, kaçınma, öğrenilmiş çaresizlik</li>
                 </ul>
-                <p style="margin-top:0.8rem"><strong>Martin Seligman</strong>'ın öğrenilmiş çaresizlik teorisine göre, tekrarlayan başarısızlık deneyimleri, çocuğun <em>"Ne yaparsam yapayım başaramam!"</em> inancını içselleştirmesine yol açar. Bu inanç, yalnızca okuma yazmayla sınırlı kalmaz; tüm yaşam alanlarına genelleşir.</p>
+                <p><strong>Martin Seligman</strong>'ın öğrenilmiş çaresizlik teorisine göre, tekrarlayan başarısızlık deneyimleri, çocuğun <em>"Ne yaparsam yapayım başaramam!"</em> inancını içselleştirmesine yol açar. Bu inanç, yalnızca okuma yazmayla sınırlı kalmaz; tüm yaşam alanlarına genelleşir.</p>
             </div>
 
             <div class="academic-card fade-in">
@@ -1049,13 +1075,13 @@
                     <li><em>"Diğerleri benden daha zeki."</em></li>
                     <li><em>"Okumak benim işim değil."</em></li>
                 </ul>
-                <p style="margin-top:0.8rem">Bu düşünceler, nöral yolaklar olarak beyne kazınır. Her tekrarlandığında güçlenir — <strong>Hebb Kuralı: "Birlikte ateşlenen nöronlar, birlikte bağlanır."</strong> Yetişkinlikte bile bu kişi, yeni bir şey öğrenirken aynı otomatik olumsuz düşünceleri deneyimleyebilir.</p>
+                <p>Bu düşünceler, nöral yolaklar olarak beyne kazınır. Her tekrarlandığında güçlenir — <strong>Hebb Kuralı: "Birlikte ateşlenen nöronlar, birlikte bağlanır."</strong> Yetişkinlikte bile bu kişi, yeni bir şey öğrenirken aynı otomatik olumsuz düşünceleri deneyimleyebilir.</p>
             </div>
 
             <div class="academic-card fade-in">
                 <h3>3.3. Okuma ve Empati: Sosyal Beyin</h3>
                 <p><strong>Mar ve ark. (2006, York Üniversitesi)</strong> araştırmasına göre, düzenli okuyan çocuklarda <strong>"Zihin Kuramı"</strong> (Theory of Mind) — yani başkalarının düşünce ve duygularını anlama becerisi — anlamlı düzeyde daha gelişmiştir.</p>
-                <p style="margin-top:0.8rem">Okuma, <strong>default mode network</strong> (varsayılan mod ağı) aktivasyonunu artırır; bu ağ empati, hayal kurma ve öz-farkındalıkla ilişkilidir. Okuyamayan çocuk, bu sosyal-bilişsel gelişim fırsatından da mahrum kalır.</p>
+                <p>Okuma, <strong>default mode network</strong> (varsayılan mod ağı) aktivasyonunu artırır; bu ağ empati, hayal kurma ve öz-farkındalıkla ilişkilidir. Okuyamayan çocuk, bu sosyal-bilişsel gelişim fırsatından da mahrum kalır.</p>
             </div>
         </div>
 
@@ -1096,7 +1122,7 @@
             <div class="academic-card fade-in">
                 <h3>Sonuç</h3>
                 <p>İlk okuma yazma, bir <strong>nörobilimsel inşaat</strong>, bir <strong>eğitimsel temel atma</strong> ve bir <strong>kimlik inşası</strong> sürecidir — hepsi aynı anda.</p>
-                <ul style="margin-top:1rem">
+                <ul>
                     <li><strong>Beyin açısından →</strong> Ömür boyu kullanılacak okuma devrelerinin kurulduğu tek penceredir.</li>
                     <li><strong>Eğitim açısından →</strong> Tüm akademik başarının üzerine inşa edileceği temel taştır.</li>
                     <li><strong>Kişisel gelişim açısından →</strong> Çocuğun "Ben öğrenebilen bir insanım" ya da "Ben yetersizim" hikâyesini yazdığı ilk sayfadır.</li>
@@ -1117,7 +1143,7 @@
 <!-- CTA -->
 <section id="indir">
     <div class="container fade-in">
-        <h2 class="brand-name">Hemen İndir, Eğlenceye Katıl!</h2>
+        <h2 class="brand-name">Hemen indir, eğlenceye katıl!</h2>
         <p>Milyonlarca oyuncunun arasına katıl ve kelimelerin büyülü dünyasını keşfet. Ücretsiz!</p>
         <div class="store-buttons">
             <a href="#" class="store-btn">
@@ -1136,16 +1162,13 @@
             </a>
         </div>
     </div>
-    <img src="bear-mascot.png?v=3" alt="" aria-hidden="true" class="cta-bear">
 </section>
 
 <!-- FOOTER -->
 <footer>
     <div class="footer-grid">
         <div class="footer-about">
-            <a href="#" class="nav-logo" style="display:inline-flex;">
-                <img src="logo.png?v=11" alt="Arkadaşım Kelimeler Logo" style="height:76px;width:auto;">
-            </a>
+            <a href="#hero"><img src="logo.png?v=11" alt="Arkadaşım Kelimeler Logo"></a>
             <p>Türkiye'nin en eğlenceli kelime oyunu platformu. Yüzlerce bulmaca, onlarca oyun modu ve milyonlarca oyuncuyla buluşan büyük bir aile.</p>
         </div>
         <div class="footer-links">
@@ -1177,259 +1200,236 @@
 </footer>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <script>
-    // Show flow icons after page load
-    window.addEventListener('load', function() {
-        setTimeout(function() {
-            document.querySelectorAll('.flow-icon').forEach(function(el) {
+(function () {
+    'use strict';
+
+    // Flow icons on the hero cycle appear after load
+    window.addEventListener('load', function () {
+        setTimeout(function () {
+            document.querySelectorAll('.flow-icon').forEach(function (el) {
                 el.classList.add('visible');
             });
-        }, 800);
+        }, 600);
     });
 
     // Hamburger menu
-    const hamburger = document.getElementById('hamburger');
-    const mobileMenu = document.getElementById('mobileMenu');
-    hamburger.addEventListener('click', () => {
-        hamburger.classList.toggle('active');
-        mobileMenu.classList.toggle('active');
+    var hamburger = document.getElementById('hamburger');
+    var mobileMenu = document.getElementById('mobileMenu');
+    hamburger.addEventListener('click', function () {
+        var open = hamburger.classList.toggle('active');
+        mobileMenu.classList.toggle('active', open);
+        hamburger.setAttribute('aria-expanded', String(open));
     });
-    mobileMenu.querySelectorAll('a').forEach(link => {
-        link.addEventListener('click', () => {
+    mobileMenu.querySelectorAll('a').forEach(function (link) {
+        link.addEventListener('click', function () {
             hamburger.classList.remove('active');
             mobileMenu.classList.remove('active');
+            hamburger.setAttribute('aria-expanded', 'false');
         });
     });
 
-    // Intersection Observer for fade-in
-    const fadeEls = document.querySelectorAll('.fade-in');
-    const fadeObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
+    // Fade-in on scroll
+    var fadeObserver = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
             if (entry.isIntersecting) {
                 entry.target.classList.add('visible');
                 fadeObserver.unobserve(entry.target);
             }
         });
-    }, { threshold: 0.1 });
-    fadeEls.forEach(el => fadeObserver.observe(el));
+    }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+    document.querySelectorAll('.fade-in').forEach(function (el) { fadeObserver.observe(el); });
 
-    // Bear wave animation on scroll
-    const bearLogos = document.querySelectorAll('.bear-logo-wave');
-    const bearObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.remove('waving');
-                void entry.target.offsetWidth;
-                entry.target.classList.add('waving');
-            }
-        });
-    }, { threshold: 0.3 });
-    bearLogos.forEach(el => bearObserver.observe(el));
+    // Counters
+    var countersAnimated = false;
+    var statsSection = document.getElementById('istatistikler');
+    if (statsSection) {
+        var counterObserver = new IntersectionObserver(function (entries) {
+            entries.forEach(function (entry) {
+                if (entry.isIntersecting && !countersAnimated) {
+                    countersAnimated = true;
+                    animateCounters();
+                    counterObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.3 });
+        counterObserver.observe(statsSection);
+    }
 
-    // Counter animation
-    let countersAnimated = false;
-    const statsSection = document.getElementById('istatistikler');
-    const counterObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting && !countersAnimated) {
-                countersAnimated = true;
-                animateCounters();
-                counterObserver.unobserve(entry.target);
-            }
-        });
-    }, { threshold: 0.3 });
-    counterObserver.observe(statsSection);
+    function format(value, target, suffix, isDecimal, done) {
+        if (isDecimal) return value.toFixed(1) + suffix;
+        if (target >= 1000000) return done ? '1M' + suffix : (value / 1000000).toFixed(1) + 'M' + suffix;
+        if (target >= 1000) return (done ? target / 1000 : Math.floor(value / 1000)) + 'K' + suffix;
+        return Math.floor(done ? target : value) + suffix;
+    }
 
     function animateCounters() {
-        document.querySelectorAll('.stat-number').forEach(el => {
-            const target = parseFloat(el.dataset.target);
-            const suffix = el.dataset.suffix || '';
-            const isDecimal = el.dataset.decimal === 'true';
-            const duration = 2000;
-            const start = performance.now();
+        document.querySelectorAll('.stat-number').forEach(function (el) {
+            var target = parseFloat(el.dataset.target);
+            var suffix = el.dataset.suffix || '';
+            var isDecimal = el.dataset.decimal === 'true';
+            var duration = 1800;
+            var start = performance.now();
 
             function update(now) {
-                const elapsed = now - start;
-                const progress = Math.min(elapsed / duration, 1);
-                const eased = 1 - Math.pow(1 - progress, 3);
-                const current = target * eased;
-
-                if (isDecimal) {
-                    el.textContent = current.toFixed(1) + suffix;
-                } else if (target >= 1000000) {
-                    el.textContent = (current / 1000000).toFixed(current >= target ? 0 : 1) + 'M' + suffix;
-                } else if (target >= 1000) {
-                    el.textContent = Math.floor(current / 1000) + 'K' + suffix;
-                } else {
-                    el.textContent = Math.floor(current) + suffix;
-                }
-
-                if (progress < 1) {
-                    requestAnimationFrame(update);
-                } else {
-                    if (isDecimal) {
-                        el.textContent = target.toFixed(1) + suffix;
-                    } else if (target >= 1000000) {
-                        el.textContent = '1M' + suffix;
-                    } else if (target >= 1000) {
-                        el.textContent = (target / 1000) + 'K' + suffix;
-                    } else {
-                        el.textContent = target + suffix;
-                    }
-                }
+                var progress = Math.min((now - start) / duration, 1);
+                var eased = 1 - Math.pow(1 - progress, 3);
+                el.textContent = format(target * eased, target, suffix, isDecimal, progress === 1);
+                if (progress < 1) requestAnimationFrame(update);
             }
             requestAnimationFrame(update);
         });
     }
 
     // FAQ accordion
-    document.querySelectorAll('.faq-question').forEach(q => {
-        q.addEventListener('click', () => {
-            const item = q.parentElement;
-            const wasActive = item.classList.contains('active');
-            document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('active'));
+    document.querySelectorAll('.faq-question').forEach(function (q) {
+        q.addEventListener('click', function () {
+            var item = q.parentElement;
+            var wasActive = item.classList.contains('active');
+            document.querySelectorAll('.faq-item').forEach(function (i) { i.classList.remove('active'); });
             if (!wasActive) item.classList.add('active');
         });
     });
 
     // Academic tabs
-    document.querySelectorAll('.academic-tab').forEach(tab => {
-        tab.addEventListener('click', () => {
-            document.querySelectorAll('.academic-tab').forEach(t => t.classList.remove('active'));
-            document.querySelectorAll('.academic-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.academic-tab').forEach(function (tab) {
+        tab.addEventListener('click', function () {
+            document.querySelectorAll('.academic-tab').forEach(function (t) { t.classList.remove('active'); });
+            document.querySelectorAll('.academic-panel').forEach(function (p) { p.classList.remove('active'); });
             tab.classList.add('active');
-            const panel = document.getElementById(tab.dataset.panel);
+            var panel = document.getElementById(tab.dataset.panel);
             panel.classList.add('active');
-            // Re-observe fade-in elements in newly visible panel
-            panel.querySelectorAll('.fade-in').forEach(el => {
+            panel.querySelectorAll('.fade-in').forEach(function (el) {
                 if (!el.classList.contains('visible')) fadeObserver.observe(el);
             });
         });
     });
 
-    // Active nav link on scroll
-    const sections = document.querySelectorAll('section[id]');
-    window.addEventListener('scroll', () => {
-        const scrollY = window.scrollY + 100;
-        sections.forEach(sec => {
-            const top = sec.offsetTop;
-            const height = sec.offsetHeight;
-            const id = sec.getAttribute('id');
-            const link = document.querySelector('.nav-links a[href="#' + id + '"]');
-            if (link) {
-                if (scrollY >= top && scrollY < top + height) {
-                    link.style.color = '#7c3aed';
+    /* ---------------------------------------------------------
+       Marquee: GSAP drives the scroll and every LETTER clears a
+       hurdle standing at the centre of the screen. The lift is a
+       function of the letter's distance from that point, so the
+       arc is tied to position rather than fired as a tween — the
+       letters cross one after another like a field of hurdlers.
+       The CSS animation stays as the fallback and is switched off
+       only once GSAP has taken over.
+       --------------------------------------------------------- */
+    (function marquee() {
+        const track = document.querySelector('.marquee-track');
+        if (!track || typeof gsap === 'undefined') return;
+
+        const HOP_HEIGHT = 15;   // px at the top of the arc
+        const HOP_RADIUS = 26;   // px either side of the hurdle
+        const HOP_TILT = 11;     // deg the runner leans through the jump
+        const HANG = 0.65;       // <1 flattens the top of the arc into hang time
+        const SPEED = 24;        // seconds for one full copy of the strip
+
+        // split every word into letters; spaces stay as text nodes so the
+        // words keep their natural spacing
+        const letters = [];
+        Array.prototype.forEach.call(track.children, function (item) {
+            const text = item.textContent;
+            if (text.trim() === '\u25CF') return;   // separators do not run
+            item.textContent = '';
+            for (let i = 0; i < text.length; i++) {
+                if (text[i] === ' ') {
+                    item.appendChild(document.createTextNode(' '));
                 } else {
-                    link.style.color = '';
+                    const ch = document.createElement('span');
+                    ch.className = 'mq-ch';
+                    ch.textContent = text[i];
+                    item.appendChild(ch);
+                    letters.push(ch);
                 }
             }
         });
-    });
-</script>
+        if (!letters.length) return;
 
-<script>
-// GSAP Bear Reading Animation
-(function() {
-    gsap.defaults({ overwrite: "auto" });
+        let loop = null, metrics = [], trackLeft = 0, half = 0;
 
-})();
-</script>
-<script>
-// GSAP Section Title Animations - fun & playful for kids
-(function() {
-    gsap.registerPlugin(ScrollTrigger);
-
-    var titles = document.querySelectorAll('.section-title');
-    // Different animation for each title
-    var animations = [
-        // 1. Özellikler - bounce drop from above
-        function(el) {
-            gsap.from(el, {
-                y: -80, scale: 0.3, opacity: 0, rotation: -10,
-                duration: 1, ease: "bounce.out",
-                scrollTrigger: { trigger: el, start: "top 85%" }
-            });
-        },
-        // 2. Oyunlarımız - spin in from small
-        function(el) {
-            gsap.from(el, {
-                scale: 0, rotation: 720, opacity: 0,
-                duration: 1.2, ease: "back.out(1.7)",
-                scrollTrigger: { trigger: el, start: "top 85%" }
-            });
-        },
-        // 3. Sistem Nasıl Çalışır? - elastic slide from left
-        function(el) {
-            gsap.from(el, {
-                x: -300, opacity: 0, skewX: 20,
-                duration: 1.2, ease: "elastic.out(1, 0.5)",
-                scrollTrigger: { trigger: el, start: "top 85%" }
-            });
-        },
-        // 4. Rakamlarla Biz - pop up with wobble
-        function(el) {
-            var tl = gsap.timeline({
-                scrollTrigger: { trigger: el, start: "top 85%" }
-            });
-            tl.from(el, { y: 100, scale: 0, opacity: 0, duration: 0.6, ease: "back.out(2)" })
-              .to(el, { rotation: 5, duration: 0.15, ease: "power1.inOut" })
-              .to(el, { rotation: -5, duration: 0.15, ease: "power1.inOut" })
-              .to(el, { rotation: 3, duration: 0.1, ease: "power1.inOut" })
-              .to(el, { rotation: 0, duration: 0.1, ease: "power1.out" });
-        },
-        // 5. Kullanıcılarımız Ne Diyor? - flip in 3D
-        function(el) {
-            gsap.set(el, { transformPerspective: 600 });
-            gsap.from(el, {
-                rotationX: -90, y: 50, opacity: 0,
-                duration: 1, ease: "back.out(1.5)",
-                scrollTrigger: { trigger: el, start: "top 85%" }
-            });
-        },
-        // 6. Sıkça Sorulan Sorular - typewriter / slide from right
-        function(el) {
-            gsap.from(el, {
-                x: 300, opacity: 0, skewX: -15, scale: 0.5,
-                duration: 1, ease: "elastic.out(1, 0.6)",
-                scrollTrigger: { trigger: el, start: "top 85%" }
-            });
-        },
-        // 7. Arkadaşım Kelimeler (Sunum) - rainbow scale pulse
-        function(el) {
-            var tl = gsap.timeline({
-                scrollTrigger: { trigger: el, start: "top 85%" }
-            });
-            tl.from(el, { scale: 3, opacity: 0, rotation: -15, duration: 0.8, ease: "power3.out" })
-              .to(el, { scale: 1.1, duration: 0.2, ease: "power1.inOut" })
-              .to(el, { scale: 1, duration: 0.3, ease: "bounce.out" });
-        },
-        // 8. Bilimsel Temel - elegant rise with fade
-        function(el) {
-            gsap.set(el, { transformPerspective: 800 });
-            gsap.from(el, {
-                y: 60, rotationY: 90, opacity: 0,
-                duration: 1.2, ease: "power3.out",
-                scrollTrigger: { trigger: el, start: "top 85%" }
+        function measure() {
+            gsap.set(track, { x: 0 });
+            const tr = track.getBoundingClientRect();
+            trackLeft = tr.left;
+            half = tr.width / 2;
+            metrics = letters.map(function (el) {
+                const r = el.getBoundingClientRect();
+                return {
+                    offset: r.left - tr.left + r.width / 2,
+                    setY: gsap.quickSetter(el, 'y', 'px'),
+                    setRot: gsap.quickSetter(el, 'rotation', 'deg'),
+                    airborne: false
+                };
             });
         }
-    ];
 
-    titles.forEach(function(title, i) {
-        if (animations[i]) {
-            animations[i](title);
+        function run() {
+            const x = gsap.getProperty(track, 'x');
+            const mid = window.innerWidth / 2;
+            for (let i = 0; i < metrics.length; i++) {
+                const m = metrics[i];
+                const t = (trackLeft + x + m.offset - mid) / HOP_RADIUS;
+                if (t > -1 && t < 1) {
+                    const lift = Math.pow(1 - t * t, HANG);
+                    m.setY(-HOP_HEIGHT * lift);
+                    m.setRot(-t * HOP_TILT * lift);
+                    m.airborne = true;
+                } else if (m.airborne) {
+                    // only written once on landing, not every frame
+                    m.setY(0);
+                    m.setRot(0);
+                    m.airborne = false;
+                }
+            }
         }
-    });
 
-    // Also animate the CTA title "Hemen İndir, Eğlenceye Katıl!"
-    var ctaTitle = document.querySelector('#indir .section-title');
-    if (ctaTitle) {
-        gsap.from(ctaTitle, {
-            y: -60, scale: 0.5, opacity: 0, rotation: 8,
-            duration: 1, ease: "bounce.out",
-            scrollTrigger: { trigger: ctaTitle, start: "top 85%" }
+        gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', function () {
+            track.style.animation = 'none';
+            measure();
+            loop = gsap.to(track, {
+                x: function () { return -half; },
+                duration: SPEED,
+                ease: 'none',
+                repeat: -1
+            });
+            gsap.ticker.add(run);
+            return function () {
+                gsap.ticker.remove(run);
+                if (loop) { loop.kill(); loop = null; }
+                gsap.set(letters, { y: 0, rotation: 0 });
+                track.style.animation = '';
+            };
         });
-    }
+
+        let resizeTimer;
+        window.addEventListener('resize', function () {
+            clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(function () {
+                if (!loop) return;
+                const progress = loop.progress();
+                measure();
+                loop.invalidate().progress(progress);
+            }, 200);
+        });
+    })();
+
+    // Active nav link on scroll
+    var sections = document.querySelectorAll('section[id]');
+    var ticking = false;
+    window.addEventListener('scroll', function () {
+        if (ticking) return;
+        ticking = true;
+        requestAnimationFrame(function () {
+            var scrollY = window.scrollY + 120;
+            sections.forEach(function (sec) {
+                var link = document.querySelector('.nav-links a[href="#' + sec.id + '"]');
+                if (!link) return;
+                var inView = scrollY >= sec.offsetTop && scrollY < sec.offsetTop + sec.offsetHeight;
+                link.classList.toggle('active', inView);
+            });
+            ticking = false;
+        });
+    }, { passive: true });
 })();
 </script>
 </body>
