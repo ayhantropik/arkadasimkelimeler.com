@@ -1897,3 +1897,76 @@ h1,h2,h3,h4,
 .sunum-result-item:nth-child(2) .sri-icon { background: #fff1e6; color: #ea7317; }
 .sunum-result-item:nth-child(3) .sri-icon { background: #eaf9ee; color: #16a34a; }
 .sunum-result-item:nth-child(4) .sri-icon { background: #fdedf5; color: #db2777; }
+
+/* =========================================================
+   The last dark/saturated bands brought onto the light canvas:
+   the stats band, the download band and the footer. Cards keep
+   the sticker language used everywhere else — white fill, ink
+   keyline, chunky bottom edge.
+   ========================================================= */
+
+/* Sunum's heading had been given a gradient; every other section
+   title on this design is orange sticker text, so drop it. */
+#sunum .section-title {
+    background: none;
+    color: var(--orange);
+    -webkit-text-fill-color: var(--orange);
+}
+
+/* --- stats band --- */
+#istatistikler {
+    background: #fff7e4;
+    color: var(--ink);
+}
+#istatistikler .section-title {
+    color: var(--orange);
+    -webkit-text-fill-color: var(--orange);
+}
+#istatistikler .section-subtitle { color: #6b5a4a; }
+.stat-card {
+    background: #fff;
+    border: 2.5px solid var(--ink);
+    border-radius: 20px;
+    box-shadow: 0 5px 0 var(--ink);
+    backdrop-filter: none;
+}
+.stat-number { color: var(--grape); }
+.stat-label { color: #6b5a4a; opacity: 1; }
+.stat-icon { color: var(--sky-deep); opacity: 1; }
+
+/* --- download band --- */
+#indir {
+    background: #fff0e2;
+    color: var(--ink);
+}
+#indir .brand-name,
+#indir h2.brand-name {
+    color: var(--orange);
+    -webkit-text-fill-color: var(--orange);
+}
+#indir p { color: #6b5a4a; opacity: 1; }
+
+/* --- footer --- */
+footer {
+    background: var(--cream);
+    color: #6b5a4a;
+    border-top: 3px solid var(--ink);
+}
+.footer-about p { color: #6b5a4a; }
+.footer-links h4, .footer-social h4 { color: var(--ink); }
+.footer-links a { color: #6b5a4a; }
+.footer-links a:hover { color: var(--grape); }
+.social-icons a {
+    background: #fff;
+    border: 2.5px solid var(--ink);
+    color: var(--ink);
+    box-shadow: 0 4px 0 var(--ink);
+}
+.social-icons a:hover { opacity: 1; background: var(--sun); }
+.footer-bottom {
+    border-top: 2px solid rgba(32,22,12,.15);
+    color: #8a7a6a;
+}
+.footer-address { color: #8a7a6a; }
+.footer-address i { color: var(--sky-deep); }
+.footer-bottom strong { color: var(--ink); }
