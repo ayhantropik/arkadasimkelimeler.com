@@ -2096,3 +2096,16 @@ section > .container,
     }
     .isbirligi-logo { width: 160px; }
 }
+
+/* The two long sections carry more than one character, so those are
+   pinned at different heights instead of sharing the bottom edge. */
+.kahraman-ust  { top: 13%; bottom: auto; }
+.kahraman-orta { top: 46%; bottom: auto; }
+
+/* sizes re-pointed after the shuffle */
+#hero .kahraman         { width: 168px; }
+#oyunlar .kahraman-sol  { width: 168px; }
+#yorumlar .kahraman-sag { width: 168px; }
+#sunum .kahraman-sag    { width: 112px; }   /* badger, a tall standing figure */
+#sunum .kahraman-sol    { width: 132px; }
+#akademik .kahraman-sol { width: 122px; }   /* stork at her stall */
