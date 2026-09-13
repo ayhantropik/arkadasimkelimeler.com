@@ -2121,3 +2121,8 @@ section > .container,
 @media (max-width: 700px) {
     .isbirligi-band { padding: 1.75rem 1rem; }
 }
+
+/* the three newcomers, sized for their slots */
+#ozellikler .kahraman-sag { width: 120px; }   /* crane, a tall standing figure */
+#oyunlar .kahraman-sol    { width: 150px; }
+#akademik .kahraman-orta  { width: 168px; }
