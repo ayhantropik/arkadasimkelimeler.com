@@ -1994,3 +1994,11 @@ footer {
 
 /* --- download band --- */
 #indir { background: #fff; }
+
+/* =========================================================
+   Band rhythm restarted on the tint: the hero opens blue and
+   the page alternates from there. Stats keeps its cream accent.
+   ========================================================= */
+.hero { background: var(--cream); }
+#ozellikler, #nasil-oynanir { background: #fff; }
+#oyunlar { background: var(--cream); }
