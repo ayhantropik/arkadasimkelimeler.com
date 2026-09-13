@@ -2106,6 +2106,9 @@ section > .container,
    pinned at different heights instead of sharing the bottom edge. */
 .kahraman-ust  { top: 13%; bottom: auto; }
 .kahraman-orta { top: 46%; bottom: auto; }
+/* a fourth stop, low in a long section but still clear of the block that
+   follows — keeps three characters from landing in one screenful */
+.kahraman-alt  { top: 70%; bottom: auto; }
 
 /* sizes re-pointed after the shuffle */
 /* the reading owl chick moved here from the FAQ */

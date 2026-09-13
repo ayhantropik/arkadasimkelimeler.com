@@ -11,7 +11,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Baloo+2:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link href="https://fonts.cdnfonts.com/css/scrambled-tofu" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <link rel="stylesheet" href="style.css?v=51">
+    <link rel="stylesheet" href="style.css?v=52">
 </head>
 <body>
 
@@ -867,7 +867,7 @@
 <section id="akademik">
     <img src="kahraman-hindi-isaret.png?v=1" alt="" aria-hidden="true" class="kahraman kahraman-sag kahraman-orta" loading="lazy">
     <img src="kahraman-baykus-ogretmen.png?v=1" alt="" aria-hidden="true" class="kahraman kahraman-sag kahraman-ust" loading="lazy">
-    <img src="kahraman-leylek-tezgah.png?v=1" alt="" aria-hidden="true" class="kahraman kahraman-sol" loading="lazy">
+    <img src="kahraman-leylek-tezgah.png?v=1" alt="" aria-hidden="true" class="kahraman kahraman-sol kahraman-alt" loading="lazy">
     <div class="container">
         <h2 class="section-title fade-in">Bilimsel Temel</h2>
         <p class="section-subtitle fade-in">İlk Okuma Yazma: Bir Çocuğun Eğitim Hayatındaki En Kritik Eşik</p>
@@ -1454,6 +1454,67 @@
             scrollTrigger: { trigger: ctaTitle, start: "top 85%" }
         });
     }
+})();
+</script>
+<script>
+// Kenar kahramanları: kadraja girdiklerinde bir parlamayla büyüyüp yerlerine
+// otururlar, sonra ekranda kaldıkları sürece çok yavaş salınırlar.
+(function () {
+    if (!window.gsap || !window.ScrollTrigger) return;
+    gsap.registerPlugin(ScrollTrigger);
+
+    // 1320px altında kahramanlar zaten gizli, azaltılmış hareket tercihinde de
+    // hiç kurulmasın: CSS'teki duruş (opacity .92) olduğu gibi kalır.
+    gsap.matchMedia().add(
+        '(min-width: 1321px) and (prefers-reduced-motion: no-preference)',
+        function () {
+            var SHADOW = 'drop-shadow(0 10px 16px rgba(32, 22, 12, 0.16))';
+            var REST = 'drop-shadow(0 0 0px rgba(249, 178, 51, 0)) ' + SHADOW;
+            var GLOW = 'drop-shadow(0 0 22px rgba(249, 178, 51, 0.9)) ' + SHADOW;
+
+            gsap.utils.toArray('.kahraman').forEach(function (el, i) {
+                var sag = el.classList.contains('kahraman-sag');
+                var sway = gsap.to(el, {
+                    rotation: sag ? -1.6 : 1.6,
+                    y: -5,
+                    duration: 3 + (i % 5) * 0.4,
+                    ease: 'sine.inOut',
+                    repeat: -1,
+                    yoyo: true,
+                    paused: true
+                });
+                var girdi = false;
+
+                ScrollTrigger.create({
+                    trigger: el,
+                    // tam ilk pikseli görününce: böylece sıfırlama anında
+                    // ekranda hiçbir parçası yok, sıçrama görünmez
+                    start: 'top bottom',
+                    end: 'bottom top',
+                    onToggle: function (self) {
+                        if (!self.isActive) { sway.pause(); return; }
+                        if (girdi) { sway.resume(); return; }
+                        girdi = true;
+                        gsap.set(el, {
+                            // ayağının bastığı köşeden büyüsün, havada şişmesin
+                            transformOrigin: sag ? '100% 100%' : '0% 100%',
+                            autoAlpha: 0,
+                            scale: 0.84,
+                            y: 16,
+                            rotation: sag ? 3.5 : -3.5,
+                            filter: GLOW
+                        });
+                        gsap.timeline({ onComplete: function () { sway.play(0); } })
+                            .to(el, {
+                                autoAlpha: 0.92, scale: 1, y: 0, rotation: 0,
+                                duration: 0.9, ease: 'back.out(1.4)'
+                            })
+                            .to(el, { filter: REST, duration: 1.2, ease: 'power2.out' }, 0);
+                    }
+                });
+            });
+        }
+    );
 })();
 </script>
 </body>
