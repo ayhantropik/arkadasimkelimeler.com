@@ -1763,3 +1763,137 @@ h1,h2,h3,h4,
         opacity: 1;
     }
 }
+
+/* =========================================================
+   SUNUM — brought onto the light canvas the rest of the page
+   uses. Was a dark navy band with glowing glass cards, which
+   read as a different site between two white sections.
+   ========================================================= */
+#sunum {
+    background: #fff;
+    color: #333;
+}
+/* keep the band alternation now that Sunum is white */
+#akademik { background: #eaf7fc; }
+
+#sunum .section-title {
+    background: linear-gradient(135deg, #7c3aed, #f97316);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+#sunum .section-subtitle { color: #777; }
+
+/* --- hero cards --- */
+.sunum-hero-card {
+    background: #fff;
+    border: 2px solid #ece8f7;
+    border-radius: 24px;
+    padding: 2.5rem;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+    backdrop-filter: none;
+}
+.sunum-hero-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 40px rgba(124,58,237,0.15);
+}
+.sunum-hero-card h3 { color: #7c3aed; }
+.sunum-hero-card p { color: #666; }
+.sunum-hero-card.accent { background: #f3fbf5; border-color: #cdeed8; }
+.sunum-hero-card.accent h3 { color: #16a34a; }
+
+.sunum-problem {
+    background: #fff2f2;
+    border: 2px solid #f6c9c9;
+    color: #c53030;
+    box-shadow: none;
+}
+.sunum-problem:hover {
+    box-shadow: 0 8px 20px rgba(197,48,48,0.12);
+}
+
+/* --- ecosystem --- */
+.ecosystem-highlight {
+    background: linear-gradient(135deg, #f7f2ff, #eef5ff 55%, #f1fbf3);
+    border: 2px solid #e2d7f7;
+    box-shadow: 0 4px 24px rgba(124,58,237,0.10);
+    animation: none;
+}
+.ecosystem-title {
+    background: linear-gradient(135deg, #7c3aed, #3b82f6, #22c55e);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+.ecosystem-subtitle { color: #777; }
+
+.sunum-eco-card,
+.sunum-eco-card.eco-featured {
+    background: #fff;
+    border: 2px solid #ece8f7;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+}
+.sunum-eco-card.eco-featured:hover {
+    background: #fff;
+    box-shadow: 0 12px 40px rgba(124,58,237,0.15);
+}
+.sunum-eco-card h4 { color: #333; }
+.sunum-eco-card .eco-subtitle { color: #9a8fb5; }
+.sunum-eco-card p { color: #777; }
+
+.connector-line { background: linear-gradient(90deg, transparent, #d6c7f2, transparent); }
+.connector-text { color: #777; }
+
+/* --- feature blocks --- */
+.sunum-feature-block {
+    background: #fff;
+    border: 2px solid #ece8f7;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+}
+.sunum-feature-block:hover {
+    background: #fff;
+    box-shadow: 0 12px 40px rgba(124,58,237,0.15);
+}
+.sunum-feature-block h4 { color: #333; }
+.sunum-feature-block li {
+    color: #666;
+    border-bottom: 1px solid #f0ecf8;
+}
+.sunum-feature-block.center { text-align: center; margin-bottom: 2rem; }
+.sunum-feature-block.center h4 { justify-content: center; }
+.sunum-feature-block.center ul { display: inline-block; text-align: left; }
+.sf-check { color: #16a34a; }
+
+/* --- comparison table --- */
+.sunum-compare {
+    background: #fff;
+    border: 2px solid #ece8f7;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+}
+.sunum-compare:hover { box-shadow: 0 12px 40px rgba(124,58,237,0.15); }
+.sunum-compare h4 { color: #333; }
+.sunum-compare-table th { border-bottom: 2px solid #ece8f7; }
+.sunum-compare-table th:nth-child(1) { color: #c53030; }
+.sunum-compare-table th:nth-child(2) { color: #b45309; }
+.sunum-compare-table th:nth-child(3) { color: #16a34a; }
+.sunum-compare-table td {
+    color: #666;
+    border-bottom: 1px solid #f4f1fa;
+}
+.sunum-compare-table td:last-child { color: #333; font-weight: 700; }
+.mark-no { color: #ef4444; font-weight: 800; }
+.mark-yes { color: #16a34a; font-weight: 800; }
+
+/* --- result --- */
+.sunum-result {
+    background: linear-gradient(135deg, #f1fbf3, #eef5ff);
+    border: 2px solid #cdeed8;
+    box-shadow: 0 4px 24px rgba(34,197,94,0.12);
+}
+.sunum-result:hover { box-shadow: 0 12px 40px rgba(34,197,94,0.18); }
+.sunum-result h3 { color: #16a34a; }
+.sunum-result-item { color: #333; }
+.sri-icon { background: #f3eefe; color: #7c3aed; }
+.sunum-result-item:nth-child(2) .sri-icon { background: #fff1e6; color: #ea7317; }
+.sunum-result-item:nth-child(3) .sri-icon { background: #eaf9ee; color: #16a34a; }
+.sunum-result-item:nth-child(4) .sri-icon { background: #fdedf5; color: #db2777; }
