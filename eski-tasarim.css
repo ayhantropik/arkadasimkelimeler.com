@@ -2030,11 +2030,10 @@ section > .container,
     bottom: 24px;
     /* fit the free margin beside the 1200px content column, so a character
        is never sliced by the screen edge nor buried under a card */
-    width: clamp(96px, calc((100vw - 1180px) / 2), 170px);
+    --k: 1;
+    width: calc(var(--k) * clamp(96px, calc((100vw - 1180px) / 2), 170px));
     height: auto;
-    /* the standing figures are far taller than the crouching ones; cap the
-       height and let the art sit against its edge */
-    max-height: 230px;
+    max-height: 270px;
     object-fit: contain;
     z-index: 0;
     opacity: .92;
@@ -2122,3 +2121,26 @@ section > .container,
 /* the three newcomers, sized for their slots */
 /* swapped: the owl on the branch takes the top-right, the crane the
    bottom-left, so the widths follow them */
+
+/* The scenes differ wildly in shape — a crouching beaver against a standing
+   crane — so equal width left one twice the visual size of another. Each
+   character carries a multiplier that evens out its *inked* area: the count
+   of non-transparent pixels, scaled to the median. Measured per file, not
+   eyeballed. */
+.kahraman[src*="kahraman-leylek-ayi"]      { --k: 1.35; }
+.kahraman[src*="kahraman-baykus-dal"]      { --k: 1.28; }
+.kahraman[src*="kahraman-hindi-isaret"]    { --k: 1.18; }
+.kahraman[src*="kahraman-kunduz-rende"]    { --k: 1.16; }
+.kahraman[src*="kahraman-baykus-ogretmen"] { --k: 1.15; }
+.kahraman[src*="kahraman-tavuk-sepet"]     { --k: 1.12; }
+.kahraman[src*="kahraman-tavsan-zil"]      { --k: 1.11; }
+.kahraman[src*="kahraman-kunduz-sepet"]    { --k: 1.04; }
+.kahraman[src*="kahraman-baykus-soru"]     { --k: 1.00; }
+.kahraman[src*="kahraman-ayi-semsiye"]     { --k: 0.98; }
+.kahraman[src*="kahraman-leylek-sepet"]    { --k: 0.97; }
+.kahraman[src*="kahraman-hindi.png"]       { --k: 0.95; }
+.kahraman[src*="kahraman-leylek-tezgah"]   { --k: 0.89; }
+.kahraman[src*="kahraman-baykus-kitap"]    { --k: 0.88; }
+.kahraman[src*="kahraman-rakun"]           { --k: 0.87; }
+.kahraman[src*="kahraman-turna"]           { --k: 0.80; }
+.kahraman[src*="kahraman-porsuk"]          { --k: 0.67; }
