@@ -1970,3 +1970,27 @@ footer {
 .footer-address { color: #8a7a6a; }
 .footer-address i { color: var(--sky-deep); }
 .footer-bottom strong { color: var(--ink); }
+
+/* =========================================================
+   The hero and the download band move onto the light canvas
+   too, so the page carries one palette end to end.
+   ========================================================= */
+.hero {
+    background: #fff;
+    color: var(--ink);
+}
+/* the wash was two white radial glows meant for a saturated ground */
+.hero::before { display: none; }
+/* translucent white circles are invisible on white; give them the
+   page's own sky tint so the drift still reads */
+.bubble { background: rgba(51,190,224,.16); }
+
+.hero-text { color: var(--ink); }
+.hero-text p { color: #6b5a4a; }
+
+/* the triangle's captions were set for a dark ground */
+.trio-label { color: var(--ink); text-shadow: none; animation: none; }
+.trio-desc { color: #6b5a4a; text-shadow: none; }
+
+/* --- download band --- */
+#indir { background: #fff; }
