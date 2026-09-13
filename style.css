@@ -440,6 +440,10 @@ img.hero-logo {
     letter-spacing: var(--tracking-label);
     text-transform: uppercase;
     text-align: center;
+    /* the triangle's dashed lines are drawn at fixed coordinates, so the
+       node must not widen when a label gets longer — let it wrap instead */
+    max-width: 175px;
+    line-height: 1.25;
 }
 .trio-desc { font-size: var(--text-caption); line-height: 1.4; text-align: center; max-width: 165px; }
 
