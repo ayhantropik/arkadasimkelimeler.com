@@ -1705,9 +1705,7 @@ h1,h2,h3,h4,
 .flow-scroll {
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
-    background: #faf9ff;
-    border-radius: 18px;
-    padding: 1.5rem;
+    padding: 0 0 0.5rem;
 }
 .flow-scroll:focus-visible { outline: 3px solid #7c3aed; outline-offset: 3px; }
 .flow-diagram { display: block; width: 100%; min-width: 900px; height: auto; }
@@ -1749,5 +1747,4 @@ h1,h2,h3,h4,
 
 @media (max-width: 768px) {
     .flow-block { padding: 1.5rem 1rem; }
-    .flow-scroll { padding: 1rem; }
 }

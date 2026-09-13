@@ -1193,9 +1193,7 @@ footer h4 {
 .flow-scroll {
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
-    border: 2px solid var(--color-keyline);
-    border-radius: var(--radius);
-    padding: var(--spacing-24);
+    padding: 0 0 var(--spacing-8);
 }
 .flow-scroll:focus-visible { outline: 3px solid var(--color-cyan-deep); outline-offset: 3px; }
 .flow-diagram { display: block; width: 100%; min-width: 900px; height: auto; }
@@ -1250,5 +1248,4 @@ footer h4 {
 
 @media (max-width: 900px) {
     .flow-block { padding: var(--spacing-24) var(--spacing-16); }
-    .flow-scroll { padding: var(--spacing-16); }
 }
