@@ -2123,6 +2123,9 @@ section > .container,
 }
 
 /* the three newcomers, sized for their slots */
-#ozellikler .kahraman-sag { width: 120px; }   /* crane, a tall standing figure */
+/* swapped: the owl on the branch takes the top-right, the crane the
+   bottom-left, so the widths follow them */
+#ozellikler .kahraman-sag { width: 168px; }   /* owl on its branch, a wide figure */
+#ozellikler .kahraman-sol { width: 120px; }   /* crane, a tall standing figure */
 #oyunlar .kahraman-sol    { width: 150px; }
 #akademik .kahraman-orta  { width: 168px; }
