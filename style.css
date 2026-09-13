@@ -2002,3 +2002,47 @@ footer {
 .hero { background: var(--cream); }
 #ozellikler, #nasil-oynanir { background: #fff; }
 #oyunlar { background: var(--cream); }
+
+/* =========================================================
+   The flow diagram loses its card: it was a white panel inside
+   a white section, which cut the page's flow in two.
+   ========================================================= */
+.flow-block {
+    background: none;
+    border-radius: 0;
+    box-shadow: none;
+    padding: 0;
+}
+
+/* =========================================================
+   Story characters scattered down the page margins. They sit
+   behind the content and peek in from the edges, so they need
+   the section as their positioning context and a content layer
+   above them.
+   ========================================================= */
+section { position: relative; overflow: hidden; }
+section > .container,
+#sunum > .container,
+#akademik > .container { position: relative; z-index: 1; }
+
+.kahraman {
+    position: absolute;
+    bottom: 24px;
+    width: 168px;
+    height: auto;
+    z-index: 0;
+    opacity: .92;
+    pointer-events: none;
+    filter: drop-shadow(0 10px 16px rgba(32,22,12,.16));
+}
+.kahraman-sol  { left: -26px; }
+.kahraman-sag  { right: -26px; }
+
+/* the tall ones would tower over their band */
+#sunum .kahraman { width: 132px; }
+#sss .kahraman   { width: 150px; }
+
+/* below this the content reaches the edges and would collide */
+@media (max-width: 1180px) {
+    .kahraman { display: none; }
+}
