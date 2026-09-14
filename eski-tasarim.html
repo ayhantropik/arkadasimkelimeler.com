@@ -11,7 +11,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Baloo+2:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link href="https://fonts.cdnfonts.com/css/scrambled-tofu" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <link rel="stylesheet" href="eski-tasarim.css?v=52">
+    <link rel="stylesheet" href="eski-tasarim.css?v=53">
 </head>
 <body>
 
@@ -1454,29 +1454,37 @@
 })();
 </script>
 <script>
-// Kenar kahramanları: kadraja girdiklerinde bir parlamayla büyüyüp yerlerine
-// otururlar, sonra ekranda kaldıkları sürece salınarak nefes alırlar.
+// Kenar kahramanları: kadraja her girdiklerinde bir parlamayla büyüyüp
+// yerlerine otururlar, ekranda kaldıkları sürece salınarak nefes alırlar.
+// Kadrajdan tamamen çıkınca başa sarar, bir sonraki girişte yeniden oynar.
 (function () {
-    if (!window.gsap || !window.ScrollTrigger) return;
-    gsap.registerPlugin(ScrollTrigger);
+    if (!window.gsap) return;
 
     var SHADOW = 'drop-shadow(0 10px 16px rgba(32, 22, 12, 0.16))';
     var REST = 'drop-shadow(0 0 0px rgba(249, 178, 51, 0)) ' + SHADOW;
     var GLOW = 'drop-shadow(0 0 34px rgba(249, 178, 51, 1)) ' + SHADOW;
 
-    var mm = gsap.matchMedia();
-
-    // 1320px altında kahramanlar zaten gizli, oraya hiç uğramayalım.
-    mm.add({
+    gsap.matchMedia().add({
         tam: '(min-width: 1321px) and (prefers-reduced-motion: no-preference)',
         sakin: '(min-width: 1321px) and (prefers-reduced-motion: reduce)'
     }, function (ctx) {
         // "Hareketi azalt" açıksa hareket yok ama karakter yine de belirsin:
         // sadece yumuşak bir açılma kalır.
         var sakin = ctx.conditions.sakin;
+        var kayitlar = [];
 
         gsap.utils.toArray('.kahraman').forEach(function (el, i) {
             var sag = el.classList.contains('kahraman-sag');
+
+            var BASLANGIC = {
+                // ayağının bastığı köşeden büyüsün, havada şişmesin
+                transformOrigin: sag ? '100% 100%' : '0% 100%',
+                autoAlpha: 0,
+                scale: sakin ? 1 : 0.72,
+                y: sakin ? 0 : 26,
+                rotation: sakin ? 0 : (sag ? 6 : -6),
+                filter: sakin ? REST : GLOW
+            };
 
             var sway = sakin ? null : gsap.to(el, {
                 rotation: sag ? -2.6 : 2.6,
@@ -1489,32 +1497,19 @@
                 paused: true
             });
 
-            // Başlangıç duruşu daha sayfa açılırken, karakter ekranın altında
-            // kalırken kuruluyor: hiçbir sıçrama görünmüyor. O an zaten ekranda
-            // olan varsa animasyonsuz, olduğu gibi kalır.
-            var girdi = el.getBoundingClientRect().top < window.innerHeight;
-            if (!girdi) {
-                gsap.set(el, {
-                    // ayağının bastığı köşeden büyüsün, havada şişmesin
-                    transformOrigin: sag ? '100% 100%' : '0% 100%',
-                    autoAlpha: 0,
-                    scale: sakin ? 1 : 0.72,
-                    y: sakin ? 0 : 26,
-                    rotation: sakin ? 0 : (sag ? 6 : -6),
-                    filter: sakin ? REST : GLOW
-                });
-            }
-
-            var st = ScrollTrigger.create({
-                trigger: el,
-                // kadrajın içine iyice girdiğinde oynasın; en alt kenarda
-                // oynarsa iş işten geçmiş oluyor
-                start: 'top 85%',
-                end: 'bottom top',
-                onToggle: function (self) {
-                    if (!self.isActive) { if (sway) sway.pause(); return; }
-                    if (girdi) { if (sway) sway.resume(); return; }
-                    girdi = true;
+            var kayit = {
+                el: el,
+                durum: '',
+                bekle: function () {
+                    if (kayit.durum === 'bekliyor') return;
+                    kayit.durum = 'bekliyor';
+                    gsap.killTweensOf(el);
+                    if (sway) sway.pause();
+                    gsap.set(el, BASLANGIC);
+                },
+                oyna: function () {
+                    if (kayit.durum === 'oynuyor') return;
+                    kayit.durum = 'oynuyor';
                     if (sakin) {
                         gsap.to(el, { autoAlpha: 0.92, duration: 0.6, ease: 'power1.out' });
                         return;
@@ -1526,15 +1521,48 @@
                         })
                         .to(el, { filter: REST, duration: 1.5, ease: 'power2.out' }, 0);
                 }
-            });
-
-            // sayfa zaten o karakterin hizasında açıldıysa onToggle hiç
-            // tetiklenmez; salınımı burada başlat
-            if (girdi && sway && st.isActive) sway.play(0);
+            };
+            kayit.bekle();
+            kayitlar.push(kayit);
         });
 
-        // görseller geç yüklendiği için tetik noktaları kayabiliyor
-        window.addEventListener('load', function () { ScrollTrigger.refresh(); });
+        // Durumu kaydırma olaylarına değil, o anki konuma bakarak veriyoruz.
+        // ScrollTrigger'ın giriş/çıkış geri çağrıları bir sıçrama kadrajı
+        // tümüyle atlarsa (menüden bölüme geçiş) hiç tetiklenmiyor ve kahraman
+        // gizli kalıyordu; buradaki denetim nereden gelindiğine bakmıyor.
+        // Önce hepsi okunuyor, sonra yazılıyor: araya giren yazma, sonraki
+        // okumaları yeniden düzen hesabına zorlamasın.
+        function denetle() {
+            var ih = window.innerHeight, i, r;
+            var yapilacak = [];
+            for (i = 0; i < kayitlar.length; i++) {
+                r = kayitlar[i].el.getBoundingClientRect();
+                if (r.bottom <= 0 || r.top >= ih) yapilacak.push([kayitlar[i], 0]);
+                else if (r.top <= ih * 0.85) yapilacak.push([kayitlar[i], 1]);
+            }
+            for (i = 0; i < yapilacak.length; i++) {
+                if (yapilacak[i][1]) yapilacak[i][0].oyna();
+                else yapilacak[i][0].bekle();
+            }
+        }
+
+        var sirada = false;
+        function tetikle() {
+            if (sirada) return;
+            sirada = true;
+            requestAnimationFrame(function () { sirada = false; denetle(); });
+        }
+
+        window.addEventListener('scroll', tetikle, { passive: true });
+        window.addEventListener('resize', tetikle);
+        window.addEventListener('load', tetikle);
+        denetle();
+
+        return function () {
+            window.removeEventListener('scroll', tetikle);
+            window.removeEventListener('resize', tetikle);
+            window.removeEventListener('load', tetikle);
+        };
     });
 })();
 </script>
