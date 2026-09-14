@@ -11,7 +11,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Baloo+2:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link href="https://fonts.cdnfonts.com/css/scrambled-tofu" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <link rel="stylesheet" href="eski-tasarim.css?v=58">
+    <link rel="stylesheet" href="eski-tasarim.css?v=59">
 </head>
 <body>
 
@@ -1728,11 +1728,30 @@ window.KahramanSes = (function () {
             // bölümün ortasında oldukları için maskelenemiyor, onlar yola
             // sönük çıkıp hızla açılıyor.
             var giris = el.getAttribute('data-giris') || 'yan';
+
+            // Her giriş kendi yol eğrisini kuruyor. Düşüş tek bir tweende
+            // olmuyor: hazır sekme eğrisi (bounce.out) sert bir lastik top
+            // gibi, üç kez zıplayıp duruyordu. Yerine iki parça — yer çekimiyle
+            // hızlanan bir iniş, ardından yastığa basar gibi geri yumuşayan bir
+            // toparlanma. Aşağı doğru küçük bir gömülme, sekme yerine ağırlık
+            // hissi veriyor.
             var HAREKET = {
-                yan:   { ease: 'power3.out',    sure: 1.15 },
-                dus:   { ease: 'bounce.out',    sure: 1.25 },
-                zipla: { ease: 'back.out(2.4)', sure: 1.10 }
+                yan: function (tl) {
+                    tl.to(el, { x: 0, y: 0, duration: 1.15, ease: 'power3.out' });
+                },
+                dus: function (tl) {
+                    tl.to(el, { y: 11, duration: 0.66, ease: 'power2.in' })
+                      .to(el, { y: 0, duration: 0.74, ease: 'power2.out' });
+                },
+                zipla: function (tl) {
+                    tl.to(el, { x: 0, y: 0, duration: 1.10, ease: 'back.out(2.4)' });
+                }
             }[giris];
+
+            // Düşerken dönüş ve büyüme de yaylanmasın; her şeyin aynı anda
+            // sekmesi mekanikliği katlıyordu.
+            var DURUS_EASE = giris === 'dus' ? 'power2.out' : 'back.out(1.8)';
+            var DURUS_SURE = giris === 'dus' ? 1.4 : 1.25;
 
             function baslangic() {
                 // Mesafeler her sıfırlamada yeniden ölçülüyor: genişlik ekran
@@ -1810,13 +1829,13 @@ window.KahramanSes = (function () {
                     }
                     // invalidate: salınım başlangıcını her seferinde o anki
                     // duruştan okusun, ilk oynadığı andaki değerlere saplanmasın
-                    girisTl = gsap.timeline({ onComplete: function () { sway.invalidate().play(0); } })
-                        // Yanlamasına geliş sekmiyor: geri yaylanma kahramanı
-                        // duracağı yerin ötesine, metin sütununa doğru iter.
-                        // Düşüşün sekmesi ve zıplayışın tepe noktası dikeyde,
-                        // orada boşluk var.
-                        .to(el, { x: 0, y: 0, duration: HAREKET.sure, ease: HAREKET.ease })
-                        .to(el, { scale: 1, rotation: 0, duration: 1.25, ease: 'back.out(1.8)' }, 0)
+                    girisTl = gsap.timeline({ onComplete: function () { sway.invalidate().play(0); } });
+                    // Yanlamasına geliş sekmiyor: geri yaylanma kahramanı
+                    // duracağı yerin ötesine, metin sütununa doğru iter.
+                    // Zıplayışın tepe noktası dikeyde, orada boşluk var.
+                    HAREKET(girisTl);
+                    girisTl
+                        .to(el, { scale: 1, rotation: 0, duration: DURUS_SURE, ease: DURUS_EASE }, 0)
                         .to(el, { autoAlpha: 0.92, duration: 0.4, ease: 'power1.out' }, 0)
                         .to(el, { filter: REST, duration: 1.5, ease: 'power2.out' }, 0);
                 }
