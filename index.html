@@ -11,7 +11,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Baloo+2:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link href="https://fonts.cdnfonts.com/css/scrambled-tofu" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <link rel="stylesheet" href="style.css?v=52">
+    <link rel="stylesheet" href="style.css?v=54">
 </head>
 <body>
 
@@ -335,6 +335,7 @@
 <section id="oyunlar">
     <img src="kahraman-hindi.png?v=1" alt="" aria-hidden="true" class="kahraman kahraman-sol kahraman-ust" loading="lazy">
     <img src="kahraman-tavsan-zil.png?v=1" alt="" aria-hidden="true" class="kahraman kahraman-sag" loading="lazy">
+    <img src="kahraman-baykus-kitap.png?v=1" alt="" aria-hidden="true" class="kahraman kahraman-sag kahraman-orta" loading="lazy">
     <div class="container">
         <h2 class="section-title fade-in">Oyunlarımız</h2>
         <p class="section-subtitle fade-in">Platformumuzda seni bekleyen birbirinden eğlenceli kelime oyunlarını keşfet!</p>
@@ -613,7 +614,6 @@
 
 <!-- TESTIMONIALS -->
 <section id="yorumlar">
-    <img src="kahraman-baykus-kitap.png?v=1" alt="" aria-hidden="true" class="kahraman kahraman-sag kahraman-ust" loading="lazy">
     <img src="kahraman-ayi-semsiye.png?v=1" alt="" aria-hidden="true" class="kahraman kahraman-sol" loading="lazy">
     <div class="container">
         <h2 class="section-title fade-in">Kullanıcılarımız Ne Diyor?</h2>
@@ -1470,48 +1470,57 @@
         function () {
             var SHADOW = 'drop-shadow(0 10px 16px rgba(32, 22, 12, 0.16))';
             var REST = 'drop-shadow(0 0 0px rgba(249, 178, 51, 0)) ' + SHADOW;
-            var GLOW = 'drop-shadow(0 0 22px rgba(249, 178, 51, 0.9)) ' + SHADOW;
+            var GLOW = 'drop-shadow(0 0 26px rgba(249, 178, 51, 0.95)) ' + SHADOW;
 
             gsap.utils.toArray('.kahraman').forEach(function (el, i) {
                 var sag = el.classList.contains('kahraman-sag');
                 var sway = gsap.to(el, {
-                    rotation: sag ? -1.6 : 1.6,
-                    y: -5,
+                    rotation: sag ? -2.2 : 2.2,
+                    y: -7,
                     duration: 3 + (i % 5) * 0.4,
                     ease: 'sine.inOut',
                     repeat: -1,
                     yoyo: true,
                     paused: true
                 });
-                var girdi = false;
+                // Başlangıç duruşu daha sayfa açılırken, karakter ekranın
+                // altında kalırken kuruluyor: hiçbir sıçrama görünmüyor. O an
+                // zaten ekranda olan varsa animasyonsuz, olduğu gibi kalır.
+                var girdi = el.getBoundingClientRect().top < window.innerHeight;
+                if (!girdi) {
+                    gsap.set(el, {
+                        // ayağının bastığı köşeden büyüsün, havada şişmesin
+                        transformOrigin: sag ? '100% 100%' : '0% 100%',
+                        autoAlpha: 0,
+                        scale: 0.8,
+                        y: 20,
+                        rotation: sag ? 4 : -4,
+                        filter: GLOW
+                    });
+                }
 
-                ScrollTrigger.create({
+                var st = ScrollTrigger.create({
                     trigger: el,
-                    // tam ilk pikseli görününce: böylece sıfırlama anında
-                    // ekranda hiçbir parçası yok, sıçrama görünmez
-                    start: 'top bottom',
+                    // kadrajın içine iyice girdiğinde oynasın; en alt kenarda
+                    // oynarsa iş işten geçmiş oluyor
+                    start: 'top 85%',
                     end: 'bottom top',
                     onToggle: function (self) {
                         if (!self.isActive) { sway.pause(); return; }
                         if (girdi) { sway.resume(); return; }
                         girdi = true;
-                        gsap.set(el, {
-                            // ayağının bastığı köşeden büyüsün, havada şişmesin
-                            transformOrigin: sag ? '100% 100%' : '0% 100%',
-                            autoAlpha: 0,
-                            scale: 0.84,
-                            y: 16,
-                            rotation: sag ? 3.5 : -3.5,
-                            filter: GLOW
-                        });
                         gsap.timeline({ onComplete: function () { sway.play(0); } })
                             .to(el, {
                                 autoAlpha: 0.92, scale: 1, y: 0, rotation: 0,
-                                duration: 0.9, ease: 'back.out(1.4)'
+                                duration: 1, ease: 'back.out(1.7)'
                             })
-                            .to(el, { filter: REST, duration: 1.2, ease: 'power2.out' }, 0);
+                            .to(el, { filter: REST, duration: 1.4, ease: 'power2.out' }, 0);
                     }
                 });
+
+                // sayfa zaten o karakterin hizasında açıldıysa onToggle hiç
+                // tetiklenmez; salınımı burada başlat
+                if (girdi && st.isActive) sway.play(0);
             });
         }
     );
