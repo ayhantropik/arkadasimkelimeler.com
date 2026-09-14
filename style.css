@@ -2104,11 +2104,12 @@ section > .container,
 
 /* The two long sections carry more than one character, so those are
    pinned at different heights instead of sharing the bottom edge. */
-.kahraman-ust  { top: 13%; bottom: auto; }
-.kahraman-orta { top: 46%; bottom: auto; }
-/* a fourth stop, low in a long section but still clear of the block that
-   follows — keeps three characters from landing in one screenful */
-.kahraman-alt  { top: 70%; bottom: auto; }
+/* A free vertical stop instead of a ladder of fixed ones: --ky is how far
+   down its section the character stands, in percent. The spacing down the
+   page is what has to come out even, and the sections are nothing like the
+   same height, so the stops cannot be. Without --ky it rests on the section
+   floor. */
+.kahraman-y { top: calc(var(--ky, 46) * 1%); bottom: auto; }
 
 /* sizes re-pointed after the shuffle */
 /* the reading owl chick moved here from the FAQ */
@@ -2148,6 +2149,3 @@ section > .container,
 .kahraman[src*="kahraman-hindi.png"]       { --k: 0.95; }
 .kahraman[src*="kahraman-leylek-tezgah"]   { --k: 0.89; }
 .kahraman[src*="kahraman-baykus-kitap"]    { --k: 0.88; }
-.kahraman[src*="kahraman-rakun"]           { --k: 0.87; }
-.kahraman[src*="kahraman-turna"]           { --k: 0.80; }
-.kahraman[src*="kahraman-porsuk"]          { --k: 0.67; }
