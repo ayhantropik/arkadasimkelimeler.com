@@ -11,7 +11,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Baloo+2:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link href="https://fonts.cdnfonts.com/css/scrambled-tofu" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <link rel="stylesheet" href="eski-tasarim.css?v=54">
+    <link rel="stylesheet" href="eski-tasarim.css?v=55">
 </head>
 <body>
 
@@ -1476,13 +1476,14 @@
         gsap.utils.toArray('.kahraman').forEach(function (el, i) {
             var sag = el.classList.contains('kahraman-sag');
 
+            // x her sıfırlamada ayrıca veriliyor; gerisi sabit.
             var BASLANGIC = {
                 // ayağının bastığı köşeden büyüsün, havada şişmesin
                 transformOrigin: sag ? '100% 100%' : '0% 100%',
                 autoAlpha: 0,
-                scale: sakin ? 1 : 0.72,
-                y: sakin ? 0 : 26,
-                rotation: sakin ? 0 : (sag ? 6 : -6),
+                scale: sakin ? 1 : 0.88,
+                y: sakin ? 0 : 12,
+                rotation: sakin ? 0 : (sag ? 9 : -9),
                 filter: sakin ? REST : GLOW
             };
 
@@ -1505,20 +1506,28 @@
                     kayit.durum = 'bekliyor';
                     gsap.killTweensOf(el);
                     if (sway) sway.pause();
-                    gsap.set(el, BASLANGIC);
+                    // Sayfanın dışındaki bekleme noktası her seferinde yeniden
+                    // ölçülüyor: genişlik ekran genişliğine bağlı ve --k ile
+                    // kahramandan kahramana değişiyor. offsetWidth dönüşümden
+                    // etkilenmediği için görsel henüz yüklenmemişken de doğru.
+                    var disari = el.offsetWidth + 48;
+                    gsap.set(el, Object.assign({ x: sag ? disari : -disari }, BASLANGIC));
                 },
                 oyna: function () {
                     if (kayit.durum === 'oynuyor') return;
                     kayit.durum = 'oynuyor';
                     if (sakin) {
-                        gsap.to(el, { autoAlpha: 0.92, duration: 0.6, ease: 'power1.out' });
+                        gsap.to(el, { x: 0, autoAlpha: 0.92, duration: 0.6, ease: 'power1.out' });
                         return;
                     }
                     gsap.timeline({ onComplete: function () { sway.play(0); } })
-                        .to(el, {
-                            autoAlpha: 0.92, scale: 1, y: 0, rotation: 0,
-                            duration: 1.1, ease: 'back.out(1.7)'
-                        })
+                        // Kayma yumuşak duruyor, sekmiyor: geri yaylanma
+                        // kahramanı metin sütununa doğru fazladan içeri iter.
+                        .to(el, { x: 0, y: 0, duration: 1.15, ease: 'power3.out' })
+                        // Karakteri veren yaylanma dönüşte ve büyümede; ikisi de
+                        // yatayda yer kazandırmıyor.
+                        .to(el, { scale: 1, rotation: 0, duration: 1.25, ease: 'back.out(1.8)' }, 0)
+                        .to(el, { autoAlpha: 0.92, duration: 0.4, ease: 'power1.out' }, 0)
                         .to(el, { filter: REST, duration: 1.5, ease: 'power2.out' }, 0);
                 }
             };
