@@ -2135,17 +2135,17 @@ section > .container,
    character carries a multiplier that evens out its *inked* area: the count
    of non-transparent pixels, scaled to the median. Measured per file, not
    eyeballed. */
-.kahraman[src*="kahraman-leylek-ayi"]      { --k: 1.35; }
-.kahraman[src*="kahraman-baykus-dal"]      { --k: 1.28; }
-.kahraman[src*="kahraman-hindi-isaret"]    { --k: 1.18; }
-.kahraman[src*="kahraman-kunduz-rende"]    { --k: 1.16; }
-.kahraman[src*="kahraman-baykus-ogretmen"] { --k: 1.15; }
-.kahraman[src*="kahraman-tavuk-sepet"]     { --k: 1.12; }
-.kahraman[src*="kahraman-tavsan-zil"]      { --k: 1.11; }
-.kahraman[src*="kahraman-kunduz-sepet"]    { --k: 1.04; }
-.kahraman[src*="kahraman-baykus-soru"]     { --k: 1.00; }
-.kahraman[src*="kahraman-ayi-semsiye"]     { --k: 0.98; }
-.kahraman[src*="kahraman-leylek-sepet"]    { --k: 0.97; }
-.kahraman[src*="kahraman-hindi.png"]       { --k: 0.95; }
-.kahraman[src*="kahraman-leylek-tezgah"]   { --k: 0.89; }
-.kahraman[src*="kahraman-baykus-kitap"]    { --k: 0.88; }
+.kahraman[src*="kahraman-leylek-ayi.png"]        { --k: 1.23; }
+.kahraman[src*="kahraman-hindi-isaret"]          { --k: 1.08; }
+.kahraman[src*="kahraman-sepet-dersi"]           { --k: 1.07; }
+.kahraman[src*="kahraman-kunduz-rende"]          { --k: 1.05; }
+.kahraman[src*="kahraman-tavuk-sepet"]           { --k: 1.02; }
+.kahraman[src*="kahraman-tavsan-zil"]            { --k: 1.01; }
+.kahraman[src*="kahraman-ayi-sal"]               { --k: 1.00; }
+.kahraman[src*="kahraman-kunduz-sepet"]          { --k: 0.95; }
+.kahraman[src*="kahraman-ayi-kova"]              { --k: 0.94; }
+.kahraman[src*="kahraman-ayi-semsiye"]           { --k: 0.89; }
+.kahraman[src*="kahraman-leylek-sepet"]          { --k: 0.88; }
+.kahraman[src*="kahraman-hindi.png"]             { --k: 0.87; }
+.kahraman[src*="kahraman-leylek-tezgah"]         { --k: 0.81; }
+.kahraman[src*="kahraman-baykus-kitap"]          { --k: 0.80; }
