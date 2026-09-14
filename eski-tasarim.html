@@ -11,7 +11,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Baloo+2:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link href="https://fonts.cdnfonts.com/css/scrambled-tofu" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <link rel="stylesheet" href="eski-tasarim.css?v=56">
+    <link rel="stylesheet" href="eski-tasarim.css?v=57">
 </head>
 <body>
 
@@ -30,6 +30,11 @@
         <li><a href="#akademik">Bilimsel Sunum</a></li>
         <li><a href="#indir">İndir</a></li>
     </ul>
+    <button class="ses-dugme" id="ses-dugme" type="button"
+            aria-pressed="false" aria-label="Hayvan seslerini aç">
+        <span class="ses-ikon" aria-hidden="true">🔇</span>
+        <span class="ses-yazi">Ses</span>
+    </button>
     <button class="hamburger" id="hamburger" aria-label="Menü">
         <span></span><span></span><span></span>
     </button>
@@ -276,8 +281,8 @@
 
 <!-- FEATURES -->
 <section id="ozellikler">
-    <img src="kahraman-ayi-kova.png?v=1" alt="" aria-hidden="true" class="kahraman kahraman-sag kahraman-y" style="--ky: 13" loading="lazy">
-    <img src="kahraman-hindi.png?v=1" data-giris="dus" alt="" aria-hidden="true" class="kahraman kahraman-sol" loading="lazy">
+    <img src="kahraman-ayi-kova.png?v=1" data-ses="ayi" alt="" aria-hidden="true" class="kahraman kahraman-sag kahraman-y" style="--ky: 13" loading="lazy">
+    <img src="kahraman-hindi.png?v=1" data-ses="hindi" data-giris="dus" alt="" aria-hidden="true" class="kahraman kahraman-sol" loading="lazy">
     <div class="container">
         <h2 class="section-title fade-in">Özellikler</h2>
         <p class="section-subtitle fade-in">Türkiye'nin ilk ve tek tam yapılandırılmış İlk Okuma-Yazma Öğretimine hoş geldin! Kelime oyunlarını seviyorsan, öğrenirken gelişmek ve ömür boyu kullanacağın bilişsel yetenekler kazanmak istiyorsan doğru yerdesin! İşte seni bekleyen harika özellikler.</p>
@@ -333,8 +338,8 @@
 
 <!-- GAMES -->
 <section id="oyunlar">
-    <img src="kahraman-sepet-dersi.png?v=1" alt="" aria-hidden="true" class="kahraman kahraman-sag kahraman-y" style="--ky: 33" loading="lazy">
-    <img src="kahraman-tavsan-zil.png?v=1" data-giris="zipla" alt="" aria-hidden="true" class="kahraman kahraman-sol kahraman-y" style="--ky: 72" loading="lazy">
+    <img src="kahraman-sepet-dersi.png?v=1" data-ses="leylek" alt="" aria-hidden="true" class="kahraman kahraman-sag kahraman-y" style="--ky: 33" loading="lazy">
+    <img src="kahraman-tavsan-zil.png?v=1" data-ses="tavsan" data-giris="zipla" alt="" aria-hidden="true" class="kahraman kahraman-sol kahraman-y" style="--ky: 72" loading="lazy">
     <div class="container">
         <h2 class="section-title fade-in">Oyunlarımız</h2>
         <p class="section-subtitle fade-in">Platformumuzda seni bekleyen birbirinden eğlenceli kelime oyunlarını keşfet!</p>
@@ -465,8 +470,8 @@
 
 <!-- HOW TO PLAY -->
 <section id="nasil-oynanir">
-    <img src="kahraman-ayi-semsiye.png?v=1" data-giris="dus" alt="" aria-hidden="true" class="kahraman kahraman-sag kahraman-y" style="--ky: 20" loading="lazy">
-    <img src="kahraman-kunduz-rende.png?v=1" alt="" aria-hidden="true" class="kahraman kahraman-sol" loading="lazy">
+    <img src="kahraman-ayi-semsiye.png?v=1" data-ses="ayi" data-giris="dus" alt="" aria-hidden="true" class="kahraman kahraman-sag kahraman-y" style="--ky: 20" loading="lazy">
+    <img src="kahraman-kunduz-rende.png?v=1" data-ses="kunduz" alt="" aria-hidden="true" class="kahraman kahraman-sol" loading="lazy">
     <div class="container">
         <h2 class="section-title fade-in">Sistem Nasıl Çalışır?</h2>
         <p class="section-subtitle fade-in">Dört kolay adımda eğlenceye katıl!</p>
@@ -612,7 +617,7 @@
 
 <!-- TESTIMONIALS -->
 <section id="yorumlar">
-    <img src="kahraman-leylek-tezgah.png?v=1" data-giris="zipla" alt="" aria-hidden="true" class="kahraman kahraman-sag kahraman-y" style="--ky: 63" loading="lazy">
+    <img src="kahraman-leylek-tezgah.png?v=1" data-ses="leylek" data-giris="zipla" alt="" aria-hidden="true" class="kahraman kahraman-sag kahraman-y" style="--ky: 63" loading="lazy">
     <div class="container">
         <h2 class="section-title fade-in">Kullanıcılarımız Ne Diyor?</h2>
         <p class="section-subtitle fade-in">Milyonlarca mutlu kullanıcıdan bazıları...</p>
@@ -693,9 +698,9 @@
 
 <!-- SUNUM / PRESENTATION -->
 <section id="sunum">
-    <img src="kahraman-hindi-isaret.png?v=1" alt="" aria-hidden="true" class="kahraman kahraman-sol kahraman-y" style="--ky: 6" loading="lazy">
-    <img src="kahraman-ayi-sal.png?v=1" data-giris="zipla" alt="" aria-hidden="true" class="kahraman kahraman-sag kahraman-y" style="--ky: 40" loading="lazy">
-    <img src="kahraman-tavuk-sepet.png?v=1" data-giris="dus" alt="" aria-hidden="true" class="kahraman kahraman-sol kahraman-y" style="--ky: 74" loading="lazy">
+    <img src="kahraman-hindi-isaret.png?v=1" data-ses="hindi" alt="" aria-hidden="true" class="kahraman kahraman-sol kahraman-y" style="--ky: 6" loading="lazy">
+    <img src="kahraman-ayi-sal.png?v=1" data-ses="ayi" data-giris="zipla" alt="" aria-hidden="true" class="kahraman kahraman-sag kahraman-y" style="--ky: 40" loading="lazy">
+    <img src="kahraman-tavuk-sepet.png?v=1" data-ses="tavuk" data-giris="dus" alt="" aria-hidden="true" class="kahraman kahraman-sol kahraman-y" style="--ky: 74" loading="lazy">
     <div class="container">
         <h2 class="section-title fade-in">Arkadaşım Kelimeler</h2>
         <p class="section-subtitle fade-in">Yapay Zeka ve Nörobilim ile İlk Okuma Yazmayı Yeniden Tanımlıyoruz</p>
@@ -862,9 +867,9 @@
 
 <!-- ACADEMIC -->
 <section id="akademik">
-    <img src="kahraman-leylek-ayi.png?v=1" alt="" aria-hidden="true" class="kahraman kahraman-sag kahraman-y" style="--ky: 8" loading="lazy">
-    <img src="kahraman-baykus-kitap.png?v=1" data-giris="dus" alt="" aria-hidden="true" class="kahraman kahraman-sol kahraman-y" style="--ky: 41" loading="lazy">
-    <img src="kahraman-leylek-sepet.png?v=1" data-giris="zipla" alt="" aria-hidden="true" class="kahraman kahraman-sag kahraman-y" style="--ky: 75" loading="lazy">
+    <img src="kahraman-leylek-ayi.png?v=1" data-ses="leylek" alt="" aria-hidden="true" class="kahraman kahraman-sag kahraman-y" style="--ky: 8" loading="lazy">
+    <img src="kahraman-baykus-kitap.png?v=1" data-ses="baykus" data-giris="dus" alt="" aria-hidden="true" class="kahraman kahraman-sol kahraman-y" style="--ky: 41" loading="lazy">
+    <img src="kahraman-leylek-sepet.png?v=1" data-ses="leylek" data-giris="zipla" alt="" aria-hidden="true" class="kahraman kahraman-sag kahraman-y" style="--ky: 75" loading="lazy">
     <div class="container">
         <h2 class="section-title fade-in">Bilimsel Temel</h2>
         <p class="section-subtitle fade-in">İlk Okuma Yazma: Bir Çocuğun Eğitim Hayatındaki En Kritik Eşik</p>
@@ -1136,7 +1141,7 @@
 
 <!-- CTA -->
 <section id="indir">
-    <img src="kahraman-kunduz-sepet.png?v=1" alt="" aria-hidden="true" class="kahraman kahraman-sol" loading="lazy">
+    <img src="kahraman-kunduz-sepet.png?v=1" data-ses="kunduz" alt="" aria-hidden="true" class="kahraman kahraman-sol" loading="lazy">
     <div class="container fade-in">
         <h2 class="brand-name">Hemen İndir, Eğlenceye Katıl!</h2>
         <p>Milyonlarca oyuncunun arasına katıl ve kelimelerin büyülü dünyasını keşfet. Ücretsiz!</p>
@@ -1454,6 +1459,248 @@
 })();
 </script>
 <script>
+// Kahraman sesleri. Kayıt dosyası yerine Web Audio ile sentezleniyor: sayfaya
+// tek bir ek istek bile getirmiyor ve çizgi film tarzı, gerçekçi olmayan bir
+// tını çocuk illüstrasyonlarına daha çok yakışıyor.
+//
+// Tarayıcılar sayfada bir tıklama olmadan ses çaldırmaz — kaydırma yetmez.
+// Bu yüzden ses varsayılan olarak kapalı ve düğmeye ilk basış hem sesi açıyor
+// hem tarayıcının iznini alıyor. Tercih localStorage'da saklanıyor.
+window.KahramanSes = (function () {
+    var AC = window.AudioContext || window.webkitAudioContext;
+    var ctx = null, ana = null;
+    var cikis = null;               // o an kurulan sesin kendi kanalı
+    var acik = false;
+    var sonCalma = 0;
+
+    // Türlerin ham seviyeleri birbirini tutmuyor: leylek gaga takırtısı seyrek
+    // darbelerden oluştuğu için baykuşun onda biri kadar güç taşıyor. Aşağıdaki
+    // düzeltmeler çevrimdışı render edilip ölçülen tepe ve RMS değerlerinden
+    // çıkarıldı; tıkırtılı olanlar (leylek, tavuk, kunduz) tepe eşitlemesinin
+    // bir tık üstüne alındı, çünkü kısa darbeler kulağa gücünden sönük geliyor.
+    var DUZELTME = {
+        baykus: 1.00, hindi: 1.70, leylek: 5.00, ayi: 1.45,
+        tavuk: 2.40, kunduz: 1.35, tavsan: 0.95
+    };
+
+    function baslat() {
+        if (ctx || !AC) return;
+        ctx = new AC();
+        ana = ctx.createGain();
+        ana.gain.value = 0.40;          // kendi başına duyulur ama bastırmaz
+        ana.connect(ctx.destination);
+    }
+
+    function gurultu(sure) {
+        var n = Math.max(1, Math.floor(ctx.sampleRate * sure));
+        var tampon = ctx.createBuffer(1, n, ctx.sampleRate);
+        var d = tampon.getChannelData(0);
+        for (var i = 0; i < n; i++) d[i] = Math.random() * 2 - 1;
+        var k = ctx.createBufferSource();
+        k.buffer = tampon;
+        return k;
+    }
+
+    function zarf(t0, sure, tepe, kalkis) {
+        var g = ctx.createGain();
+        kalkis = kalkis || 0.012;
+        g.gain.setValueAtTime(0.0001, t0);
+        g.gain.exponentialRampToValueAtTime(tepe, t0 + kalkis);
+        g.gain.exponentialRampToValueAtTime(0.0001, t0 + sure);
+        return g;
+    }
+
+    // tek bir tıkırtı / cıvıltı: süzülmüş gürültü darbesi
+    function darbe(t0, sure, frekans, Q, tepe) {
+        var k = gurultu(sure + 0.02);
+        var f = ctx.createBiquadFilter();
+        f.type = 'bandpass'; f.frequency.value = frekans; f.Q.value = Q;
+        var g = zarf(t0, sure, tepe, 0.004);
+        k.connect(f); f.connect(g); g.connect(cikis);
+        k.start(t0); k.stop(t0 + sure + 0.02);
+    }
+
+    // tek bir ötüş: kaydırmalı ton
+    function ton(t0, sure, tip, f1, f2, tepe, kalkis) {
+        var o = ctx.createOscillator();
+        o.type = tip;
+        o.frequency.setValueAtTime(f1, t0);
+        o.frequency.exponentialRampToValueAtTime(Math.max(20, f2), t0 + sure);
+        var g = zarf(t0, sure, tepe, kalkis);
+        o.connect(g); g.connect(cikis);
+        o.start(t0); o.stop(t0 + sure + 0.02);
+        return o;
+    }
+
+    var SESLER = {
+        // baykuş: iki yumuşak "hu-huu", hafif titreşimli
+        baykus: function (t) {
+            [[0, 0.5], [0.72, 0.85], [1.9, 0.5]].forEach(function (p, i) {
+                var t0 = t + p[0], sure = p[1];
+                var o = ton(t0, sure, 'sine', 402, 366, 0.5, 0.09);
+                var lfo = ctx.createOscillator(), lg = ctx.createGain();
+                lfo.frequency.value = 5.5; lg.gain.value = 7;
+                lfo.connect(lg); lg.connect(o.frequency);
+                lfo.start(t0); lfo.stop(t0 + sure);
+                // ikinci harmonik, sesi biraz doldursun
+                ton(t0, sure * 0.9, 'sine', 804, 732, 0.12, 0.1);
+            });
+            return 2.4;
+        },
+        // hindi: hızlı "gulu-gulu" — taşıyıcıyı çırpıştırarak
+        hindi: function (t) {
+            for (var g = 0; g < 3; g++) {
+                var t0 = t + g * 0.72;
+                ton(t0, 0.1, 'sawtooth', 320, 520, 0.35, 0.01);
+                for (var i = 0; i < 13; i++) {
+                    var ti = t0 + 0.12 + i * 0.033;
+                    var f = 430 + (i % 2 ? 190 : -70) + Math.random() * 70;
+                    ton(ti, 0.03, 'sawtooth', f, f * 0.8, 0.34, 0.004);
+                }
+            }
+            return 2.3;
+        },
+        // leylek: gaga takırtısı — hızlanıp yavaşlayan tıkırtı dizisi
+        leylek: function (t) {
+            var ti = t, aralik = 0.085;
+            for (var i = 0; i < 26; i++) {
+                darbe(ti, 0.028, 1500 + Math.random() * 900, 7, 0.55);
+                darbe(ti + 0.006, 0.02, 3100 + Math.random() * 700, 9, 0.28);
+                aralik = i < 13 ? aralik * 0.93 : aralik * 1.09;
+                ti += aralik;
+                if (ti > t + 2.3) break;
+            }
+            return 2.4;
+        },
+        // ayı: alçak homurtu, iki nefes
+        ayi: function (t) {
+            [[0, 0.95], [1.15, 1.05]].forEach(function (p) {
+                var t0 = t + p[0], sure = p[1];
+                var o = ton(t0, sure, 'sawtooth', 88, 66, 0.42, 0.12);
+                var lfo = ctx.createOscillator(), lg = ctx.createGain();
+                lfo.type = 'triangle'; lfo.frequency.value = 22; lg.gain.value = 16;
+                lfo.connect(lg); lg.connect(o.frequency);
+                lfo.start(t0); lfo.stop(t0 + sure);
+                // nefes uğultusu
+                var k = gurultu(sure), f = ctx.createBiquadFilter();
+                f.type = 'lowpass'; f.frequency.value = 420;
+                var g = zarf(t0, sure, 0.1, 0.15);
+                k.connect(f); f.connect(g); g.connect(cikis);
+                k.start(t0); k.stop(t0 + sure);
+            });
+            return 2.3;
+        },
+        // tavuk: "gıt gıt gıdak"
+        tavuk: function (t) {
+            var zaman = [0, 0.3, 0.6, 0.88];
+            zaman.forEach(function (z) {
+                ton(t + z, 0.07, 'square', 900, 620, 0.2, 0.006);
+                darbe(t + z, 0.06, 1400, 4, 0.3);
+            });
+            // bitişteki tiz "gıdaaak"
+            ton(t + 1.35, 0.5, 'square', 700, 1250, 0.24, 0.02);
+            ton(t + 1.35, 0.5, 'sawtooth', 350, 620, 0.1, 0.02);
+            darbe(t + 1.9, 0.09, 1100, 4, 0.3);
+            ton(t + 1.9, 0.12, 'square', 820, 560, 0.2, 0.008);
+            return 2.2;
+        },
+        // kunduz: cıvıltılı çene sesi, sonunda kuyruk şaplağı
+        kunduz: function (t) {
+            for (var i = 0; i < 14; i++) {
+                var ti = t + i * 0.115;
+                var f = 900 + Math.random() * 500;
+                ton(ti, 0.06, 'triangle', f, f * 0.55, 0.26, 0.006);
+                darbe(ti, 0.03, 2400, 6, 0.12);
+            }
+            // kuyruk şaplağı
+            ton(t + 1.95, 0.22, 'sine', 150, 48, 0.55, 0.004);
+            var k = gurultu(0.25), f2 = ctx.createBiquadFilter();
+            f2.type = 'lowpass'; f2.frequency.value = 900;
+            var g = zarf(t + 1.95, 0.25, 0.3, 0.004);
+            k.connect(f2); f2.connect(g); g.connect(cikis);
+            k.start(t + 1.95); k.stop(t + 2.2);
+            return 2.3;
+        },
+        // tavşan: iki pat, arada minik bir ciyaklama
+        tavsan: function (t) {
+            [0, 0.26, 1.45, 1.71].forEach(function (z) {
+                ton(t + z, 0.16, 'sine', 132, 42, 0.6, 0.004);
+                darbe(t + z, 0.05, 260, 3, 0.25);
+            });
+            ton(t + 0.75, 0.13, 'triangle', 1250, 780, 0.2, 0.01);
+            ton(t + 0.93, 0.1, 'triangle', 980, 1450, 0.16, 0.01);
+            return 2.1;
+        }
+    };
+
+    function cal(tur) {
+        if (!acik || !ctx || !SESLER[tur]) return;
+        if (ctx.state === 'suspended' && ctx.resume) {
+            var sz = ctx.resume();
+            if (sz && sz.catch) sz.catch(function () {});
+        }
+        // Aynı anda birden fazla hayvan bağırmasın: kahramanlar ~1050px
+        // arayla duruyor, hızlı kaydırmada yine de üst üste binebiliyorlar.
+        var simdi = ctx.currentTime;
+        if (simdi < sonCalma) return;
+        // Her ses kendi kanalını kuruyor: ortak bir kazanç düğümü olsaydı yeni
+        // sesin düzeltmesi, hâlâ sönmekte olan bir öncekinin kuyruğunu da
+        // değiştirirdi.
+        cikis = ctx.createGain();
+        cikis.gain.value = DUZELTME[tur] || 1;
+        cikis.connect(ana);
+        sonCalma = simdi + SESLER[tur](simdi + 0.02) * 0.6;
+    }
+
+    function ayarla(yeni) {
+        acik = yeni;
+        if (acik) {
+            baslat();
+            if (ctx && ctx.state === 'suspended') ctx.resume();
+        }
+        try { localStorage.setItem('ak-ses', acik ? '1' : '0'); } catch (e) {}
+        return acik;
+    }
+
+    function tercih() {
+        try { return localStorage.getItem('ak-ses') === '1'; } catch (e) { return false; }
+    }
+
+    return { cal: cal, ayarla: ayarla, acikMi: function () { return acik; }, tercih: tercih };
+})();
+
+(function () {
+    var dugme = document.getElementById('ses-dugme');
+    if (!dugme || !window.KahramanSes) return;
+    var ikon = dugme.querySelector('.ses-ikon');
+
+    function goster(acik) {
+        dugme.setAttribute('aria-pressed', acik ? 'true' : 'false');
+        dugme.setAttribute('aria-label', acik ? 'Hayvan seslerini kapat' : 'Hayvan seslerini aç');
+        dugme.classList.toggle('acik', acik);
+        ikon.textContent = acik ? '🔊' : '🔇';
+    }
+
+    // Tercih hatırlansa bile AudioContext'i ancak bir tıklama çözebiliyor;
+    // o yüzden hatırlanan "açık" durumu ilk etkileşime kadar sessiz kalır.
+    if (window.KahramanSes.tercih()) {
+        var coz = function () {
+            window.KahramanSes.ayarla(true);
+            goster(true);
+            document.removeEventListener('pointerdown', coz);
+            document.removeEventListener('keydown', coz);
+        };
+        document.addEventListener('pointerdown', coz);
+        document.addEventListener('keydown', coz);
+    }
+    goster(false);
+
+    dugme.addEventListener('click', function () {
+        goster(window.KahramanSes.ayarla(!window.KahramanSes.acikMi()));
+    });
+})();
+</script>
+<script>
 // Kenar kahramanları: kadraja her girdiklerinde bir parlamayla büyüyüp
 // yerlerine otururlar, ekranda kaldıkları sürece salınarak nefes alırlar.
 // Kadrajdan tamamen çıkınca başa sarar, bir sonraki girişte yeniden oynar.
@@ -1554,6 +1801,9 @@
                 oyna: function () {
                     if (kayit.durum === 'oynuyor') return;
                     kayit.durum = 'oynuyor';
+                    if (window.KahramanSes) {
+                        window.KahramanSes.cal(el.getAttribute('data-ses'));
+                    }
                     if (sakin) {
                         gsap.to(el, { x: 0, y: 0, autoAlpha: 0.92, duration: 0.6, ease: 'power1.out' });
                         return;

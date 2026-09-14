@@ -2149,3 +2149,34 @@ section > .container,
 .kahraman[src*="kahraman-hindi.png"]             { --k: 0.87; }
 .kahraman[src*="kahraman-leylek-tezgah"]         { --k: 0.81; }
 .kahraman[src*="kahraman-baykus-kitap"]          { --k: 0.80; }
+
+/* Hayvan sesleri düğmesi. Kahramanlar 1320px altında zaten gizli, dolayısıyla
+   ses de yok: düğme de orada görünmesin, dar menüde yer kaplamasın. */
+.ses-dugme {
+    display: none;
+    align-items: center;
+    gap: 0.4rem;
+    margin-left: 1.25rem;
+    padding: 0.4rem 0.85rem 0.4rem 0.7rem;
+    font: inherit;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #555;
+    background: #fff;
+    border: 2px solid #e5e1dc;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: color .2s, border-color .2s, background .2s;
+}
+.ses-dugme .ses-ikon { font-size: 1rem; line-height: 1; }
+.ses-dugme:hover { color: #7c3aed; border-color: #cdbdf0; }
+.ses-dugme.acik {
+    color: #fff;
+    background: #7c3aed;
+    border-color: #7c3aed;
+}
+.ses-dugme:focus-visible { outline: 3px solid #f9b233; outline-offset: 2px; }
+
+@media (min-width: 1321px) {
+    .ses-dugme { display: inline-flex; }
+}
