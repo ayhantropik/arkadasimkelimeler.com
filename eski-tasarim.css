@@ -132,14 +132,10 @@ nav {
 img.hero-logo {
     filter: drop-shadow(0 10px 22px rgba(0,0,0,0.28));
     margin-top: -20px;
-    animation: badge-float 5s ease-in-out infinite;
 }
 @keyframes badge-float {
     0%, 100% { transform: translateY(0) rotate(0deg); }
     50% { transform: translateY(-12px) rotate(-1.5deg); }
-}
-@media (prefers-reduced-motion: reduce) {
-    img.hero-logo { animation: none; }
 }
 .hero {
     min-height: 100vh;
@@ -1066,7 +1062,7 @@ footer {
     .trio-cycle { width: 360px; height: 420px; }
     .hero-text { min-width: 280px; }
     .hero-text img.hero-logo {
-        max-height: 170px !important;
+        max-height: 57px !important;
     }
 }
 
@@ -1092,7 +1088,7 @@ footer {
     .trio-right { right: -20px; }
     .trio-left { left: -20px; }
     .hero-text img.hero-logo {
-        max-height: 150px !important;
+        max-height: 50px !important;
     }
 }
 
@@ -1117,7 +1113,7 @@ footer {
     .hero-text img.hero-logo {
         max-width: 100%;
         height: auto !important;
-        max-height: 220px;
+        max-height: 73px;
         margin-left: auto;
         margin-right: auto;
     }
@@ -1246,7 +1242,7 @@ footer {
         margin-bottom: 1.5rem;
     }
     .hero-text img.hero-logo {
-        max-height: 180px !important;
+        max-height: 60px !important;
     }
     .trio-cycle { width: 300px; height: 420px; }
     .trio-icon-wrap { width: 80px; height: 80px; border-radius: 20px; }
