@@ -1063,6 +1063,7 @@ footer {
     .hero-text { min-width: 280px; }
     .hero-text img.hero-logo {
         max-height: 113px !important;
+        margin-top: -16px;
     }
 }
 
