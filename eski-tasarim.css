@@ -130,19 +130,8 @@ nav {
 
 /* HERO */
 img.hero-logo {
+    filter: drop-shadow(0 10px 22px rgba(0,0,0,0.28));
     margin-top: -48px;
-}
-
-/* Mor neon + saydamlık. Parlama üç katmanlı: dar ve parlak bir çekirdek,
-   onu saran orta halka, en dışta geniş ve soluk bir hale. Tek bir gölgeyle
-   yapılsaydı ya bulanık bir leke ya da sert bir kontur olurdu. */
-.hero-logo,
-.footer-about .nav-logo img {
-    opacity: 0.85;
-    filter:
-        drop-shadow(0 0 5px rgba(192, 132, 252, 0.95))
-        drop-shadow(0 0 14px rgba(147, 51, 234, 0.75))
-        drop-shadow(0 0 34px rgba(109, 40, 217, 0.45));
 }
 @keyframes badge-float {
     0%, 100% { transform: translateY(0) rotate(0deg); }
