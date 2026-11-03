@@ -2265,12 +2265,19 @@ section > .container,
    tanımadığı biri yüzünden kuralın tamamı düşerdi — önceki sürümde
    kenarda kalan boşluğun sebebi buydu. */
 #tanitim-video:fullscreen {
-    width: 100%; height: 100%;
-    object-fit: cover;          /* ekranı tamamen kaplasın, kenarda boşluk kalmasın */
+    /* Yüzde DEĞİL görünüm birimi: tam ekranda %100, öğenin eski kabına
+       (1200px'lik çerçeveye) göre hesaplanıyordu; ekran daha genişse
+       aradaki fark sağda boşluk olarak kalıyordu. */
+    width: 100vw; height: 100vh;
+    max-width: 100vw; max-height: 100vh;
+    object-fit: cover;
+    background: #000;
 }
 #tanitim-video:-webkit-full-screen {
-    width: 100%; height: 100%;
+    width: 100vw; height: 100vh;
+    max-width: 100vw; max-height: 100vh;
     object-fit: cover;
+    background: #000;
 }
 
 @media (max-width: 700px) {
