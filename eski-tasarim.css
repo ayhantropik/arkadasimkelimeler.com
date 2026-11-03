@@ -1548,7 +1548,8 @@ footer {
 h1,h2,h3,h4,
 .section-title,.brand-name,.nav-logo span,
 .feature-card h3,.game-card h3,.step h3,.testimonial-name,
-.stat-number,.trio-label,.ecosystem-title,.eco-subtitle,.slogan{
+.stat-number,.trio-label,.ecosystem-title,.eco-subtitle,.slogan,
+.tanitim-yazi{
     font-family:'Baloo 2','Nunito',sans-serif;
 }
 
@@ -2177,4 +2178,97 @@ section > .container,
 
 @media (min-width: 1321px) {
     .ses-dugme { display: inline-flex; }
+}
+
+
+/* ——— TANITIM AFİŞİ ———————————————————————————————————————————————
+   Bant krem işbirliği şeridi ile beyaz özellikler bölümünün arasına
+   giriyor; gök mavisi ikisinden de ayrılsın diye. */
+.tanitim-band {
+    background: var(--cream);
+    padding: 3rem 2rem;
+}
+.tanitim-afis {
+    display: block;
+    position: relative;
+    width: 100%;
+    padding: 0;
+    border: 2.5px solid var(--ink);
+    border-radius: 22px;
+    background: var(--ink);
+    box-shadow: var(--chunk);
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform .18s ease, box-shadow .18s ease;
+}
+.tanitim-afis img { display: block; width: 100%; height: auto; }
+.tanitim-afis:hover  { transform: translateY(-3px); box-shadow: 0 9px 0 var(--ink); }
+.tanitim-afis:active { transform: translateY(3px);  box-shadow: 0 2px 0 var(--ink); }
+.tanitim-afis:focus-visible { outline: 3px solid var(--sun); outline-offset: 4px; }
+
+/* Yazı soldan sağa açılan bir karartmanın üstünde duruyor: fotoğrafın
+   sağ yarısı (sınıf, tablet) açık kalsın, yazı da okunur olsun. */
+.tanitim-perdelik {
+    position: absolute; inset: 0;
+    background: linear-gradient(90deg,
+        rgba(32,22,12,.72) 0%, rgba(32,22,12,.34) 48%, rgba(32,22,12,.04) 76%);
+}
+.tanitim-ic {
+    position: absolute; inset: 0;
+    display: flex; align-items: center; gap: clamp(.8rem, 2vw, 1.4rem);
+    padding: 0 clamp(1.1rem, 4vw, 3.25rem);
+}
+.tanitim-oynat {
+    flex: 0 0 auto;
+    display: grid; place-items: center;
+    width: clamp(50px, 7vw, 82px); aspect-ratio: 1;
+    background: var(--orange);
+    border: 2.5px solid var(--ink);
+    border-radius: 50%;
+    box-shadow: 0 4px 0 var(--ink);
+    transition: transform .18s ease;
+}
+.tanitim-afis:hover .tanitim-oynat { transform: scale(1.06); }
+.tanitim-oynat svg { width: 44%; height: 44%; fill: #fff; margin-left: 9%; }
+.tanitim-yazi {
+    font-weight: 800; letter-spacing: .4px; line-height: 1;
+    font-size: clamp(1.5rem, 4.2vw, 3rem);
+    color: var(--sun);
+    -webkit-text-fill-color: var(--sun);
+    -webkit-text-stroke: 3px var(--ink);
+    paint-order: stroke fill;
+    text-shadow: 0 5px 0 rgba(32,22,12,.35);
+    padding-bottom: .12em;      /* Türkçe inme payı */
+}
+
+/* ——— TAM EKRAN OYNATICI ——— */
+.tanitim-perde {
+    position: fixed; inset: 0; z-index: 3000;
+    background: #0a0806;
+    display: flex; align-items: center; justify-content: center;
+}
+.tanitim-perde[hidden] { display: none; }
+.tanitim-perde video {
+    width: 100%; height: 100%;
+    object-fit: contain;
+    background: #000;
+}
+.tanitim-kapat {
+    position: absolute; top: 18px; right: 18px; z-index: 2;
+    width: 46px; height: 46px; padding: 0;
+    display: grid; place-items: center;
+    font: 700 26px/1 'Baloo 2','Nunito',sans-serif;
+    color: var(--ink);
+    background: var(--sun);
+    border: 2.5px solid var(--ink);
+    border-radius: 50%;
+    box-shadow: 0 4px 0 var(--ink);
+    cursor: pointer;
+}
+.tanitim-kapat:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
+
+@media (max-width: 700px) {
+    .tanitim-band { padding: 2rem 1rem; }
+    .tanitim-afis { border-radius: 16px; }
+    .tanitim-yazi { -webkit-text-stroke-width: 2px; }
 }

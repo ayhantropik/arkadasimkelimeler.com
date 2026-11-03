@@ -11,7 +11,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Baloo+2:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link href="https://fonts.cdnfonts.com/css/scrambled-tofu" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <link rel="stylesheet" href="style.css?v=79">
+    <link rel="stylesheet" href="style.css?v=80">
 </head>
 <body>
 
@@ -280,6 +280,22 @@
 </section>
 
 <!-- FEATURES -->
+<!-- TANITIM -->
+<section class="tanitim-band">
+    <div class="container fade-in">
+        <button type="button" class="tanitim-afis" id="tanitim-ac" aria-haspopup="dialog">
+            <img src="tanitim-afis.jpg?v=1" alt="" aria-hidden="true" width="1600" height="800" loading="lazy">
+            <span class="tanitim-perdelik" aria-hidden="true"></span>
+            <span class="tanitim-ic">
+                <span class="tanitim-oynat" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.2v13.6L19 12z"/></svg>
+                </span>
+                <span class="tanitim-yazi">Tanıtım</span>
+            </span>
+        </button>
+    </div>
+</section>
+
 <section id="ozellikler">
     <img src="kahraman-ayi-kova.png?v=1" data-ses="ayi" alt="" aria-hidden="true" class="kahraman kahraman-sag kahraman-y" style="--ky: 13" loading="lazy">
     <img src="kahraman-hindi.png?v=1" data-ses="hindi" data-giris="zipla" alt="" aria-hidden="true" class="kahraman kahraman-sol" loading="lazy">
@@ -1881,6 +1897,72 @@ window.KahramanSes = (function () {
             window.removeEventListener('resize', olcuDegisti);
             window.removeEventListener('load', olcuDegisti);
         };
+    });
+})();
+</script>
+<!-- TANITIM OYNATICI -->
+<div class="tanitim-perde" id="tanitim-perde" role="dialog" aria-modal="true"
+     aria-label="Arkadaşım Kelimeler tanıtım filmi" hidden>
+    <button type="button" class="tanitim-kapat" id="tanitim-kapat" aria-label="Kapat">&times;</button>
+    <video id="tanitim-video" src="tanitim.mp4?v=1" poster="tanitim-afis.jpg?v=1"
+           controls playsinline preload="none"></video>
+</div>
+
+<script>
+// Tanıtım afişi -> tam ekran oynatıcı.
+(function () {
+    var ac     = document.getElementById('tanitim-ac');
+    var perde  = document.getElementById('tanitim-perde');
+    if (!ac || !perde) return;
+    var video  = document.getElementById('tanitim-video');
+    var kapat  = document.getElementById('tanitim-kapat');
+
+    function tamEkranIste(el) {
+        var f = el.requestFullscreen || el.webkitRequestFullscreen || el.msRequestFullscreen;
+        if (f) {
+            try { var p = f.call(el); if (p && p.catch) p.catch(function () {}); } catch (e) {}
+        } else if (video.webkitEnterFullscreen) {
+            // iOS Safari öğeyi tam ekrana almıyor, yalnız videoyu alıyor
+            video.webkitEnterFullscreen();
+        }
+    }
+    function tamEkrandanCik() {
+        if (!(document.fullscreenElement || document.webkitFullscreenElement)) return;
+        var f = document.exitFullscreen || document.webkitExitFullscreen;
+        if (!f) return;
+        try { var p = f.call(document); if (p && p.catch) p.catch(function () {}); } catch (e) {}
+    }
+
+    function perdeyiAc() {
+        perde.hidden = false;
+        document.body.style.overflow = 'hidden';
+        tamEkranIste(perde);
+        try { video.currentTime = 0; } catch (e) {}
+        var p = video.play();
+        if (p && p.catch) p.catch(function () {});   // oynatma engellenirse kontroller kalır
+        kapat.focus();
+    }
+    function perdeyiKapat() {
+        if (perde.hidden) return;
+        video.pause();
+        tamEkrandanCik();
+        perde.hidden = true;
+        document.body.style.overflow = '';
+        ac.focus();
+    }
+
+    ac.addEventListener('click', perdeyiAc);
+    kapat.addEventListener('click', perdeyiKapat);
+    // videonun dışındaki karanlık alana tıklamak kapatır
+    perde.addEventListener('click', function (e) { if (e.target === perde) perdeyiKapat(); });
+    document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') perdeyiKapat();
+    });
+    // Tam ekrandan tarayıcının kendi yoluyla çıkılırsa perde de kalkmalı
+    ['fullscreenchange', 'webkitfullscreenchange'].forEach(function (olay) {
+        document.addEventListener(olay, function () {
+            if (!(document.fullscreenElement || document.webkitFullscreenElement)) perdeyiKapat();
+        });
     });
 })();
 </script>
