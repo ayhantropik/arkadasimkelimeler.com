@@ -2181,30 +2181,46 @@ section > .container,
 }
 
 
-/* ——— TANITIM AFİŞİ ———————————————————————————————————————————————
+/* ——— TANITIM ———————————————————————————————————————————————————
    Bant krem işbirliği şeridi ile beyaz özellikler bölümünün arasına
    giriyor; gök mavisi ikisinden de ayrılsın diye. */
 .tanitim-band {
     background: var(--cream);
     padding: 3rem 2rem;
 }
-.tanitim-afis {
-    display: block;
+
+/* Çerçeve hem afişin hem videonun kabı: video yerinde, aynı ölçüde oynar. */
+.tanitim-cerceve {
     position: relative;
-    width: 100%;
-    padding: 0;
+    aspect-ratio: 2 / 1;
     border: 2.5px solid var(--ink);
     border-radius: 22px;
     background: var(--ink);
     box-shadow: var(--chunk);
     overflow: hidden;
-    cursor: pointer;
-    transition: transform .18s ease, box-shadow .18s ease;
 }
-.tanitim-afis img { display: block; width: 100%; height: auto; }
-.tanitim-afis:hover  { transform: translateY(-3px); box-shadow: 0 9px 0 var(--ink); }
-.tanitim-afis:active { transform: translateY(3px);  box-shadow: 0 2px 0 var(--ink); }
-.tanitim-afis:focus-visible { outline: 3px solid var(--sun); outline-offset: 4px; }
+.tanitim-cerceve video {
+    display: block;
+    width: 100%; height: 100%;
+    /* cover: 16:9 kaynağı 2:1 çerçeveye otururken filmin kendi siyah
+       bantlarından kırpıyor, görüntüden değil. */
+    object-fit: cover;
+    background: #000;
+}
+
+/* Afiş katmanı — ilk oynatmaya kadar videonun üstünde durur */
+.tanitim-afis {
+    position: absolute; inset: 0;
+    width: 100%; padding: 0;
+    border: 0; background: none;
+    cursor: pointer;
+    transition: opacity .25s ease;
+}
+.tanitim-cerceve.oynuyor .tanitim-afis {
+    opacity: 0;
+    pointer-events: none;
+}
+.tanitim-afis:focus-visible { outline: 3px solid var(--sun); outline-offset: -6px; }
 
 /* Yazı soldan sağa açılan bir karartmanın üstünde duruyor: fotoğrafın
    sağ yarısı (sınıf, tablet) açık kalsın, yazı da okunur olsun. */
@@ -2241,34 +2257,47 @@ section > .container,
     padding-bottom: .12em;      /* Türkçe inme payı */
 }
 
-/* ——— TAM EKRAN OYNATICI ——— */
-.tanitim-perde {
-    position: fixed; inset: 0; z-index: 3000;
-    background: #0a0806;
-    display: flex; align-items: center; justify-content: center;
-}
-.tanitim-perde[hidden] { display: none; }
-.tanitim-perde video {
-    width: 100%; height: 100%;
-    object-fit: contain;
-    background: #000;
-}
-.tanitim-kapat {
-    position: absolute; top: 18px; right: 18px; z-index: 2;
-    width: 46px; height: 46px; padding: 0;
+/* Büyütme düğmesi — sağ ÜST köşe: videonun kendi denetim çubuğu altta,
+   üst üste binmesinler. */
+.tanitim-buyut {
+    position: absolute; top: 14px; right: 14px; z-index: 3;
+    width: 44px; height: 44px; padding: 0;
     display: grid; place-items: center;
-    font: 700 26px/1 'Baloo 2','Nunito',sans-serif;
-    color: var(--ink);
     background: var(--sun);
     border: 2.5px solid var(--ink);
-    border-radius: 50%;
+    border-radius: 12px;
     box-shadow: 0 4px 0 var(--ink);
     cursor: pointer;
+    transition: transform .16s ease, box-shadow .16s ease;
 }
-.tanitim-kapat:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
+.tanitim-buyut svg {
+    width: 22px; height: 22px;
+    fill: none; stroke: var(--ink); stroke-width: 2.4;
+    stroke-linecap: round; stroke-linejoin: round;
+}
+.tanitim-buyut:hover  { transform: translateY(-2px); box-shadow: 0 6px 0 var(--ink); }
+.tanitim-buyut:active { transform: translateY(2px);  box-shadow: 0 2px 0 var(--ink); }
+.tanitim-buyut:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
+
+/* ——— TAM EKRAN ———
+   Çerçevenin oranı, çerçevesi ve köşeleri kalkıyor; video ekranı
+   tamamen kaplasın diye cover'da kalıyor — kenarda boşluk bırakmıyor. */
+.tanitim-cerceve:fullscreen,
+.tanitim-cerceve:-webkit-full-screen {
+    aspect-ratio: auto;
+    width: 100%; height: 100%;
+    border: 0; border-radius: 0; box-shadow: none;
+}
+.tanitim-cerceve:fullscreen video,
+.tanitim-cerceve:-webkit-full-screen video {
+    width: 100%; height: 100%;
+    object-fit: cover;
+}
 
 @media (max-width: 700px) {
     .tanitim-band { padding: 2rem 1rem; }
-    .tanitim-afis { border-radius: 16px; }
+    .tanitim-cerceve { border-radius: 16px; }
     .tanitim-yazi { -webkit-text-stroke-width: 2px; }
+    .tanitim-buyut { width: 38px; height: 38px; top: 10px; right: 10px; }
+    .tanitim-buyut svg { width: 18px; height: 18px; }
 }
