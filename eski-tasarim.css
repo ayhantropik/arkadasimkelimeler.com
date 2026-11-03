@@ -2257,39 +2257,18 @@ section > .container,
     padding-bottom: .12em;      /* Türkçe inme payı */
 }
 
-/* Büyütme düğmesi — sağ ÜST köşe: videonun kendi denetim çubuğu altta,
-   üst üste binmesinler. */
-.tanitim-buyut {
-    position: absolute; top: 14px; right: 14px; z-index: 3;
-    width: 44px; height: 44px; padding: 0;
-    display: grid; place-items: center;
-    background: var(--sun);
-    border: 2.5px solid var(--ink);
-    border-radius: 12px;
-    box-shadow: 0 4px 0 var(--ink);
-    cursor: pointer;
-    transition: transform .16s ease, box-shadow .16s ease;
-}
-.tanitim-buyut svg {
-    width: 22px; height: 22px;
-    fill: none; stroke: var(--ink); stroke-width: 2.4;
-    stroke-linecap: round; stroke-linejoin: round;
-}
-.tanitim-buyut:hover  { transform: translateY(-2px); box-shadow: 0 6px 0 var(--ink); }
-.tanitim-buyut:active { transform: translateY(2px);  box-shadow: 0 2px 0 var(--ink); }
-.tanitim-buyut:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
-
 /* ——— TAM EKRAN ———
-   Çerçevenin oranı, çerçevesi ve köşeleri kalkıyor; video ekranı
-   tamamen kaplasın diye cover'da kalıyor — kenarda boşluk bırakmıyor. */
-.tanitim-cerceve:fullscreen,
-.tanitim-cerceve:-webkit-full-screen {
-    aspect-ratio: auto;
+   Tam ekrana oynatıcının kendi düğmesi geçiriyor, yani tam ekrana giden
+   <video> öğesinin kendisi. Kural bu yüzden videoya yazılı.
+
+   İki seçici AYRI kurallarda: virgülle birleştirilseydi, tarayıcının
+   tanımadığı biri yüzünden kuralın tamamı düşerdi — önceki sürümde
+   kenarda kalan boşluğun sebebi buydu. */
+#tanitim-video:fullscreen {
     width: 100%; height: 100%;
-    border: 0; border-radius: 0; box-shadow: none;
+    object-fit: cover;          /* ekranı tamamen kaplasın, kenarda boşluk kalmasın */
 }
-.tanitim-cerceve:fullscreen video,
-.tanitim-cerceve:-webkit-full-screen video {
+#tanitim-video:-webkit-full-screen {
     width: 100%; height: 100%;
     object-fit: cover;
 }
@@ -2298,6 +2277,4 @@ section > .container,
     .tanitim-band { padding: 2rem 1rem; }
     .tanitim-cerceve { border-radius: 16px; }
     .tanitim-yazi { -webkit-text-stroke-width: 2px; }
-    .tanitim-buyut { width: 38px; height: 38px; top: 10px; right: 10px; }
-    .tanitim-buyut svg { width: 18px; height: 18px; }
 }

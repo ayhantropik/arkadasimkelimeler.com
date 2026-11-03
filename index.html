@@ -11,7 +11,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Baloo+2:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link href="https://fonts.cdnfonts.com/css/scrambled-tofu" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <link rel="stylesheet" href="style.css?v=82">
+    <link rel="stylesheet" href="style.css?v=83">
 </head>
 <body>
 
@@ -294,11 +294,6 @@
                     </span>
                     <span class="tanitim-yazi">Tanıtım</span>
                 </span>
-            </button>
-            <button type="button" class="tanitim-buyut" id="tanitim-buyut" aria-label="Tam ekran">
-                <svg viewBox="0 0 24 24" aria-hidden="true">
-                    <path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/>
-                </svg>
             </button>
         </div>
     </div>
@@ -1909,58 +1904,19 @@ window.KahramanSes = (function () {
 })();
 </script>
 <script>
-// Tanıtım: video yerinde oynar; büyütme düğmesi çerçeveyi tam ekrana alır.
+// Tanıtım: afişe basınca video yerinde oynar. Tam ekran tamamen
+// oynatıcının kendi düğmesine bırakıldı — girişi de çıkışı da o yönetiyor.
 (function () {
     var cerceve = document.getElementById('tanitim-cerceve');
     if (!cerceve) return;
     var video = document.getElementById('tanitim-video');
     var afis  = document.getElementById('tanitim-ac');
-    var buyut = document.getElementById('tanitim-buyut');
 
-    function oynat() {
-        cerceve.classList.add('oynuyor');       // afiş katmanını kaldırır
-        video.controls = true;                  // çubuk afişin altından sızmasın
+    afis.addEventListener('click', function () {
+        cerceve.classList.add('oynuyor');   // afiş katmanını kaldırır
+        video.controls = true;              // çubuk afişin altından sızmasın
         var p = video.play();
         if (p && p.catch) p.catch(function () {});
-    }
-
-    // Tam ekran çerçeveye veriliyor, videoya değil: büyütme düğmesi ve
-    // köşe yuvarlaklığının kalkması için kabın kendisi gerekiyor.
-    function tamEkran() {
-        var f = cerceve.requestFullscreen || cerceve.webkitRequestFullscreen
-             || cerceve.msRequestFullscreen;
-        if (f) {
-            try { var p = f.call(cerceve); if (p && p.catch) p.catch(function () {}); } catch (e) {}
-        } else if (video.webkitEnterFullscreen) {
-            video.webkitEnterFullscreen();      // iOS yalnız videoyu alıyor
-        }
-    }
-    function tamEkranKapat() {
-        if (!(document.fullscreenElement || document.webkitFullscreenElement)) return;
-        var f = document.exitFullscreen || document.webkitExitFullscreen;
-        if (!f) return;
-        try { var p = f.call(document); if (p && p.catch) p.catch(function () {}); } catch (e) {}
-    }
-
-    afis.addEventListener('click', oynat);
-    buyut.addEventListener('click', function () {
-        if (document.fullscreenElement || document.webkitFullscreenElement) {
-            tamEkranKapat();
-        } else {
-            tamEkran();
-            oynat();
-        }
-    });
-    document.addEventListener('keydown', function (e) {
-        if (e.key === 'Escape') tamEkranKapat();
-    });
-    ['fullscreenchange', 'webkitfullscreenchange'].forEach(function (olay) {
-        document.addEventListener(olay, function () {
-            var tam = document.fullscreenElement === cerceve
-                   || document.webkitFullscreenElement === cerceve;
-            cerceve.classList.toggle('tam-ekran', tam);
-            buyut.setAttribute('aria-label', tam ? 'Tam ekrandan çık' : 'Tam ekran');
-        });
     });
 })();
 </script>
