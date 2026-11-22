@@ -11,7 +11,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Baloo+2:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link href="https://fonts.cdnfonts.com/css/scrambled-tofu" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <link rel="stylesheet" href="style.css?v=91">
+    <link rel="stylesheet" href="style.css?v=92">
 </head>
 <body>
 
@@ -1578,13 +1578,689 @@
                 paused: true
             });
 
+            // --- Gezinme -------------------------------------------------
+            // Kahraman belirir belirmez bulundugu bolumde dolasmaya baslar:
+            // ilk 3 sn icinde bir blogun altina kosup orada buyur. Buyume hep
+            // gizli olur - ortunun altinda yumusakca iki katina cikar, disari
+            // cikmadan once yine orada eski boyuna doner. Yani olcek degisimi
+            // gorunmez; acikta her zaman normal boyunda, bloklarin arasindan
+            // iri gorunur. Yon her adimda degisir, arada sicrayarak gider.
+            // Kahramanlar birbirine bir boydan fazla yaklasmaz; en fazla bir
+            // alt bolume gecer.
+            var GEZ_KAT = 2;        // ortunun altinda cikilan olcek
+            var GEZ_HIZ = 62;       // px/sn
+            var GEZ_ADIM = 620;     // tek seferde gidilen en uzun mesafe (px)
+            var GEZ_YUMUSAK = 2.8;  // buyume/kuculme suresi (sn)
+            var GEZ_ORTU = 0.95;    // "ortulu" sayilmak icin gereken oran
+            var GEZ_ILK = 1.3;      // giris biter bitmez gezinmeye basla (sn)
+            var GEZ_ILK_BUYUME = 1.0;   // ilk buyume: 3 sn dolmadan bitsin
+            var gezSira = null, gezTween = null, gezOlcekTween = null, gezSalinim = null;
+            var gezGoz = null, gezImza = null;
+            var geziyor = false, buyuk = false, kalanTur = 0, acikTur = 1, olcekSu = 1;
+            var ilkDalis = true, sonYon = Math.random() * Math.PI * 2, gosterTur = 0;
+            var kayModu = false, kaySon = 0, kayBasY = 0, kayBasScroll = 0;
+            var kaySinir = 0, kayBitis = null, kaySetY = null, kacis = 0, buyumeYeri = null;
+            var anaBolum = el.parentNode, anaSonraki = el.nextSibling;
+
+            // Bolum koordinatinda, verilen oteleme ve olcekteki kutu.
+            // Olcek kosesi giristeki ile ayni (sagdakiler saga, soldakiler
+            // sola yapisik buyur), kutu da o koseden acilir.
+            function gezKutu(x, y, s) {
+                var w = el.offsetWidth, h = el.offsetHeight, ox = sag ? w : 0;
+                return [el.offsetLeft + x + ox * (1 - s),
+                        el.offsetTop + y + h * (1 - s),
+                        el.offsetLeft + x + ox + s * (w - ox),
+                        el.offsetTop + y + h];
+            }
+
+            // Saydam zeminde duran yazilar: kahraman ustlerine binerse yazi
+            // okunmaz oluyor. Blok kutusu degil gercek satir kutulari
+            // kapatiliyor - basliklar ortali, blok tum sutunu kapliyor ama
+            // yazi ortada duruyor.
+            function gezYasak() {
+                var bolum = el.offsetParent, sifir = bolum.getBoundingClientRect();
+                var metin = bolum.querySelectorAll(
+                    '.container > h2, .container > h3, .container > p, .container > a, .container > .section-title, .container > .section-subtitle');
+                var kutular = [], i, j, r, satir, aralik = document.createRange();
+                for (i = 0; i < metin.length; i++) {
+                    if (!metin[i].textContent.trim()) continue;
+                    aralik.selectNodeContents(metin[i]);
+                    satir = aralik.getClientRects();
+                    for (j = 0; j < satir.length; j++) {
+                        r = satir[j];
+                        if (r.width < 4 || r.height < 4) continue;
+                        kutular.push([r.left - sifir.left - 12, r.top - sifir.top - 12,
+                                      r.right - sifir.left + 12, r.bottom - sifir.top + 12]);
+                    }
+                }
+                return kutular;
+            }
+
+            // Kahramanin altina girebilecegi opak bloklar: kart, tablo, adim
+            // kutusu... Sinif adiyla degil, dolgusu opak ve yeterince genis
+            // her kutu sayiliyor; ikon rozetleri gibi kucukler eleniyor.
+            function gezBloklar() {
+                var bolum = el.offsetParent, sifir = bolum.getBoundingClientRect();
+                var hepsi = bolum.querySelectorAll('.container *'), kutular = [], i, n, r, c, p, a;
+                for (i = 0; i < hepsi.length; i++) {
+                    n = hepsi[i];
+                    c = getComputedStyle(n).backgroundColor;
+                    if (!c || c === 'transparent') continue;
+                    p = c.match(/[\d.]+/g);
+                    if (!p) continue;
+                    a = p.length > 3 ? parseFloat(p[3]) : 1;
+                    if (a < 0.9) continue;
+                    r = n.getBoundingClientRect();
+                    if (r.width * r.height < 12000) continue;
+                    kutular.push([r.left - sifir.left, r.top - sifir.top,
+                                  r.right - sifir.left, r.bottom - sifir.top]);
+                }
+                return kutular;
+            }
+
+            function gezYaziyaGirdi(k, yasak) {
+                for (var i = 0; i < yasak.length; i++) {
+                    if (k[0] < yasak[i][2] && k[2] > yasak[i][0] &&
+                        k[1] < yasak[i][3] && k[3] > yasak[i][1]) return true;
+                }
+                return false;
+            }
+
+            // Kutunun ne kadari blok altinda kaliyor: 6x6 nokta orneklemesi.
+            function gezOrtuOran(k, bloklar) {
+                var ic = 0, a, b, px, py, i;
+                for (a = 0; a < 6; a++) {
+                    for (b = 0; b < 6; b++) {
+                        px = k[0] + (k[2] - k[0]) * (a + 0.5) / 6;
+                        py = k[1] + (k[3] - k[1]) * (b + 0.5) / 6;
+                        for (i = 0; i < bloklar.length; i++) {
+                            if (px > bloklar[i][0] && px < bloklar[i][2] &&
+                                py > bloklar[i][1] && py < bloklar[i][3]) { ic++; break; }
+                        }
+                    }
+                }
+                return ic / 36;
+            }
+            function gezOrtulu(k, bloklar) { return gezOrtuOran(k, bloklar) >= GEZ_ORTU; }
+
+            // Bir boy mesafe: ne simdiki yerlerine ne de gittikleri yere
+            // bir boydan fazla yaklasilmiyor.
+            function gezAyrik(k) {
+                var sifir = el.offsetParent.getBoundingClientRect();
+                var ben = [k[0] + sifir.left, k[1] + sifir.top, k[2] + sifir.left, k[3] + sifir.top];
+                var boy = ben[3] - ben[1];
+                var hepsi = document.querySelectorAll('.kahraman'), i, o, r, kutular, j, en, dx, dy;
+                for (i = 0; i < hepsi.length; i++) {
+                    o = hepsi[i];
+                    if (o === el) continue;
+                    if (getComputedStyle(o).visibility === 'hidden') continue;
+                    kutular = [o.getBoundingClientRect()];
+                    if (o.__gezVaris && o.__gezVaris.bolum === o.offsetParent) {
+                        var s2 = o.offsetParent.getBoundingClientRect(), v = o.__gezVaris.kutu;
+                        kutular.push({ left: v[0] + s2.left, top: v[1] + s2.top,
+                                       right: v[2] + s2.left, bottom: v[3] + s2.top,
+                                       width: v[2] - v[0], height: v[3] - v[1] });
+                    }
+                    for (j = 0; j < kutular.length; j++) {
+                        r = kutular[j];
+                        if (!r.width) continue;
+                        en = Math.max(boy, r.height);
+                        dx = Math.max(r.left - ben[2], ben[0] - r.right, 0);
+                        dy = Math.max(r.top - ben[3], ben[1] - r.bottom, 0);
+                        if (Math.sqrt(dx * dx + dy * dy) < en) return false;
+                    }
+                }
+                return true;
+            }
+
+            // Yol denetimi: iki temiz nokta arasindaki duz cizgi basligin
+            // ustunden gecebiliyor. Kahraman yola cikarken zaten bir yazinin
+            // uzerindeyse (ilk adim) yalnizca varis noktasi araniyor, yoksa
+            // hic kipirdayamaz. kalkis: sicrayarak gidiyorsa ziplayisin
+            // tepesi de denetleniyor, havada yaziya binmesin.
+            function gezYolTemiz(x, y, yasak, kalkis) {
+                var x0 = gsap.getProperty(el, 'x') || 0, y0 = gsap.getProperty(el, 'y') || 0;
+                var sN = gsap.getProperty(el, 'scaleX') || 1;
+                if (gezYaziyaGirdi(gezKutu(x0, y0, sN), yasak)) return true;
+                for (var a = 1; a < 12; a++) {
+                    var px = x0 + (x - x0) * a / 12, py = y0 + (y - y0) * a / 12;
+                    var k = gezKutu(px, py, sN);
+                    if (gezYaziyaGirdi(k, yasak) || !gezAyrik(k)) return false;
+                    if (kalkis) {
+                        var k2 = gezKutu(px, py - kalkis, sN);
+                        if (k2[1] < 0) return false;
+                        if (gezYaziyaGirdi(k2, yasak) || !gezAyrik(k2)) return false;
+                    }
+                }
+                return true;
+            }
+
+            // Sayfa yerine oturmadan yola cikilmasin: gec yuklenen gorseller
+            // ve kaydirmayla gelen beliriverme animasyonlari kartlarin yerini
+            // oynatiyor; o anda secilen siginak birkac yuz ms sonra ortusuz
+            // kaliyordu. Iki olcum ayni cikana ve bolumun gorselleri inene
+            // kadar beklenir.
+            function gezDuruldu() {
+                var b = el.offsetParent;
+                if (!b) return false;
+                var c = b.querySelector('.container');
+                if (!c) return false;
+                var r = c.getBoundingClientRect(), im = b.querySelectorAll('img'), i, tam = true;
+                for (i = 0; i < im.length; i++) if (!im[i].complete) tam = false;
+                var imza = Math.round(r.top) + ':' + Math.round(r.height) + ':' + tam;
+                var ayni = gezImza === imza;
+                gezImza = imza;
+                return ayni && tam;
+            }
+
+            // Gozcu: kahraman dururken sayfa kayarsa yazinin ustunde ya da
+            // ortusuz iri kalabilir. Saniyede bir denetlenir, bozulmussa
+            // kahraman hemen toparlanir.
+            function gezGozcu() {
+                if (!geziyor) return;
+                gezGoz = gsap.delayedCall(1, gezGozcu);
+                if (kayModu) return;             // kaydirma sirasinda karisma
+                if (!el.offsetWidth) return;
+                if (gezTween && gezTween.isActive()) return;
+                if (gezOlcekTween && gezOlcekTween.isActive()) return;
+                var x = gsap.getProperty(el, 'x') || 0, y = gsap.getProperty(el, 'y') || 0;
+                var s = gsap.getProperty(el, 'scaleX') || 1, k = gezKutu(x, y, s);
+                var bozuk = gezYaziyaGirdi(k, gezYasak());
+                // Iriyken aralikta durmasi normal; ancak cogu acikta kalirsa
+                // (sayfa kaymis demektir) toparlanir.
+                if (!bozuk && s > 1.1 && gezOrtuOran(k, gezBloklar()) < 0.4) bozuk = true;
+                if (!bozuk) return;
+                if (gezSira) { gezSira.kill(); gezSira = null; }
+                if (s > 1.1) {      // iri ve aciktaysa once normale don
+                    buyuk = false; olcekSu = 1; acikTur = 1;
+                    gezOlcek(1, function () { gezAdim(); }, 0.7);
+                } else gezAdim();
+            }
+
+            // Hareket bicimi. Hep ayni sine.inOut suzulme "naif dusme" gibi
+            // duruyordu: arada sicrayarak, arada kisa bir kosuyla gitsin.
+            function gezBicim() {
+                var r = Math.random();
+                if (r < 0.52) return { ad: 'zipla', kalkis: 18 + Math.random() * 22 };
+                if (r < 0.72) return { ad: 'kos', kalkis: 0 };
+                return { ad: 'yuru', kalkis: 0 };
+            }
+
+            // Sicrayarak gidilecek bir yol bulunamazsa - ziplayisin tepesi
+            // yaziya biniyorsa - adim harcanmasin, ayni hedef suzulerek
+            // aransin.
+            function gezHedefB(bicim) {
+                var h = gezHedef(bicim.kalkis);
+                if (!h && bicim.kalkis) {
+                    bicim.ad = 'yuru'; bicim.kalkis = 0;
+                    h = gezHedef(0);
+                }
+                return h;
+            }
+            function gezSiginakB(bicim, enAz, yakin) {
+                var h = gezSiginak(enAz, false, bicim.kalkis, yakin);
+                if (!h && bicim.kalkis) {
+                    bicim.ad = 'yuru'; bicim.kalkis = 0;
+                    h = gezSiginak(enAz, false, 0, yakin);
+                }
+                return h;
+            }
+
+            // Acikta, normal boyda bir durak.
+            function gezHedef(kalkis) {
+                var bolum = el.offsetParent;
+                if (!bolum) return null;
+                var w = el.offsetWidth, h = el.offsetHeight;
+                if (!w || !h) return null;
+                var xa = -el.offsetLeft, xb = bolum.clientWidth - w - el.offsetLeft;
+                var ya = -el.offsetTop, yb = bolum.clientHeight - h - el.offsetTop;
+                if (xb < xa) { xa = xb = (xa + xb) / 2; }
+                if (yb < ya) { ya = yb = (ya + yb) / 2; }
+                var yasak = gezYasak();
+                var x0 = gsap.getProperty(el, 'x') || 0, y0 = gsap.getProperty(el, 'y') || 0;
+                for (var d = 0; d < 34; d++) {
+                    var x, y;
+                    if (d < 26) {
+                        // Yon her adimda 40-130 derece donuyor. Rastgele nokta
+                        // secmek tekduze bir suruklenme veriyordu (cogu zaman
+                        // asagi dogru), cunku kahraman hep bolumun ortasina
+                        // dogru cekiliyor.
+                        var donus = (0.7 + Math.random() * 1.6) * (Math.random() < 0.5 ? 1 : -1);
+                        var yon = sonYon + donus;
+                        var mesafe = 140 + Math.random() * (GEZ_ADIM - 140);
+                        x = Math.min(xb, Math.max(xa, x0 + Math.cos(yon) * mesafe));
+                        y = Math.min(yb, Math.max(ya, y0 + Math.sin(yon) * mesafe));
+                    } else {
+                        x = xa + Math.random() * (xb - xa);
+                        y = ya + Math.random() * (yb - ya);
+                    }
+                    // Adimlar kisa olsun: bolumun bir ucundan obur ucuna tek
+                    // seferde gitmek hem bitimsiz suruyor hem de dolasmak
+                    // degil kacmak gibi duruyor. Son denemelerde sinir kalkar.
+                    var yol = Math.sqrt((x - x0) * (x - x0) + (y - y0) * (y - y0));
+                    if (d < 30 && (yol < 110 || yol > GEZ_ADIM)) continue;
+                    var k = gezKutu(x, y, 1);
+                    if (gezYaziyaGirdi(k, yasak) || !gezAyrik(k)) continue;
+                    if (!gezYolTemiz(x, y, yasak, kalkis)) continue;
+                    sonYon = Math.atan2(y - y0, x - x0);
+                    return { x: x, y: y, kutu: k };
+                }
+                return null;
+            }
+
+            // Buyudukten hemen sonra duracagi yer: ortunun tam altinda degil,
+            // iki blogun arasinda. Kutunun buyuk bolumu blok altinda kalir,
+            // kalani aralikta gorunur - gezinme boylece fark edilir. Yaziya
+            // yine girilmez, mesafe yine korunur.
+            function gezAralik(olcek, kalkis) {
+                var bolum = el.offsetParent;
+                if (!bolum) return null;
+                var w = el.offsetWidth, h = el.offsetHeight;
+                if (!w || !h) return null;
+                var bloklar = gezBloklar(), yasak = gezYasak();
+                var x0 = gsap.getProperty(el, 'x') || 0, y0 = gsap.getProperty(el, 'y') || 0;
+                var xa = -el.offsetLeft, xb = bolum.clientWidth - w - el.offsetLeft;
+                var ya = -el.offsetTop, yb = bolum.clientHeight - h - el.offsetTop;
+                var en = null, enP = -1, d, x, y, k, o, p, ac, uz;
+                for (d = 0; d < 70; d++) {
+                    ac = Math.random() * Math.PI * 2;
+                    uz = 40 + Math.random() * 300;
+                    x = x0 + Math.cos(ac) * uz;
+                    y = y0 + Math.sin(ac) * uz;
+                    if (x < xa || x > xb || y < ya || y > yb) continue;
+                    k = gezKutu(x, y, olcek);
+                    if (k[0] < 0 || k[1] < 0 ||
+                        k[2] > bolum.clientWidth || k[3] > bolum.clientHeight) continue;
+                    if (gezYaziyaGirdi(k, yasak) || !gezAyrik(k)) continue;
+                    o = gezOrtuOran(k, bloklar);
+                    if (o < 0.4 || o > 0.88) continue;      // ne tumuyle gizli ne ortada
+                    if (!gezYolTemiz(x, y, yasak, kalkis)) continue;
+                    p = 1 - Math.abs(o - 0.62);             // en iyisi: ucte biri gorunur
+                    if (p > enP) { enP = p; en = { x: x, y: y, kutu: k }; }
+                }
+                if (en) sonYon = Math.atan2(en.y - y0, en.x - x0);
+                return en;
+            }
+
+            // Buyuyebilecegi bir siginak: kahramani butunuyle ortecek kadar
+            // genis bir blogun alti. Olcek o bloga gore seciliyor - iki kata
+            // kadar, sigmiyorsa daha az; hic sigmiyorsa o blok elenir. Boylece
+            // buyume ve kuculme her zaman gozden uzakta olur.
+            // yolsuz: gocte kahraman yeni bolume isinlanıyor, yurumuyor;
+            // o yuzden ne mesafe siniri ne de yol denetimi gecerli.
+            // yakin: bulunanlarin en yakini secilir (ilk dalis icin).
+            function gezSiginak(enAz, yolsuz, kalkis, yakin) {
+                var bolum = el.offsetParent;
+                if (!bolum) return null;
+                var w = el.offsetWidth, h = el.offsetHeight, ox = sag ? w : 0;
+                if (!w || !h) return null;
+                var bloklar = gezBloklar(), yasak = gezYasak(), adaylar = [], i, b, s;
+                for (i = 0; i < bloklar.length; i++) {
+                    b = bloklar[i];
+                    s = Math.min(GEZ_KAT, (b[2] - b[0] - 8) / w, (b[3] - b[1] - 8) / h);
+                    if (s < Math.max(1.25, enAz || 0)) continue;
+                    adaylar.push([b, s]);
+                }
+                if (!adaylar.length) return null;
+                // Genisten dara dogru; esit olanlar arasinda rastgele, yoksa
+                // hep ayni kartin altina girer. Once yakindakiler deneniyor.
+                for (i = 0; i < adaylar.length; i++) adaylar[i].push(Math.random());
+                adaylar.sort(function (p, q) { return (q[1] - p[1]) || (p[2] - q[2]); });
+                var x0 = gsap.getProperty(el, 'x') || 0, y0 = gsap.getProperty(el, 'y') || 0;
+                var bulunan = [];
+                for (var tur = 0; tur < 2; tur++) {
+                    var sinir = (tur === 0 && !yolsuz) ? GEZ_ADIM : 1e9;
+                    for (i = 0; i < adaylar.length; i++) {
+                        b = adaylar[i][0]; s = adaylar[i][1];
+                        for (var d = 0; d < 8; d++) {
+                            var kl = b[0] + 4 + Math.random() * (b[2] - b[0] - s * w - 8);
+                            var kt = b[1] + 4 + Math.random() * (b[3] - b[1] - s * h - 8);
+                            var x = kl - el.offsetLeft - ox * (1 - s);
+                            var y = kt - el.offsetTop - h * (1 - s);
+                            var uz = Math.sqrt((x - x0) * (x - x0) + (y - y0) * (y - y0));
+                            if (uz > sinir) continue;
+                            var k = gezKutu(x, y, s);
+                            if (k[0] < 0 || k[1] < 0 ||
+                                k[2] > bolum.clientWidth || k[3] > bolum.clientHeight) continue;
+                            if (!gezOrtulu(k, bloklar)) continue;   // komsu bloklar da sayilir
+                            if (!gezAyrik(k)) continue;
+                            if (!yolsuz && !gezYolTemiz(x, y, yasak, kalkis)) continue;
+                            var sonuc = { x: x, y: y, olcek: s, kutu: k, uzaklik: uz };
+                            if (!yakin) { sonYon = Math.atan2(y - y0, x - x0); return sonuc; }
+                            bulunan.push(sonuc);
+                        }
+                    }
+                    if (yakin && bulunan.length) break;
+                }
+                if (bulunan.length) {
+                    bulunan.sort(function (p, q) { return p.uzaklik - q.uzaklik; });
+                    sonYon = Math.atan2(bulunan[0].y - y0, bulunan[0].x - x0);
+                    return bulunan[0];
+                }
+                return null;
+            }
+
+            // bicim: yuru (suzulme), kos (kisa ve hizli), zipla (sicrayarak).
+            // sure verilirse tweenin suresi odur - ilk dalis icin.
+            function gezYuru(hedef, bitince, bicim, sure) {
+                var x0 = gsap.getProperty(el, 'x') || 0, y0 = gsap.getProperty(el, 'y') || 0;
+                var dx = hedef.x - x0, dy = hedef.y - y0;
+                var yol = Math.sqrt(dx * dx + dy * dy);
+                el.__gezVaris = { bolum: el.offsetParent, kutu: hedef.kutu };
+                bicim = bicim || { ad: 'yuru', kalkis: 0 };
+                var t = sure || Math.max(2.4, yol / GEZ_HIZ);
+                if (!sure && bicim.ad === 'kos') t = Math.max(1.1, t * 0.55);
+
+                if (bicim.ad === 'zipla' && bicim.kalkis > 0 && !sure) {
+                    // Sicrama: yatayda duz, dikeyde yer cekimi egrisi. Yol
+                    // uzunlugu kadar zipla, her biri tepeden sonra hizlanarak
+                    // insin - suzulmek yerine sekmek gibi dursun.
+                    var n = Math.max(1, Math.min(4, Math.round(yol / 190)));
+                    var ts = Math.max(0.42, t * 0.78 / n);
+                    var tl = gsap.timeline({ onComplete: bitince });
+                    for (var i = 1; i <= n; i++) {
+                        var xi = x0 + dx * i / n, yi = y0 + dy * i / n;
+                        var yo = y0 + dy * (i - 1) / n;
+                        var t0 = (i - 1) * ts;
+                        tl.to(el, { x: xi, duration: ts, ease: 'none' }, t0)
+                          .to(el, { y: Math.min(yo, yi) - bicim.kalkis,
+                                    duration: ts * 0.45, ease: 'power2.out' }, t0)
+                          .to(el, { y: yi, duration: ts * 0.55, ease: 'power1.in' },
+                              t0 + ts * 0.45);
+                    }
+                    gezTween = tl;
+                    return;
+                }
+                gezTween = gsap.to(el, {
+                    x: hedef.x, y: hedef.y, duration: t,
+                    ease: bicim.ad === 'kos' ? 'power2.inOut' : 'sine.inOut',
+                    onComplete: bitince
+                });
+            }
+
+            function gezOlcek(s, bitince, sure) {
+                gezOlcekTween = gsap.to(el, {
+                    scale: s, duration: sure || GEZ_YUMUSAK,
+                    ease: 'power1.inOut', onComplete: bitince
+                });
+            }
+
+            function gezBekle(fn, en, pay) {
+                gezSira = gsap.delayedCall(en + Math.random() * pay, fn);
+            }
+            function gezDinlen() { gezBekle(gezAdim, 0.4, 1.4); }
+
+            function gezAdim() {
+                if (!geziyor) return;
+                if (!el.offsetWidth) { gezBekle(gezAdim, 1, 0.5); return; }
+                // Ilk dalis kosarak olur: belirdikten sonraki ilk 3 sn icinde
+                // ortunun altina girip orada buyumesi gerekiyor.
+                var hedef, bicim = ilkDalis ? { ad: 'kos', kalkis: 0 } : gezBicim();
+
+                if (buyuk) {
+                    // Buyur buyumez (ve goc eder etmez) aralikta gorunecek
+                    // bir noktaya cikar: kart altinda saklanip kaybolmasin.
+                    if (gosterTur > 0) {
+                        gosterTur--;
+                        hedef = gezAralik(olcekSu, bicim.kalkis);
+                        if (hedef) {
+                            var ux = hedef.x - (gsap.getProperty(el, 'x') || 0);
+                            var uy = hedef.y - (gsap.getProperty(el, 'y') || 0);
+                            gezYuru(hedef, gezDinlen, bicim,
+                                Math.max(0.45, Math.min(1, Math.sqrt(ux * ux + uy * uy) / 320)));
+                            return;
+                        }
+                    }
+                    // Iriyken yalnizca ortu altindaki duraklar: mola yerinde
+                    // gizli, yol boyunca bloklarin arasindan gorunuyor.
+                    if (kalanTur > 0) {
+                        hedef = gezSiginakB(bicim, olcekSu);
+                        if (hedef) { kalanTur--; gezYuru(hedef, gezDinlen, bicim); return; }
+                        kalanTur = 0;
+                    }
+                    // Ortu altindayken komsu bolume gecmeyi dener.
+                    if (Math.random() < 0.5 && gezGoc()) {
+                        kalanTur = 2 + Math.floor(Math.random() * 3);
+                        gosterTur = 1;             // yeni bolumde de hemen gorunsun
+                        gezBekle(gezAdim, 0.2, 0.4);
+                        return;
+                    }
+                    // Disari cikis: once ortunun altinda eski boyuna doner.
+                    // Aralikta duruyorsa once tumuyle ortunun altina girer,
+                    // kuculme gozukmesin.
+                    var bl2 = gezBloklar();
+                    var simdiK = gezKutu(gsap.getProperty(el, 'x') || 0,
+                                         gsap.getProperty(el, 'y') || 0, olcekSu);
+                    if (!gezOrtulu(simdiK, bl2) && kacis < 3) {
+                        // Once buyudugu noktaya doner: orasinin ortusu zaten
+                        // olculmustu. Olmazsa yeni bir siginak aranir.
+                        hedef = null;
+                        if (buyumeYeri) {
+                            var kg = gezKutu(buyumeYeri.x, buyumeYeri.y, olcekSu);
+                            if (gezOrtulu(kg, bl2) && gezAyrik(kg)) {
+                                hedef = { x: buyumeYeri.x, y: buyumeYeri.y, kutu: kg };
+                            }
+                        }
+                        if (!hedef) hedef = gezSiginakB(bicim, olcekSu);
+                        if (hedef) {
+                            kacis++;
+                            gezYuru(hedef, function () { gezBekle(gezAdim, 0.1, 0.25); }, bicim);
+                            return;
+                        }
+                        // Saklanacak yer yok: kuculmek gorunur olurdu, iri
+                        // kalip aralikta dolasmayi surdursun.
+                        kacis++;
+                        gosterTur = 1;
+                        gezBekle(gezAdim, 0.2, 0.4);
+                        return;
+                    }
+                    kacis = 0; buyumeYeri = null;
+                    gezOlcek(1, function () {
+                        buyuk = false; olcekSu = 1; acikTur = 1;
+                        var b2 = gezBicim(), h2 = gezHedefB(b2);
+                        if (h2) gezYuru(h2, gezDinlen, b2); else gezBekle(gezAdim, 1, 0.6);
+                    });
+                    return;
+                }
+
+                if (acikTur > 0) {                 // normal boyda acikta bir tur
+                    acikTur--;
+                    hedef = gezHedefB(bicim);
+                    if (hedef) { gezYuru(hedef, gezDinlen, bicim); return; }
+                }
+                hedef = gezSiginakB(bicim, 0, ilkDalis);
+                if (hedef) {
+                    var s = hedef.olcek, ilk = ilkDalis;
+                    ilkDalis = false;
+                    gezYuru(hedef, function () {
+                        // Yol boyunca sayfa kaymis olabilir: buyumeye baslamadan
+                        // ortuyu yeniden olc, yoksa acikta buyur.
+                        var kk = gezKutu(hedef.x, hedef.y, s);
+                        if (!gezOrtulu(kk, gezBloklar())) { gezBekle(gezAdim, 0.2, 0.4); return; }
+                        buyumeYeri = { x: hedef.x, y: hedef.y };   // kuculurken buraya doner
+                        gezOlcek(s, function () {
+                            buyuk = true; olcekSu = s; gosterTur = 1;
+                            kalanTur = 2 + Math.floor(Math.random() * 3);
+                            gezBekle(gezAdim, 0.04, 0.12);  // hemen aralikta gorunsun
+                        }, ilk ? GEZ_ILK_BUYUME : 0);
+                    }, bicim, ilk ? Math.max(0.55, Math.min(0.9, hedef.uzaklik / 520)) : 0);
+                    return;
+                }
+                ilkDalis = false;
+                // Siginacak blok yok (bu bolumde opak kutu yok ya da hepsi dar):
+                // kahraman normal boyunda dolasmayi surdurur, hic buyumez.
+                acikTur = 1;
+                hedef = gezHedefB(bicim);
+                if (hedef) gezYuru(hedef, gezDinlen, bicim); else gezBekle(gezAdim, 1.2, 0.8);
+            }
+
+            // Bir bolumde ayni anda en fazla iki kahraman gezinir; ucuncusu
+            // yerinde durup sirasini bekler.
+            function gezYerVar(bolum) {
+                return bolum && bolum.querySelectorAll('.kahraman.geziyor').length < 2;
+            }
+
+            // Bolum gecisi. Yalnizca kahraman bir blogun altinda gizliyken ve
+            // varis bolumunde de saklanacak bir blok varken yapilir - boylece
+            // gecis hic gorunmez, bolum sinirinda kesilmis bir kahraman olmaz.
+            // En fazla BIR ALT bolume inilir: kahraman kendi bolumu ile onun
+            // bir altindaki bolum arasinda gidip gelir, daha asagi gitmez.
+            function gezGoc() {
+                var simdi = el.offsetParent;
+                if (!simdi) return false;
+                var tum = document.querySelectorAll('section'), i, k = -1, ev = -1, komsu = [];
+                for (i = 0; i < tum.length; i++) {
+                    if (tum[i] === simdi) k = i;
+                    if (tum[i] === anaBolum) ev = i;
+                }
+                if (k < 0 || ev < 0) return false;
+                if (k === ev) { if (tum[ev + 1]) komsu.push(tum[ev + 1]); }
+                else if (k === ev + 1) komsu.push(anaBolum);
+                else komsu.push(anaBolum);           // beklenmedik yer: eve don
+                for (i = 0; i < komsu.length; i++) {
+                    var b = komsu[i];
+                    if (!b.querySelector('.container') || !gezYerVar(b)) continue;
+                    var eskiEbeveyn = el.parentNode, eskiSonraki = el.nextSibling;
+                    b.appendChild(el);                 // olcum icin tasi
+                    var sig = gezSiginak(olcekSu, true);   // orada da saklanabilecek mi
+                    if (sig) {
+                        gsap.set(el, { x: sig.x, y: sig.y });
+                        el.__gezVaris = { bolum: b, kutu: sig.kutu };
+                        return true;
+                    }
+                    eskiEbeveyn.insertBefore(el, eskiSonraki);   // olmadi, geri al
+                }
+                return false;
+            }
+
+            // Kaydirmada kahraman icerikten cikip kenar acikligina gelir:
+            // metin sutununun yanindaki bos serit. Kendi tarafina (saga
+            // yaslilar saga, solakiler sola) gider.
+            function gezKenar() {
+                var bolum = el.offsetParent;
+                if (!bolum) return null;
+                var c = bolum.querySelector('.container'), w = el.offsetWidth;
+                var bk = bolum.getBoundingClientRect(), sol;
+                var ck = c ? c.getBoundingClientRect() : null;
+                if (sag) {
+                    sol = ck ? ck.right - bk.left + 8 : bolum.clientWidth - w - 4;
+                    sol = Math.min(sol, bolum.clientWidth - w - 4);
+                } else {
+                    sol = ck ? ck.left - bk.left - w - 8 : 4;
+                    sol = Math.max(sol, 4);
+                }
+                return sol - el.offsetLeft;
+            }
+
+            // Sayfa kaydirilinca gezinme durur: kahraman hemen kenar
+            // acikligina cikip normal boyuna doner, sonra kaydirmayla birlikte
+            // ayni yone kayar - ekranda oldugu yerde kalir gibi. Bu kayma en
+            // cok bolumun yarisi kadar surer, sonra oldugu yerde durur ve
+            // sayfayla birlikte akip gider. Kaydirma bitince yeniden gezinir.
+            function gezKaydir() {
+                if (!geziyor || sakin) return;
+                var s = window.pageYOffset || document.documentElement.scrollTop || 0;
+                var fark = s - kaySon;
+                kaySon = s;
+                if (!fark) return;
+                var bolum = el.offsetParent;
+                if (!bolum) return;
+                if (!kayModu) {
+                    kayModu = true;
+                    if (gezSira) { gezSira.kill(); gezSira = null; }
+                    if (gezTween) { gezTween.kill(); gezTween = null; }
+                    if (gezOlcekTween) { gezOlcekTween.kill(); gezOlcekTween = null; }
+                    buyuk = false; olcekSu = 1; kalanTur = 0; gosterTur = 0;
+                    buyumeYeri = null; kacis = 0;
+                    var kx = gezKenar();
+                    var hiz = Math.min(0.55, 0.22 + Math.abs(fark) / 400);
+                    gezTween = gsap.to(el, {
+                        x: kx, scale: 1, duration: hiz, ease: 'power2.out', overwrite: 'auto'
+                    });
+                    kayBasY = gsap.getProperty(el, 'y') || 0;
+                    kayBasScroll = s;
+                    kaySinir = bolum.clientHeight * 0.5;
+                    kaySetY = gsap.quickTo(el, 'y', { duration: 0.32, ease: 'power3.out' });
+                }
+                var h = el.offsetHeight;
+                var ya = -el.offsetTop, yb = bolum.clientHeight - h - el.offsetTop;
+                var toplam = s - kayBasScroll;
+                if (toplam > kaySinir) toplam = kaySinir;
+                if (toplam < -kaySinir) toplam = -kaySinir;
+                var hedefY = kayBasY + toplam;
+                if (hedefY < ya) hedefY = ya;
+                if (hedefY > yb) hedefY = yb;
+                if (kaySetY) kaySetY(hedefY);
+                if (kayBitis) kayBitis.kill();
+                kayBitis = gsap.delayedCall(0.9, gezKaydirBitti);
+            }
+
+            function gezKaydirBitti() {
+                kayBitis = null;
+                kayModu = false;
+                if (!geziyor) return;
+                // Durur durmaz yeniden bir blogun altina kosup buyusun.
+                buyuk = false; olcekSu = 1; acikTur = 0; ilkDalis = true;
+                gezBekle(gezAdim, 0.3, 0.5);
+            }
+
+            function gezBasla() {
+                if (geziyor || sakin) return;
+                if (!gezYerVar(el.offsetParent)) {     // bolum dolu, sonra tekrar dene
+                    gezSira = gsap.delayedCall(4 + Math.random() * 4, gezBasla);
+                    return;
+                }
+                if (!gezDuruldu()) {                   // once sayfa yerine otursun
+                    gezSira = gsap.delayedCall(0.25, gezBasla);
+                    return;
+                }
+                geziyor = true; buyuk = false; kalanTur = 0; olcekSu = 1;
+                acikTur = 0; ilkDalis = true;    // dogruca ortunun altina
+                gosterTur = 0; kacis = 0; kayModu = false; buyumeYeri = null;
+                kaySon = window.pageYOffset || document.documentElement.scrollTop || 0;
+                sonYon = Math.random() * Math.PI * 2;
+                if (sway) sway.pause();          // nefes yerine yuruyus
+                el.classList.add('geziyor');     // bloklarin altina in
+                gezSalinim = gsap.to(el, {
+                    rotation: sag ? -2.4 : 2.4,
+                    duration: 3.2, ease: 'sine.inOut', repeat: -1, yoyo: true
+                });
+                gezGoz = gsap.delayedCall(1, gezGozcu);
+                gezAdim();
+            }
+
+            function gezDur() {
+                geziyor = false; buyuk = false; kalanTur = 0; acikTur = 1; olcekSu = 1;
+                ilkDalis = true; gosterTur = 0; kacis = 0; kayModu = false; buyumeYeri = null;
+                if (kayBitis) { kayBitis.kill(); kayBitis = null; }
+                kaySetY = null;
+                if (gezSira) { gezSira.kill(); gezSira = null; }
+                if (gezTween) { gezTween.kill(); gezTween = null; }
+                if (gezOlcekTween) { gezOlcekTween.kill(); gezOlcekTween = null; }
+                if (gezSalinim) { gezSalinim.kill(); gezSalinim = null; }
+                if (gezGoz) { gezGoz.kill(); gezGoz = null; }
+                gezImza = null;
+                el.__gezVaris = null;
+                el.classList.remove('geziyor');
+                // Gezerken baska bolume gectiyse kendi yerine donsun: sayfa
+                // duzeni (hangi kosede kim durur) oldugu gibi kalsin. Bu
+                // yalnizca kahraman kadrajdan ciktiginda cagriliyor, yani
+                // tasima hic gorunmuyor.
+                if (anaBolum && el.parentNode !== anaBolum) {
+                    anaBolum.insertBefore(el,
+                        (anaSonraki && anaSonraki.parentNode === anaBolum) ? anaSonraki : null);
+                }
+            }
+
             var girisTl = null;
             var kayit = {
                 el: el,
                 durum: '',
+                kaydir: gezKaydir,
                 bekle: function () {
                     if (kayit.durum === 'bekliyor') return;
                     kayit.durum = 'bekliyor';
+                    gezDur();
                     // Yalnızca girişi durdur. gsap.killTweensOf(el) salınımı da
                     // öldürüyor, sonraki play() onu diriltiyor ama kayıtlı
                     // başlangıç değerleriyle — o değerler de bekleme noktasından
@@ -1608,6 +2284,9 @@
                         gsap.to(el, { x: 0, y: 0, autoAlpha: 0.92, duration: 0.6, ease: 'power1.out' });
                         return;
                     }
+                    // Giris biter bitmez gezinmeye baslar: ilk 3 sn
+                    // icinde bir blogun altina girip orada buyur.
+                    gezSira = gsap.delayedCall(GEZ_ILK, gezBasla);
                     // invalidate: salınım başlangıcını her seferinde o anki
                     // duruştan okusun, ilk oynadığı andaki değerlere saplanmasın
                     girisTl = gsap.timeline({ onComplete: function () { sway.invalidate().play(0); } });
@@ -1641,8 +2320,16 @@
                 // kendi kendini tetikleyen bir döngü kuruyor. Bölüm
                 // position:relative olduğu için offsetTop ona göre ve
                 // dönüşümden bağımsız.
+                if (el.classList.contains('geziyor')) {
+                    // Gezerken kahraman bagli oldugu noktadan uzaklasiyor;
+                    // olcuyu bolume gore al, yoksa kendisi kadrajdayken
+                    // sifirlanip yerine ziplayabiliyor.
+                    var kutu = el.offsetParent.getBoundingClientRect();
+                    ust = kutu.top; alt = kutu.bottom;
+                } else {
                 ust = el.offsetParent.getBoundingClientRect().top + el.offsetTop;
                 alt = ust + el.offsetHeight;
+                }
                 if (alt <= 0 || ust >= ih) yapilacak.push([kayitlar[i], 0]);
                 else if (ust <= ih * 0.85) yapilacak.push([kayitlar[i], 1]);
             }
@@ -1656,6 +2343,12 @@
             for (var i = 0; i < kayitlar.length; i++) kayitlar[i].tazele();
         }
 
+        function kaydirHepsi() {
+            for (var i = 0; i < kayitlar.length; i++) {
+                if (kayitlar[i].kaydir) kayitlar[i].kaydir();
+            }
+        }
+
         var sirada = false;
         function tetikle() {
             if (sirada) return;
@@ -1664,13 +2357,14 @@
         }
         function olcuDegisti() { tazeleHepsi(); tetikle(); }
 
-        window.addEventListener('scroll', tetikle, { passive: true });
+        function kaydirildi() { tetikle(); kaydirHepsi(); }
+        window.addEventListener('scroll', kaydirildi, { passive: true });
         window.addEventListener('resize', olcuDegisti);
         window.addEventListener('load', olcuDegisti);
         denetle();
 
         return function () {
-            window.removeEventListener('scroll', tetikle);
+            window.removeEventListener('scroll', kaydirildi);
             window.removeEventListener('resize', olcuDegisti);
             window.removeEventListener('load', olcuDegisti);
         };

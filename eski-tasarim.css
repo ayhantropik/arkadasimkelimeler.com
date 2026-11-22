@@ -2048,6 +2048,13 @@ section > .container,
 .kahraman-sol  { left: 8px;  object-position: left bottom; }
 .kahraman-sag  { right: 8px; object-position: right bottom; }
 
+/* Kahraman belirir belirmez bölümün içinde gezinmeye başlar; bir bloğun
+   altına girip orada iki katına büyür, sonra iki bloğun arasına çıkıp
+   oradan görünür. Gezerken içerik bloklarının ALTINA geçiyor, duruş
+   hâlinde yine üstte kalıyor. Sayfa kaydırılınca kenar açıklığına çıkıp
+   normal boyuna döner. */
+.kahraman.geziyor { z-index: 0; will-change: transform; }
+
 /* the tall ones would tower over their band */
 
 /* below this there is no margin left beside the content column */
