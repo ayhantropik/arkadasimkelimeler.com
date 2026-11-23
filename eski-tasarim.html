@@ -1503,9 +1503,12 @@
 (function () {
     if (!window.gsap) return;
 
+    // Ayni renk ayari style.css'teki .kahraman kuralinda da var; burada
+    // tekrar ediyor cunku bu filtreler CSS'i inline olarak eziyor.
+    var TINT = 'saturate(1.85) contrast(1.16) brightness(1.03) ';
     var SHADOW = 'drop-shadow(0 10px 16px rgba(32, 22, 12, 0.16))';
-    var REST = 'drop-shadow(0 0 0px rgba(249, 178, 51, 0)) ' + SHADOW;
-    var GLOW = 'drop-shadow(0 0 34px rgba(249, 178, 51, 1)) ' + SHADOW;
+    var REST = TINT + 'drop-shadow(0 0 0px rgba(249, 178, 51, 0)) ' + SHADOW;
+    var GLOW = TINT + 'drop-shadow(0 0 34px rgba(249, 178, 51, 1)) ' + SHADOW;
 
     gsap.matchMedia().add({
         tam: '(min-width: 1321px) and (prefers-reduced-motion: no-preference)',
@@ -2281,7 +2284,7 @@
                     if (kayit.durum === 'oynuyor') return;
                     kayit.durum = 'oynuyor';
                     if (sakin) {
-                        gsap.to(el, { x: 0, y: 0, autoAlpha: 0.92, duration: 0.6, ease: 'power1.out' });
+                        gsap.to(el, { x: 0, y: 0, autoAlpha: 1, duration: 0.6, ease: 'power1.out' });
                         return;
                     }
                     // Giris biter bitmez gezinmeye baslar: ilk 3 sn
@@ -2296,7 +2299,7 @@
                     HAREKET(girisTl);
                     girisTl
                         .to(el, { scale: 1, rotation: 0, duration: 1.25, ease: 'back.out(1.8)' }, 0)
-                        .to(el, { autoAlpha: 0.92, duration: 0.4, ease: 'power1.out' }, 0)
+                        .to(el, { autoAlpha: 1, duration: 0.4, ease: 'power1.out' }, 0)
                         .to(el, { filter: REST, duration: 1.5, ease: 'power2.out' }, 0);
                 }
             };

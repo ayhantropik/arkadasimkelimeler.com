@@ -55,7 +55,8 @@ nav {
 }
 .nav-bear {
     height: 48px; width: auto;
-    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.18));
+    /* ayni canlilik ayari .kahraman'da da var: tavsan da ayni suluboya ailesinden */
+    filter: saturate(1.85) contrast(1.16) brightness(1.03) drop-shadow(0 2px 4px rgba(0,0,0,0.18));
     transition: transform 0.3s ease;
     transform-origin: bottom center;
 }
@@ -66,7 +67,7 @@ nav {
     position: absolute;
     pointer-events: none;
     z-index: 3;
-    filter: drop-shadow(0 12px 20px rgba(0,0,0,0.22));
+    filter: saturate(1.85) contrast(1.16) brightness(1.03) drop-shadow(0 12px 20px rgba(0,0,0,0.22));
 }
 .section-bear.peek-right { right: 3%; bottom: 0; width: 190px; }
 .section-bear.peek-left { left: 3%; bottom: 0; width: 170px; transform: scaleX(-1); }
@@ -76,7 +77,7 @@ nav {
     width: 230px;
     pointer-events: none;
     z-index: 3;
-    filter: drop-shadow(0 14px 26px rgba(0,0,0,0.3));
+    filter: saturate(1.85) contrast(1.16) brightness(1.03) drop-shadow(0 14px 26px rgba(0,0,0,0.3));
     animation: badge-float 6s ease-in-out infinite;
 }
 @media (max-width: 768px) {
@@ -2039,9 +2040,13 @@ section > .container,
     /* above the cards rather than buried under them: they may lap onto a
        card's edge, so they have to be the ones on top */
     z-index: 2;
-    opacity: .92;
+    /* tam opak: .92 suluboya tonlarini gorunur sekilde soluklastiriyordu */
+    opacity: 1;
     pointer-events: none;
-    filter: drop-shadow(0 10px 16px rgba(32,22,12,.16));
+    /* Vivid, not tinted: sepia flattens every hue into one brown, so the
+       colour comes from saturation and contrast instead. */
+    filter: saturate(1.85) contrast(1.16) brightness(1.03)
+            drop-shadow(0 10px 16px rgba(32,22,12,.16));
 }
 /* flush with the edge, not past it: the section clips its overflow, so a
    negative offset was slicing 14-23% off every character */
